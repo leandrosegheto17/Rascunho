@@ -1,0 +1,1 @@
+{"comando": "python -m unittest discover -s .claude/scripts/testes -p \"test_*.py\""}
