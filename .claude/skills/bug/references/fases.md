@@ -19,7 +19,7 @@ Princípio: **corrigir a causa, não o sintoma, e provar com um teste que falhav
 | Chamador | Em que fase dele | Entra na fase | Devolver após |
 |---|---|---|---|
 | 9 Incidente | 6 (correção definitiva, depois da contenção) | 3 | `verificação` (o incidente libera e faz o pós-mortem) |
-| 16 Auditoria de segurança | 8 (correção dos achados) | 3, um bug por achado | `fechamento` |
+| 16 Auditoria de segurança | 8 (correção dos achados) | 3, um bug por achado (ou por causa comum a vários) | `fechamento` (a auditoria faz o reteste) |
 | 32 Suporte | 5 (encaminhamento) | 3 | `liberação` (o suporte avisa o cliente) |
 
 O chamador grava `relato.md` com relato e triagem completos (formato de `relato.md`), e o bug segue a tabela de fases normalmente.

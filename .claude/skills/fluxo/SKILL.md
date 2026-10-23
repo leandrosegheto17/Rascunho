@@ -62,7 +62,7 @@ Se o usuário descreveu o que quer em texto livre (ex.: "o login quebrou"), esco
 | 12 | Correção de bug | `bug`, `erro` | **Pronto** | skill `bug` |
 | 13 | Refatoração e dívida técnica | `refatorar`, `divida` | Em preparação | `leitor-codigo` |
 | 14 | Documentar projeto existente | `documentar`, `docs` | Em preparação | `leitor-codigo` |
-| 16 | Auditoria de segurança | `seguranca`, `auditoria` | Em preparação | agente `auditor-seguranca` |
+| 16 | Auditoria de segurança | `seguranca`, `auditoria` | **Pronto** | skill `auditoria-seguranca` |
 | 17 | Prova de conceito (spike) | `spike`, `poc` | **Pronto** | skill `spike` |
 | 24 | Revisão de código | `revisao`, `review` | Em preparação | `code-review` |
 | 25 | Escolha de tecnologia | `tecnologia`, `stack` | **Pronto** | skill `escolha-tecnologia` |

@@ -175,6 +175,51 @@
       ],
       "usado_em": ".claude/skills/escolha-tecnologia/"
     },
+    {
+      "nome": "auditoria-seguranca (tlc security-threat-model)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/tech-leads-club/agent-skills",
+      "commit": "bc4f025632b0443ed3450aaec6fe96aec5b9a0c5",
+      "arquivos_origem": [
+        "packages/skills-catalog/skills/(security)/security-threat-model/SKILL.md",
+        "packages/skills-catalog/skills/(security)/security-threat-model/references/prompt-template.md",
+        "packages/skills-catalog/skills/(security)/security-threat-model/references/security-controls-and-assets.md"
+      ],
+      "usado_em": ".claude/skills/auditoria-seguranca/"
+    },
+    {
+      "nome": "auditoria-seguranca (wshobson stride-analysis-patterns)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/wshobson/agents",
+      "commit": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+      "arquivos_origem": [
+        "plugins/security-scanning/skills/stride-analysis-patterns/SKILL.md",
+        "plugins/security-scanning/skills/stride-analysis-patterns/references/details.md"
+      ],
+      "usado_em": ".claude/skills/auditoria-seguranca/"
+    },
+    {
+      "nome": "auditoria-seguranca (security-auditor e security-guidance)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/anthropics/claude-plugins-official",
+      "commit": "465f09344424225c25d438f2e052732c3d688d2f",
+      "arquivos_origem": [
+        "plugins/code-modernization/agents/security-auditor.md",
+        "plugins/security-guidance/hooks/patterns.py"
+      ],
+      "usado_em": ".claude/skills/auditoria-seguranca/"
+    },
+    {
+      "nome": "auditoria-seguranca (legado: seguranca.py e finding-severity-classification)",
+      "tipo": "adaptado",
+      "origem": ".claude_legado",
+      "commit": "15a6ad1",
+      "arquivos_origem": [
+        ".claude_legado/scripts/seguranca.py",
+        ".claude_legado/skills/finding-severity-classification/SKILL.md"
+      ],
+      "usado_em": ".claude/skills/auditoria-seguranca/ e .claude/scripts/varredura-seguranca.py"
+    },
     { "nome": "clone .tlc", "tipo": "referencia", "pasta": ".tlc", "origem": "https://github.com/tech-leads-club/agent-skills" },
     { "nome": "clone .superpowers", "tipo": "referencia", "pasta": ".superpowers", "origem": "https://github.com/obra/superpowers" },
     { "nome": "clone .speckit", "tipo": "referencia", "pasta": ".speckit", "origem": "https://github.com/github/spec-kit" },

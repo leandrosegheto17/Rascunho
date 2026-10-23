@@ -363,6 +363,36 @@ Decisões por analogia:
 
 Orquestrador: skill `escolha-tecnologia`. `/fluxo` marca o 25 como pronto. **Pendente:** teste real com uma escolha de verdade (ex.: banco de um projeto do fluxo 1 na fase 7) e, quando os fluxos 6 e 30 forem construídos, conferir o contrato de entrada.
 
+## Passo 17: fluxo 16, auditoria de segurança
+
+**Status:** construído em 2026-10-23 por subagente, seguindo `ROTEIRO-CONSTRUCAO.md`; decisões tomadas por analogia com `bug`, `incidente` e `spike`, pendentes de revisão do usuário.
+
+Decisões por analogia:
+
+- **Artefatos em `.specs/seguranca/<AAAA-MM-DD>-<slug>/`**: `escopo.md` (fase 1, **Escopo aprovado**; também o contrato de entrada), `ameacas.md` (fases 2-3, **Ameaças aprovadas**), `achados.md` (fases 4 a 7, **Coleta**, **Teste ativo**, **Classificação aprovada**), `correcoes.md` (fase 8, **Críticos e altos fechados**), `relatorio.md` (fase 9, `Status: final` ou `parado`), `evidencias/` (saídas brutas, **fora do git**). Em andamento = sem `relatorio.md` final ou parado.
+- **Aprovações:** 1, 2-3, 4-5, 6, 7, 8, 9. Ativos e ameaças juntos (como a arqueologia junta 2 e 3); varredura e revisão manual juntas (o mesmo agente coleta, sem decisão do usuário no meio). Escopo e classificação ficam sozinhos por serem decisões do usuário.
+- **Modelo:** Opus em 1, 2-3 e 7 (autorização, modelo de ameaças, severidade); Sonnet em 4-5, 6, 8 e 9 (o `auditor-seguranca` roda em Opus de qualquer forma).
+- **Escopo e autorização inegociáveis:** sistema que não é do usuário exige autorização por escrito (quem, quando, onde está o documento); terceiro só por cópia local do código publicado; sem autorização, `parado`. Teste ativo em local (padrão) ou staging autorizado; produção só com confirmação específica por teste. Lista fixa de proibições (negação de serviço, carga, força bruta, destrutivo, engenharia social, sistemas de terceiros, além da prova mínima). Invasão em curso ou dado vazado: pausa e skill `incidente`. Repositório público: pasta fora do git até fechar críticos e altos.
+- **Modelo de ameaças pela sessão** (Opus, conversa com o usuário para confirmar premissas), com o resumo de segurança do repositório pelo `leitor-codigo`. Ameaças `TM-NNN`, STRIDE por elemento, prioridade por matriz 3 × 3, caminhos de foco que guiam a revisão manual.
+- **Agente `auditor-seguranca` reaproveitado** como executor de varredura, revisão manual, teste ativo e reteste, com uma seção "modo auditoria" (lê `escopo.md` primeiro, escreve `achados.md` e `evidencias/`, não aprova severidade, para diante de indício de invasão). Continua servindo aos fluxos 1, 3 e 4 como antes (`seguranca.md` da feature).
+- **Severidade crítico/alto/médio/baixo** (a mesma que o agente e os fluxos 1-4 já usam, e que `liberacao` confere), mapeada para P0–P3 ao abrir o bug. Crítico nunca vira risco aceito; alto só com mitigação aplicada, dono e prazo curto; médio e baixo: corrigir, débito com prazo (sugestão 30 e 90 dias) ou risco aceito. Obrigação legal (LGPD) no mínimo alto. Sem cenário de exploração, rebaixa; nunca rebaixar para não bloquear.
+- **Script `varredura-seguranca.py`** adaptado do legado: vale a pena porque dá a **Prova** repetível (sondas) para o reteste da fase 8 e o passo de CI da fase 9. Mudanças: Docker só com `--docker` (baixar imagem é instalar), `--pular` registrado, gitleaks com `--redact`, busca embutida de segredos no histórico (piso sem gitleaks, valor mascarado), sondas só contra localhost ou host autorizado. 12 testes novos.
+- **Correção pela skill `bug`**, um bug por achado (ou causa comum), slug `seg-<id>-...`, `Chamado por: auditoria <id> SEC-NNN`, `Devolver após: fechamento`, critérios de aceite com o teste do ataque e o uso legítimo preservado, nota "sem indício de exploração" para não desviar para incidente. Reteste pelo `auditor-seguranca` com a mesma Prova (quem corrige não verifica). Segredo: trocar a credencial é o que resolve (ação externa); reescrever histórico só com confirmação.
+- **Entrada por outros fluxos:** 27 (avaliação de terceiros: cópia local, fases 1 a 7 e 9, achados viram condição de adoção) e 6 (integração: só o lado do usuário, fases 1 a 9); o chamador grava `escopo.md` com **Chamado por**, **Usar em**, **Devolver após**, **Modo** e **Fases**; a autorização é sempre confirmada com o usuário.
+- **Ajustes em peças existentes:** `auditor-seguranca` (modo auditoria, uso do script, segredo mascarado, texto-instrução como achado; 58 linhas), `bug/references/fases.md` (linha do fluxo 16), `/fluxo` (16 pronto).
+
+| Fases | Peça | Origem |
+|---|---|---|
+| 1 Escopo e autorização | `auditoria-seguranca/references/escopo.md` (perguntas, proibições, modelo de `escopo.md` = contrato de entrada) | nova |
+| 2-3 Ativos, superfície, ameaças | `leitor-codigo` + `references/ameacas.md` (resumo de segurança, fronteiras, ativos, atacante, STRIDE, prioridade, premissas confirmadas) | adaptada de `security-threat-model` (tlc, Apache 2.0) e wshobson `stride-analysis-patterns` (MIT) |
+| 4-5 Varredura e revisão manual | `auditor-seguranca` (modo auditoria) + `.claude/scripts/varredura-seguranca.py ferramentas` + lista de `references/achados.md` | reaproveitada; script do legado `seguranca.py`; lista de `security-auditor` e `patterns.py` (Apache 2.0) |
+| 6 Teste ativo | `auditor-seguranca` + `varredura-seguranca.py sondas` | reaproveitada; sondas do legado |
+| 7 Classificação | `references/achados.md` (severidade, destino, mapa para P0–P3) | legado `finding-severity-classification` |
+| 8 Correção e reteste | skill `bug` com `references/correcao.md`; reteste pelo `auditor-seguranca` | reaproveitada |
+| 9 Relatório e prevenção | `references/relatorio.md` (resumo, riscos aceitos, CI, rotação, revisão periódica) | nova |
+
+Orquestrador: skill `auditoria-seguranca`. `/fluxo` marca o 16 como pronto. **Pendente:** teste real (ex.: uma aplicação de exemplo com uma falha de autorização plantada, percorrendo as 9 fases) e, quando os fluxos 27 e 6 forem construídos, conferir o contrato de entrada.
+
 ---
 
 ## Estado ao fim da rodada (2026-10-23)
