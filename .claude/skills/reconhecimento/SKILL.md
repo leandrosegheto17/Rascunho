@@ -9,7 +9,7 @@ Responde: **onde esta mudança entra, como o projeto já faz coisas parecidas, e
 
 ## Pré-requisitos
 
-- A spec da feature (`.specs/features/<feature>/spec.md`) ou, para outros fluxos, a descrição da mudança.
+- A spec da feature (`.specs/features/<feature>/spec.md`) ou, para outros fluxos, a descrição da mudança. Em correção de bug, a entrada é `.specs/bugs/<slug>/relato.md` e o arquivo vai para essa mesma pasta; a tabela de reaproveitamento pode ficar curta.
 - Se `reconhecimento.md` já existir, confirme antes de refazer; se o código mudou desde a data dele, ofereça atualizar.
 
 ## 1. Contexto do projeto

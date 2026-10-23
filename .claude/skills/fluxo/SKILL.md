@@ -56,10 +56,10 @@ Se o usuário descreveu o que quer em texto livre (ex.: "o login quebrou"), esco
 | 6 | Integração com terceiros | `integracao`, `api` | Em preparação | `pesquisador`, `tlc-spec-driven` |
 | 7 | Redesign de interface | `redesign`, `visual` | Em preparação | `mockup-visual` |
 | 8 | Aprendizado | `estudo`, `aprender` | Em preparação | — |
-| 9 | Investigação de incidentes | `incidente`, `caiu` | Em preparação | `systematic-debugging` |
+| 9 | Investigação de incidentes | `incidente`, `caiu` | Em preparação | `systematic-debugging`, skill `bug` (correção, com hotfix) |
 | 10 | Sugestão de melhoria de terceiros | `sugestao` | Em preparação | — |
 | 11 | Solicitação de feature sob demanda | `pedido`, `solicitacao` | Em preparação | `tlc-spec-driven` |
-| 12 | Correção de bug | `bug`, `erro` | Em preparação | `systematic-debugging` |
+| 12 | Correção de bug | `bug`, `erro` | **Pronto** | skill `bug` |
 | 13 | Refatoração e dívida técnica | `refatorar`, `divida` | Em preparação | `leitor-codigo` |
 | 14 | Documentar projeto existente | `documentar`, `docs` | Em preparação | `leitor-codigo` |
 | 16 | Auditoria de segurança | `seguranca`, `auditoria` | Em preparação | agente `auditor-seguranca` |

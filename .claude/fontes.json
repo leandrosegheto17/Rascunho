@@ -60,6 +60,42 @@
       "arquivos_origem": [".claude_legado/skills/visual-mockup-drafting/SKILL.md"],
       "usado_em": ".claude/skills/mockup-visual/"
     },
+    {
+      "nome": "bug (bmad bug-template)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/bmad-code-org/BMAD-METHOD",
+      "commit": "61e01f82644c4bb533750cfa0d6d61ab61d2cc9b",
+      "arquivos_origem": ["skills/bmad-agent-po/assets/bug-template.md"],
+      "usado_em": ".claude/skills/bug/"
+    },
+    {
+      "nome": "bug (spec-kit extensão bug)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/github/spec-kit",
+      "commit": "27d14e20c187c1f2916540ea201ecbdc9f8ed588",
+      "arquivos_origem": [
+        "extensions/bug/commands/speckit.bug.assess.md",
+        "extensions/bug/commands/speckit.bug.fix.md",
+        "extensions/bug/commands/speckit.bug.test.md"
+      ],
+      "usado_em": ".claude/skills/bug/"
+    },
+    {
+      "nome": "bug (silent-failure-hunter)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/anthropics/claude-plugins-official",
+      "commit": "465f09344424225c25d438f2e052732c3d688d2f",
+      "arquivos_origem": ["plugins/pr-review-toolkit/agents/silent-failure-hunter.md"],
+      "usado_em": ".claude/skills/bug/"
+    },
+    {
+      "nome": "bug (legado)",
+      "tipo": "adaptado",
+      "origem": ".claude_legado",
+      "commit": "15a6ad1",
+      "arquivos_origem": [".claude_legado/skills/bug-documentation/SKILL.md"],
+      "usado_em": ".claude/skills/bug/"
+    },
     { "nome": "clone .tlc", "tipo": "referencia", "pasta": ".tlc", "origem": "https://github.com/tech-leads-club/agent-skills" },
     { "nome": "clone .superpowers", "tipo": "referencia", "pasta": ".superpowers", "origem": "https://github.com/obra/superpowers" },
     { "nome": "clone .speckit", "tipo": "referencia", "pasta": ".speckit", "origem": "https://github.com/github/spec-kit" },

@@ -15,7 +15,8 @@ Este projeto usa **fluxos de trabalho** em `.claude/skills/`. O ponto de entrada
 
 | Skill do superpowers | Quando |
 |---|---|
-| `systematic-debugging` | Teste falha de forma inesperada durante a construção |
+| `systematic-debugging` | Teste falha de forma inesperada durante a construção; causa raiz no fluxo de bug (fase 5) |
+| `test-driven-development` | Teste que falha antes da correção (fluxo de bug, fase 4) |
 | `using-git-worktrees` | Isolar a construção (fase 9) |
 | `verification-before-completion` | Antes de declarar qualquer fase concluída |
 | `finishing-a-development-branch` | Ao fim da validação (fase 10) |

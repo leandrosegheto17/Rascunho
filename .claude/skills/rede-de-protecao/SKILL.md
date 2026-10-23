@@ -10,6 +10,7 @@ Responde: **se eu quebrar algo, vou perceber?** A mudança só começa com a lin
 ## Pré-requisitos
 
 - `reconhecimento.md` da feature (comando da suíte, o que não tem teste) e o plano aprovado (`tasks.md` ou `design.md`, ou o plano inline).
+- Em correção de bug, a pasta é `.specs/bugs/<slug>/`, o plano é a causa e a correção prevista em `causa.md`, e o teste do bug (ainda vermelho) é a **falha esperada** da linha de base, não falha preexistente.
 - **Branch isolada já criada** para a mudança (ou crie agora, com `using-git-worktrees` se o usuário preferir worktree). Os testes de caracterização entram nessa branch.
 
 ## 1. Linha de base

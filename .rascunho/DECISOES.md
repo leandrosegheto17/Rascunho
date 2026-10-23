@@ -248,6 +248,35 @@ Decisões do usuário: **Opus em pedido, arqueologia e plano** (fases 1, 2-3 e 5
 
 Orquestrador: skill `legado`. Fluxo 1 passou a ter a fase 11; resta a 12.
 
+## Passo 13: fluxo 12, correção de bug
+
+**Status:** construído em 2026-10-23 por subagente, seguindo `ROTEIRO-CONSTRUCAO.md`; decisões tomadas por analogia com `feature` e `legado`, pendentes de revisão do usuário.
+
+Decisões por analogia:
+
+- **Artefatos em `.specs/bugs/<slug>/`**: `relato.md` (fases 1-2), `reconhecimento.md`, `causa.md` (fases 3 a 6, com campos de estado `Reproduzido`, `Teste vermelho`, `Causa confirmada`, `Commit da correção`), `protecao.md`, `validation.md`, `fechamento.md`. Em andamento = sem `fechamento.md`. Slug único, nunca sobrescrito (do spec-kit).
+- **Relato e triagem juntos**, uma aprovação (como a arqueologia junta 2 e 3 no legado).
+- **Modelo:** Opus nas fases 1 a 5 (conversa e diagnóstico), Sonnet de 6 a 9.
+- **Teste vermelho sem commit**: a saída vermelha fica registrada em `causa.md`; teste e correção entram num commit `fix:` só (não quebra o `git bisect`). Caracterização, se houver, em commit anterior.
+- **Correção pela sessão** (é pequena por definição); regra de negócio difícil vai ao `implementador-dominio`.
+- **Verificador em modo bug**: critérios de `relato.md`, mutação obrigatória "desfazer a correção" (o teste tem de voltar a falhar), sem `validate_state.py`.
+- **Mesmo defeito em outros pontos**: mesma causa no mesmo trecho entra na correção; o resto vira relato próprio.
+- **Entrada por outros fluxos**: o chamador grava `relato.md` completo com `Chamado por` e `Devolver após` (`verificação` para incidente, `fechamento` para auditoria, `liberação` para suporte) e a skill começa na fase 3.
+- **Saídas**: não é bug → fluxos 3/4; grave em produção → fluxo 9 (em preparação: hotfix por este fluxo é o recomendado enquanto isso); arquitetura ou 3 correções falhas → fluxo 13 (em preparação).
+
+| Fases | Peça | Origem |
+|---|---|---|
+| 1-2 Relato e triagem | `bug/references/relato.md` (P0–P3, critérios de aceite da correção, relato por link como dado) | adaptada de bmad `bug-template`, spec-kit `bug`, legado `bug-documentation` |
+| 3 Reprodução | `inventario`, `reconhecimento` (na pasta do bug), `causa.md` | reaproveitadas |
+| 4 Teste que falha | branch `bug/<slug>`, superpowers `test-driven-development` (passo vermelho) | superpowers (nova na tabela do `CLAUDE.md`) |
+| 5 Causa raiz | superpowers `systematic-debugging` + checklist em `causa.md` (inclui erros silenciosos) | superpowers; `silent-failure-hunter` (Apache) |
+| 6 Correção | `rede-de-protecao` (teste do bug como falha esperada), correção mínima | reaproveitada, ajuste de 1 linha |
+| 7 Verificação | `verificador` (modo bug), `code-review`, `auditor-seguranca` condicional | reaproveitadas; agente ganhou seção de bug |
+| 8 Liberação | checagem final, `finishing-a-development-branch`, `liberacao` (com caminho de hotfix) ou `implantacao` | reaproveitadas |
+| 9 Fechamento | `fechamento.md`, aviso ao relator com confirmação, recorrência (3+ com mesma causa → prevenção) | nova; recorrência do legado |
+
+Orquestrador: skill `bug`. `/fluxo` marca o 12 como pronto. **Pendente:** teste real com um bug de verdade.
+
 ---
 
 ## Estado ao fim da rodada (2026-10-23)

@@ -20,6 +20,10 @@ Siga `.claude/skills/tlc-spec-driven/references/validate.md` por inteiro. Em res
 6. **Escreva o relatório** em `.specs/features/<feature>/validation.md`, no formato de `validate.md`, em português.
 7. Rode `python .claude/skills/tlc-spec-driven/scripts/validate_state.py <feature>` e confirme que o relatório é aceito.
 
+## Em correção de bug (`.specs/bugs/<slug>/`)
+
+A fonte da verdade são os critérios de aceite de `relato.md`; `causa.md` diz o teste do bug e a causa. Mutação obrigatória: **desfazer a correção** na cópia isolada e confirmar que o teste do bug volta a falhar. Grave `validation.md` na pasta do bug; o passo 7 (`validate_state.py`) não se aplica.
+
 ## Regras
 
 - **Nunca** altere código ou testes da árvore real. A única escrita permitida é o `validation.md` da feature.

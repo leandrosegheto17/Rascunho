@@ -24,7 +24,8 @@ Usado por quem constrói um fluxo novo (sessão principal ou subagente). Os flux
 
 - Skill orquestradora `.claude/skills/<nome>/SKILL.md` (até ~150 linhas; `description` com o que faz, quando usar e quando **não** usar) e `references/fases.md` com o critério de cada fase. Modelos de documento em `references/`.
 - Trecho adaptado de terceiro: traduzido para o português, enxuto, com entrada `adaptado` em `.claude/fontes.json` (`origem`, `commit` do clone — `git -C <pasta> rev-parse HEAD` —, `arquivos_origem`, `usado_em`) e atribuição com licença em `references/ATRIBUICAO.md`. Do `.claude_legado`, só citar a origem.
-- Atualizar: linha do fluxo em `.claude/skills/fluxo/SKILL.md` (Situação **Pronto**, coluna "skill `<nome>`"); `.claude/rules/artefatos.md` se houver artefato novo em `.specs/`; tabela de skills do superpowers no `CLAUDE.md` se passar a usar uma nova; novo passo em `.rascunho/DECISOES.md` no formato dos passos 9 a 12 (decisões tomadas por analogia, tabela fases × peça × origem).
+- `CLAUDE.md` e `.claude/rules/`: não edite; descreva no relatório a mudança exata (texto pronto) e a sessão principal aplica.
+- Atualizar: linha do fluxo em `.claude/skills/fluxo/SKILL.md` (Situação **Pronto**, coluna "skill `<nome>`"); novo passo em `.rascunho/DECISOES.md` no formato dos passos 9 a 12 (decisões tomadas por analogia, tabela fases × peça × origem).
 
 ## 4. Verificar
 
