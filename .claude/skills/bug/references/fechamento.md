@@ -31,6 +31,6 @@ Grave também quando o bug para antes: não é bug, duplicado, inválido, não r
 ## Aprendizado
 
 - **Recorrente?** <não | sim: mesma causa em <slugs>>
-- **Prevenção**: <nenhuma | regra no contexto do projeto | lint | teste | refatoração (fluxo 13)>
+- **Prevenção**: <nenhuma | regra no contexto do projeto | lint | teste | refatoração (skill `refatoracao`)>
 - **Armadilha registrada no contexto do projeto**: <sim | não>
 ```

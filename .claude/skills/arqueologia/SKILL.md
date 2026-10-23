@@ -13,7 +13,7 @@ Rende melhor em **Opus**. Se a sessão estiver em outro modelo, avise: "A arqueo
 
 ## Pré-requisitos
 
-Rode antes, nesta ordem, se ainda não existirem: skill `inventario` (projeto) e skill `reconhecimento` (feature). A arqueologia **complementa** o reconhecimento com o que só o legado exige.
+Rode antes, nesta ordem, se ainda não existirem: skill `inventario` (projeto) e skill `reconhecimento` (feature). A arqueologia **complementa** o reconhecimento com o que só o legado exige. Em refatoração de trecho legado (skill `refatoracao`), a pasta é `.specs/refatoracoes/<slug>/` e as costuras servem para o código novo nascer ao lado do antigo.
 
 ## 1. Ambiente: o projeto roda?
 
@@ -46,7 +46,7 @@ Pergunte via `AskUserQuestion` (com "Ainda não sei"): existe **staging** ou só
 
 ## 7. Saída de emergência
 
-Se o impacto for alto demais (sem costura possível, raio enorme, nada roda), **pare** e pergunte via `AskUserQuestion`: refatorar antes (fluxo 13), construir a funcionalidade como serviço novo ao lado do legado (estrangular aos poucos), reduzir o escopo, ou seguir com o risco registrado.
+Se o impacto for alto demais (sem costura possível, raio enorme, nada roda), **pare** e pergunte via `AskUserQuestion`: refatorar antes (skill `refatoracao`), construir a funcionalidade como serviço novo ao lado do legado (estrangular aos poucos), reduzir o escopo, ou seguir com o risco registrado.
 
 ## 8. Gravar `arqueologia.md`
 

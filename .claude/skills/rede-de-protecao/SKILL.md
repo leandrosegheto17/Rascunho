@@ -11,6 +11,7 @@ Responde: **se eu quebrar algo, vou perceber?** A mudança só começa com a lin
 
 - `reconhecimento.md` da feature (comando da suíte, o que não tem teste) e o plano aprovado (`tasks.md` ou `design.md`, ou o plano inline).
 - Em correção de bug, a pasta é `.specs/bugs/<slug>/`, o plano é a causa e a correção prevista em `causa.md`, e o teste do bug (ainda vermelho) é a **falha esperada** da linha de base, não falha preexistente.
+- Em refatoração, a pasta é `.specs/refatoracoes/<slug>/` e a rede vem **antes** do plano: o que se caracteriza é o alvo de `refatoracao.md` e **todos** os contratos da seção "Contratos e acoplamento" do `reconhecimento.md`, porque a refatoração promete não mudar nada observável.
 - **Branch isolada já criada** para a mudança (ou crie agora, com `using-git-worktrees` se o usuário preferir worktree). Os testes de caracterização entram nessa branch.
 
 ## 1. Linha de base

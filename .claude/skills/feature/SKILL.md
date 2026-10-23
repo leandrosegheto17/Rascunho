@@ -62,7 +62,7 @@ Apresente o que foi produzido (caminho e 3 a 5 linhas) e o critério de passagem
 
 ## Regras
 
-- A feature segue as convenções do projeto. Refatoração vira outra tarefa (fluxo 13), nunca entra junto.
+- A feature segue as convenções do projeto. Refatoração vira outra tarefa (skill `refatoracao`, fluxo 13), nunca entra junto.
 - Diff pequeno e branch isolada.
 - Push, PR, deploy e alterações em banco de produção exigem confirmação específica.
 - Tudo em português.

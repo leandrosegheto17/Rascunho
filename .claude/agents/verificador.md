@@ -28,6 +28,10 @@ A fonte da verdade são os critérios de aceite de `relato.md`; `causa.md` diz o
 
 A fonte da verdade são os critérios de aceite de `revisao.md`; o código revisado está no worktree indicado no pedido. Siga o pedido de `.claude/skills/revisao-codigo/references/analise.md` (fase 5), na ordem: critérios, sensor, casos limite, **só então** `alegacoes.md` (descrição do autor, a falsificar), testes apagados, enfraquecidos ou que não contam. Grave `validation.md` na pasta da revisão; o passo 7 não se aplica.
 
+## Em refatoração (`.specs/refatoracoes/<slug>/`)
+
+A fonte da verdade é o **comportamento inalterado**: contratos do `reconhecimento.md`, `protecao.md` e a meta de `refatoracao.md`. Siga o pedido de `.claude/skills/refatoracao/references/verificacao.md` (testes intactos, suíte, contratos, sensor sobre o código refatorado, métrica e desempenho medidos de novo). Grave `validation-etapa-<N>.md` na pasta da refatoração; o passo 7 não se aplica.
+
 ## Regras
 
 - **Nunca** altere código ou testes da árvore real. A única escrita permitida é o `validation.md` da feature.

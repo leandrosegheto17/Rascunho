@@ -31,6 +31,6 @@ O chamador grava `relato.md` com relato e triagem completos (formato de `relato.
 - Não reproduz → mais dados, instrumentação, ou encerrar como não reproduzido. Nunca corrigir no escuro.
 - Teste passa de primeira → não reproduz o bug; refazer o teste (fase 4), nunca seguir.
 - Hipótese errada → nova hipótese, uma variável por vez; 3 correções falharam → questionar a arquitetura.
-- Causa é falha de arquitetura → parar e propor fluxo 13 (em preparação), ou contenção mínima com risco registrado.
+- Causa é falha de arquitetura → parar e propor a skill `refatoracao` (fluxo 13; a correção retoma na fase 6 depois dela), ou contenção mínima com risco registrado.
 - Verificador FAIL ou revisão com bloqueio → volta à fase 6 (até 3 rodadas; depois, escala ao usuário).
 - Monitoramento acusou problema na liberação → reverter e voltar à fase 5.

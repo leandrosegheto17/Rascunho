@@ -62,7 +62,7 @@ A **primeira linha que se aplica** define a fase (campos de `causa.md` conforme 
 - **Duplicado**: aponte para o bug original em `fechamento.md` e encerre.
 - **Grave em produção** (P0, ou P1 afetando usuários agora): o caminho certo é o fluxo 9. Pergunte via `AskUserQuestion`: **passar para a skill `incidente` (Recomendado)**, que contém e restaura primeiro, usa este `relato.md` na triagem e volta a esta pasta na correção definitiva; **seguir aqui com caminho de hotfix**, só se o dano já estiver contido e faltar apenas corrigir; ou parar.
 - **Não reproduz**: não corrija no escuro. Pergunte via `AskUserQuestion`: **pedir mais dados** ao relator (o que faltou, com sugestão), **instrumentar** (log ou diagnóstico temporário para colher evidência) ou **encerrar como não reproduzido** em `fechamento.md`.
-- **Causa é falha de arquitetura**, ou 3 tentativas de correção falharam: **pare**. Proponha refatoração (fluxo 13, **ainda em preparação**: conduzir manualmente pelo desenho) e pergunte via `AskUserQuestion`: refatorar antes, correção de contenção mínima com o risco e a refatoração registrados em `causa.md`, ou parar.
+- **Causa é falha de arquitetura**, ou 3 tentativas de correção falharam: **pare**. Proponha refatoração (skill `refatoracao`, fluxo 13) e pergunte via `AskUserQuestion`: refatorar antes (grave `.specs/refatoracoes/<slug>/refatoracao.md` com **Chamado por** `bug <slug>`, **Usar em** `causa.md` e o motivo, e acione a skill; a correção volta à fase 6 depois dela), correção de contenção mínima com o risco e a refatoração registrados em `causa.md`, ou parar.
 
 ### Liberação (fase 8)
 
@@ -78,7 +78,7 @@ A **primeira linha que se aplica** define a fase (campos de `causa.md` conforme 
 
 1. Grave `fechamento.md` (modelo em `references/fechamento.md`).
 2. **Avisar o relator:** redija a mensagem (o que foi corrigido, desde quando vale, o que fazer). Enviar é ação externa: confirme antes.
-3. **Recorrência:** procure em `.specs/bugs/*/causa.md` a mesma causa raiz. Em 3 ou mais bugs, é problema de processo ou de projeto: proponha uma ação de prevenção (regra no contexto do projeto, lint, teste de contrato, refatoração pelo fluxo 13).
+3. **Recorrência:** procure em `.specs/bugs/*/causa.md` a mesma causa raiz. Em 3 ou mais bugs, é problema de processo ou de projeto: proponha uma ação de prevenção (regra no contexto do projeto, lint, teste de contrato, refatoração pela skill `refatoracao`).
 4. Armadilha nova vai para o contexto do projeto (`CLAUDE.md` ou equivalente); mostre o diff.
 
 ## 5. Fechar a fase
@@ -88,7 +88,7 @@ Apresente o que foi produzido (caminho e 3 a 5 linhas) e o critério de passagem
 ## Regras
 
 - Nunca corrija sem reprodução e sem o teste vermelho pelo motivo certo.
-- Correção mínima; refatoração é outro fluxo (13). "Já que estou aqui" não entra.
+- Correção mínima; refatoração é outro fluxo (skill `refatoracao`). "Já que estou aqui" não entra.
 - O teste do bug fica na suíte para sempre. Nunca apague, pule ou enfraqueça teste para passar.
 - Não esconda o sintoma: `catch` vazio, valor padrão silencioso ou nova tentativa sem aviso não são correção.
 - Push, PR, deploy, banco de produção e aviso a terceiros exigem confirmação específica.

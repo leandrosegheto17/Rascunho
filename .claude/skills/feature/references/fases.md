@@ -14,7 +14,7 @@ Princípio: **entender o que já existe e não quebrar nada.** Projetos feitos c
 
 ## Laços comuns
 
-- Reconhecimento mostra mudança grande de arquitetura → refatorar antes (fluxo 13), reduzir escopo ou seguir com risco registrado.
+- Reconhecimento mostra mudança grande de arquitetura → refatorar antes (skill `refatoracao`, com **Chamado por** a feature; depois, reconhecimento refeito), reduzir escopo ou seguir com risco registrado.
 - Suíte já vermelha antes de começar → registrar falhas preexistentes ou corrigir antes (fluxo de bug).
 - Falha nova durante a implementação → `systematic-debugging`, correção na mesma tarefa.
 - Verificador FAIL ou revisão com bloqueio → tarefa de correção, volta à fase 5 (até 3 rodadas; depois, escala ao usuário).

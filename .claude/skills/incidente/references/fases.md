@@ -46,5 +46,5 @@ Se a medida de contenção já restaurou o serviço (ex.: reversão), a fase 3 s
 - Hipótese sem evidência → não é causa; nova hipótese, uma por vez. Evidência expirou → registre a lacuna, não preencha com suposição.
 - A skill `bug` não reproduz → instrumentar em produção (log ou métrica temporária, liberação confirmada) e voltar à fase 5.
 - Monitoramento acusou problema na liberação da correção → reverter (skill `liberacao`) e voltar à fase 5.
-- Mesma causa raiz em 2 incidentes ou mais → a prevenção é de processo ou de arquitetura (refatoração, fluxo 13), não só um teste.
+- Mesma causa raiz em 2 incidentes ou mais → a prevenção é de processo ou de arquitetura (refatoração, skill `refatoracao`), não só um teste.
 - Post-mortem com nome de pessoa como causa → reescrever pela condição que permitiu o erro.

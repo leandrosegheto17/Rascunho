@@ -9,7 +9,7 @@ Responde: **onde esta mudança entra, como o projeto já faz coisas parecidas, e
 
 ## Pré-requisitos
 
-- A spec da feature (`.specs/features/<feature>/spec.md`) ou, para outros fluxos, a descrição da mudança. Em correção de bug, a entrada é `.specs/bugs/<slug>/relato.md` e o arquivo vai para essa mesma pasta; a tabela de reaproveitamento pode ficar curta.
+- A spec da feature (`.specs/features/<feature>/spec.md`) ou, para outros fluxos, a descrição da mudança. Em correção de bug, a entrada é `.specs/bugs/<slug>/relato.md` e o arquivo vai para essa mesma pasta; a tabela de reaproveitamento pode ficar curta. Em refatoração, a entrada é `.specs/refatoracoes/<slug>/refatoracao.md` (alvo e meta) e o arquivo vai para essa pasta; a skill `refatoracao` acrescenta depois a seção de contratos e acoplamento.
 - Se `reconhecimento.md` já existir, confirme antes de refazer; se o código mudou desde a data dele, ofereça atualizar.
 
 ## 1. Contexto do projeto
@@ -44,7 +44,7 @@ Com o mapa, classifique:
 - **Arquitetura:** a feature cabe na estrutura atual, ou exige mudar camadas, modelo de dados central ou contratos usados por outras partes?
 - **Raio de impacto:** quantas partes do sistema dependem do que será alterado.
 
-**Escalonamento:** se a feature exige mudança grande de arquitetura, **pare** e pergunte via `AskUserQuestion`: refatorar antes (fluxo 13), reduzir o escopo da feature, ou seguir mesmo assim com o risco registrado.
+**Escalonamento:** se a feature exige mudança grande de arquitetura, **pare** e pergunte via `AskUserQuestion`: refatorar antes (skill `refatoracao`), reduzir o escopo da feature, ou seguir mesmo assim com o risco registrado.
 
 ## 5. Gravar `reconhecimento.md`
 

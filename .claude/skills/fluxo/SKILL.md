@@ -60,7 +60,7 @@ Se o usuário descreveu o que quer em texto livre (ex.: "o login quebrou"), esco
 | 10 | Sugestão de melhoria de terceiros | `sugestao` | Em preparação | — |
 | 11 | Solicitação de feature sob demanda | `pedido`, `solicitacao` | Em preparação | `tlc-spec-driven` |
 | 12 | Correção de bug | `bug`, `erro` | **Pronto** | skill `bug` |
-| 13 | Refatoração e dívida técnica | `refatorar`, `divida` | Em preparação | `leitor-codigo` |
+| 13 | Refatoração e dívida técnica | `refatorar`, `divida` | **Pronto** | skill `refatoracao` |
 | 14 | Documentar projeto existente | `documentar`, `docs` | Em preparação | `leitor-codigo` |
 | 16 | Auditoria de segurança | `seguranca`, `auditoria` | **Pronto** | skill `auditoria-seguranca` |
 | 17 | Prova de conceito (spike) | `spike`, `poc` | **Pronto** | skill `spike` |

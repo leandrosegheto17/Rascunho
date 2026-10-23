@@ -426,6 +426,40 @@ Decisões por analogia:
 
 Orquestrador: skill `revisao-codigo`. `/fluxo` marca o 24 como pronto. **Pendente:** teste real (ex.: um PR com um teste enfraquecido e uma alegação falsa plantados, percorrendo as 10 fases), e, quando o fluxo 27 for construído, conferir o contrato de entrada.
 
+## Passo 19: fluxo 13, refatoração e dívida técnica
+
+**Status:** construído em 2026-10-23 por subagente, seguindo `ROTEIRO-CONSTRUCAO.md`; decisões tomadas por analogia com `feature`, `legado`, `bug` e `escolha-tecnologia`, pendentes de revisão do usuário.
+
+Decisões por analogia:
+
+- **Artefatos em `.specs/refatoracoes/<slug>/`**: `refatoracao.md` (fases 1-2 e estado: **Motivo e meta aprovados**, **Modo**, **Plano aprovado**, **Métrica depois**, **Resultado**, como o `escolha.md` concentra o estado; também o contrato de entrada), `reconhecimento.md` (da skill `reconhecimento`, mais a seção **Contratos e acoplamento**), `arqueologia.md` (só em legado), `protecao.md`, `design.md` (modo grande) e `tasks.md` (tlc), `validation-etapa-<N>.md`, `seguranca.md` (se despachado), `integracao.md` (uma entrada por etapa). Em andamento = **Resultado** `pendente`. Revisão curta em `.specs/revisoes/refatoracao-<slug>-etapa-<N>/`.
+- **Dívida do projeto em `.specs/projeto/dividas.md`**, ao lado do inventário: inventário de dívidas com pontuação, situação (aberta, em andamento, paga) e prevenção em vigor. A fase 1 lê e grava; a 9 marca a paga e anota a que sobrou. Sem esse arquivo, "anotar a dívida remanescente" do desenho não teria onde morar além da pasta de uma refatoração.
+- **Pontuação própria e simples** (adaptada do `tech-debt`): juros, toque e risco de 1 a 3, divididos pelo esforço de 1 a 3. Custo em horas por mês, sem dinheiro. "Refatore o que vai ser tocado" vira a dimensão toque (commits em 6 meses e mudança planejada).
+- **Meta sem número não passa**: métrica medida antes, com comando ou contagem reproduzível, alvo e fora do escopo. Ferramenta de métrica não instalada não se instala sem confirmação.
+- **Etapas como unidade de integração** (modo pequeno = uma etapa; grande = várias, cada uma com branch, verificação e integração próprias): resolve "PRs pequenos e frequentes" do desenho sem uma pasta por etapa. Etapa atual = primeira sem entrada em `integracao.md`; as fases 6 a 8 se repetem por etapa.
+- **Modo pequeno ou grande** (como rigoroso ou enxuto na escolha de tecnologia): grande quando há muitos passos, várias partes, dados ou troca de framework, ou falta de testes possíveis no antigo; usa os padrões de estrangulamento do `legacy-migration-planner` (ramificar por abstração como padrão no mesmo deploy). Na dúvida, grande.
+- **Rede antes do plano** (como no legado): a refatoração promete não mudar nada observável, então a caracterização cobre **todos os contratos** do mapeamento, não só o trecho dos passos. Sem rede verde, não começa; sem testes possíveis, saída de emergência (infraestrutura de testes como etapa 0, ou reescrita ao lado com execução paralela, ou parar).
+- **Teste de caracterização quebrado = passo errado**: desfazer e refazer menor, nunca mudar o teste (regra do `CLAUDE.md`). Bug achado no caminho é anotado e vai para a skill `bug`, separado.
+- **Modelo:** Opus em 1-2 e 5 (decisão e plano); Sonnet em 3, 4 e 6 a 9 (a `arqueologia` avisa Opus por conta própria).
+- **Verificação:** `verificador` ganhou um **modo refatoração** (testes intactos, contratos iguais, sensor sobre o código refatorado, métrica e desempenho medidos de novo por quem não executou); depois, `revisao-codigo` em modo curto (fases 4, 7 e 8), como nos fluxos 3 e 4, com mudança de comportamento como bloqueante. `auditor-seguranca` condicional.
+- **Integração:** checagem final por etapa; `liberacao` quando o trecho é crítico ou a troca é por flag (sequência sombra, canário, ampliar, limpeza; limpeza com confirmação específica).
+- **Entrada por outros fluxos** (como `bug` e `spike`): `reconhecimento`/`feature`, `arqueologia`/`legado`, `bug` e `incidente` gravam `refatoracao.md` com **Chamado por**, **Usar em** e o motivo; as fases 1-2 viram uma confirmação; a skill vai até a fase 9 e devolve; o chamador refaz o próprio reconhecimento ou arqueologia, porque o código mudou.
+- **Ajustes em peças existentes:** `reconhecimento`, `rede-de-protecao` e `arqueologia` (uma linha cada, para a pasta da refatoração); `verificador` (modo refatoração); `bug`, `feature`, `legado`, `incidente` e as próprias `reconhecimento` e `arqueologia` passam a apontar para a skill `refatoracao` em vez de "fluxo 13 (em preparação)"; `/fluxo` marca o 13 como pronto.
+- `code-simplifier` e `writing-plans` só como ideia (não acionados): nada a registrar na tabela do `CLAUDE.md`.
+
+| Fases | Peça | Origem |
+|---|---|---|
+| 1-2 Motivo, alvo e meta | `refatoracao/references/motivo.md` (dor com evidência, custo em horas por mês, toque pelo git, inventário e pontuação de dívida, métricas e como medir, modelo de `refatoracao.md` = contrato de entrada, modelo de `dividas.md`) | adaptada do wshobson `tech-debt` (MIT) |
+| 3 Mapeamento | `inventario`, `reconhecimento`, `arqueologia` (legado) + `references/mapeamento.md` (quem depende, contratos observáveis, acoplamento por força, distância e volatilidade) | reaproveitadas; tlc `coupling-analysis` (MIT), BMAD `verification-gap` (MIT) |
+| 4 Rede de proteção | `rede-de-protecao` cobrindo todos os contratos; golden master; linha de base de desempenho | reaproveitada, ajuste de 1 linha; `testing-safety-nets` do `legacy-migration-planner` (CC-BY-4.0) |
+| 5 Plano em passos | `tlc-spec-driven` (Design no modo grande, Tasks) + `references/plano.md` (um tipo de mudança por passo, campos da tarefa, etapas, padrões de estrangulamento, execução paralela) | reaproveitada; tlc `legacy-migration-planner` (CC-BY-4.0) |
+| 6 Execução | `tlc-spec-driven` (Execute) com `implementador`/`implementador-dominio`, ciclo mudar-rodar-commitar | reaproveitada |
+| 7 Verificação | `verificador` (modo refatoração) com `references/verificacao.md`; `revisao-codigo` curta; `auditor-seguranca` condicional | reaproveitadas; agente ganhou seção |
+| 8 Integração | checagem final, `finishing-a-development-branch`, `liberacao` se crítico; `references/registro.md` | reaproveitadas |
+| 9 Registro | `references/registro.md` (meta comparada, contexto do projeto, inventário, `dividas.md`, prevenção) | nova; prevenção do `tech-debt` |
+
+Orquestrador: skill `refatoracao`. `/fluxo` marca o 13 como pronto. **Pendente:** teste real (ex.: uma função grande com regra duplicada num projeto de exemplo, percorrendo as 9 fases no modo pequeno) e, num segundo teste, uma etapa do modo grande com ramificar por abstração.
+
 ---
 
 ## Estado ao fim da rodada (2026-10-23)

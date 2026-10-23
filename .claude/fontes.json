@@ -258,6 +258,44 @@
       "arquivos_origem": ["plugins/developer-essentials/skills/code-review-excellence/SKILL.md"],
       "usado_em": ".claude/skills/revisao-codigo/"
     },
+    {
+      "nome": "refatoracao (wshobson tech-debt)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/wshobson/agents",
+      "commit": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+      "arquivos_origem": ["plugins/code-refactoring/commands/tech-debt.md"],
+      "usado_em": ".claude/skills/refatoracao/"
+    },
+    {
+      "nome": "refatoracao (tlc coupling-analysis)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/tech-leads-club/agent-skills",
+      "commit": "bc4f025632b0443ed3450aaec6fe96aec5b9a0c5",
+      "arquivos_origem": ["packages/skills-catalog/skills/(architecture)/coupling-analysis/SKILL.md"],
+      "usado_em": ".claude/skills/refatoracao/"
+    },
+    {
+      "nome": "refatoracao (tlc legacy-migration-planner)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/tech-leads-club/agent-skills",
+      "commit": "bc4f025632b0443ed3450aaec6fe96aec5b9a0c5",
+      "arquivos_origem": [
+        "packages/skills-catalog/skills/(architecture)/legacy-migration-planner/SKILL.md",
+        "packages/skills-catalog/skills/(architecture)/legacy-migration-planner/references/strangler-fig-patterns.md",
+        "packages/skills-catalog/skills/(architecture)/legacy-migration-planner/references/testing-safety-nets.md",
+        "packages/skills-catalog/skills/(architecture)/legacy-migration-planner/references/plan-phase.md",
+        "packages/skills-catalog/skills/(architecture)/legacy-migration-planner/references/assessment-framework.md"
+      ],
+      "usado_em": ".claude/skills/refatoracao/"
+    },
+    {
+      "nome": "refatoracao (bmad verification-gap)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/bmad-code-org/BMAD-METHOD",
+      "commit": "61e01f82644c4bb533750cfa0d6d61ab61d2cc9b",
+      "arquivos_origem": ["skills/bmad-build/review-prompts/verification-gap.md"],
+      "usado_em": ".claude/skills/refatoracao/"
+    },
     { "nome": "clone .tlc", "tipo": "referencia", "pasta": ".tlc", "origem": "https://github.com/tech-leads-club/agent-skills" },
     { "nome": "clone .superpowers", "tipo": "referencia", "pasta": ".superpowers", "origem": "https://github.com/obra/superpowers" },
     { "nome": "clone .speckit", "tipo": "referencia", "pasta": ".speckit", "origem": "https://github.com/github/spec-kit" },

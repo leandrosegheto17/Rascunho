@@ -19,7 +19,7 @@ Regras:
 - Métrica no ponto de risco do incidente, não só CPU e memória.
 - Cada ação com **responsável e prazo**, e realista (cabe no prazo). Ação de código segue o fluxo certo (skill `bug`, `feature` ou `legado`), com testes.
 - **Runbook**: se o incidente mostrou que faltava um roteiro, crie ou atualize `.specs/runbook.md` (modelo abaixo) e date a última verificação.
-- Mesma causa em 2 incidentes ou mais: ação de processo ou de arquitetura (refatoração, fluxo 13).
+- Mesma causa em 2 incidentes ou mais: ação de processo ou de arquitetura (refatoração, skill `refatoracao`).
 
 ### Modelo de `prevencao.md`
 

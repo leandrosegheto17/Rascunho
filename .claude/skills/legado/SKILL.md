@@ -57,7 +57,7 @@ Apresente o que foi produzido (caminho e 3 a 5 linhas) e o critério de passagem
 
 ## Regras
 
-- Mudança mínima no código antigo. Refatoração é outro fluxo (13).
+- Mudança mínima no código antigo. Refatoração é outro fluxo (skill `refatoracao`).
 - Testes de caracterização nunca são apagados para a feature passar: se um deles quebra, a feature mudou um comportamento existente, e isso precisa de decisão do usuário.
 - Push, PR, deploy e banco de produção exigem confirmação específica.
 - Tudo em português.

@@ -17,6 +17,6 @@ Princípio: **como mexer sem entender tudo e sem quebrar o que funciona há anos
 ## Laços comuns
 
 - Ambiente não roda → primeira tarefa é fazê-lo rodar; sem isso não há fase 4.
-- Impacto alto demais → refatorar antes (fluxo 13), serviço novo ao lado (estrangular aos poucos), reduzir escopo ou seguir com risco registrado.
+- Impacto alto demais → refatorar antes (skill `refatoracao`; depois, arqueologia refeita), serviço novo ao lado (estrangular aos poucos), reduzir escopo ou seguir com risco registrado.
 - Teste de caracterização quebrou → a feature mudou comportamento existente: decisão do usuário (ajustar a feature ou aceitar a mudança, registrando).
 - Monitoramento acusou problema na liberação → reverter, corrigir na fase 6.
