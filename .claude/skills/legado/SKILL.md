@@ -13,7 +13,7 @@ Princípio: **mexer sem entender tudo e sem quebrar o que funciona há anos.** O
 
 Liste `.specs/features/`. Em andamento são as que não têm `integracao.md`. Nenhuma: feature nova. Uma ou mais: pergunte via `AskUserQuestion` qual retomar, com a opção **Feature nova**.
 
-**Chamada por outro fluxo:** `spec.md` com **Chamado por** `integração <slug>` (skill `integracao-terceiros`) segue estas fases com os acréscimos de [composicao.md](../integracao-terceiros/references/composicao.md); na fase 8, leve à `liberacao` os itens de liberação do chamador. Ao gravar `integracao.md`, volte ao chamador.
+**Chamada por outro fluxo:** `spec.md` com **Chamado por** `integração <slug>` (skill `integracao-terceiros`) segue estas fases com os acréscimos de [composicao.md](../integracao-terceiros/references/composicao.md); na fase 8, leve à `liberacao` os itens de liberação do chamador. Com **Chamado por** `automação <slug>` (skill `automacao`), siga os acréscimos de [composicao.md](../automacao/references/composicao.md) e pare depois da integração da branch, sem a `liberacao`: ligar é a fase 8 do chamador. Ao gravar `integracao.md`, volte ao chamador.
 
 ## 2. Descobrir a fase
 

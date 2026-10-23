@@ -16,7 +16,7 @@ Liste `.specs/features/`. Features **em andamento** são as que não têm `integ
 - Nenhuma em andamento: é uma feature nova; siga para a fase 1.
 - Uma ou mais: pergunte via `AskUserQuestion` qual retomar, com a opção **Feature nova**.
 
-**Chamada por outro fluxo:** `spec.md` com **Chamado por** `integração <slug>` (skill `integracao-terceiros`) segue estas fases com os acréscimos de [composicao.md](../integracao-terceiros/references/composicao.md) (critérios de falha, reaproveitar resiliência, auditoria restrita no lugar do `auditor-seguranca` avulso). Ao gravar `integracao.md`, volte ao chamador.
+**Chamada por outro fluxo:** `spec.md` com **Chamado por** `integração <slug>` (skill `integracao-terceiros`) segue estas fases com os acréscimos de [composicao.md](../integracao-terceiros/references/composicao.md) (critérios de falha, reaproveitar resiliência, auditoria restrita no lugar do `auditor-seguranca` avulso). Com **Chamado por** `automação <slug>` (skill `automacao`), os acréscimos são os de [composicao.md](../automacao/references/composicao.md) (critérios `AUT-NN`, casos iguais ao manual, entrada inerte). Ao gravar `integracao.md`, volte ao chamador.
 
 ## 2. Descobrir a fase da feature
 

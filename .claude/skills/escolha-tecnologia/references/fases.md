@@ -22,7 +22,7 @@ As fases andam em blocos, cada um com uma aprovação (seguir / ajustar / parar)
 |---|---|---|---|
 | 1 Projeto novo | 7 Desenho (`tlc-spec-driven`, Design), decisão de stack difícil de reverter | decisão (ex.: banco, linguagem), restrições de `viabilidade-tecnica.md` (stack candidata, custo, volume) e da spec | tabela de decisões técnicas do `design.md` da feature, referenciando o `AD-NNN` |
 | 6 Integração | 2 Escolha do serviço | capacidade a integrar, volume, criticidade, LGPD, orçamento, reversibilidade sugerida e critérios sugeridos (contrato em `integracao-terceiros/references/composicao.md`) | campos **Fornecedor** e **Rota de saída** de `.specs/integracoes/<slug>/terceiro.md` |
-| 30 Automação | escolha da ferramenta | processo a automatizar, onde roda, custo aceitável | artefato de automação do fluxo 30 |
+| 30 Automação | 4 Ferramenta, quando há alternativas reais | escopo do processo, degraus da escada que restaram, onde roda, custo aceitável, reversibilidade sugerida (enxuto na maioria) e critérios sugeridos (contrato em `automacao/references/composicao.md`) | campos **Ferramenta**, **Onde mora** e **Como se testa** de `.specs/automacoes/<slug>/processo.md` |
 
 O chamador grava `escolha.md` com o que tem e aciona esta skill; as fases 1-2 completam o que falta e pedem uma confirmação (modo e critérios são sempre do usuário). A skill segue até a fase 9 e devolve ao chamador a opção escolhida, o caminho do ADR e o `AD-NNN`. Chamada pelo Design do `tlc-spec-driven`, a entrada `AD-NNN` já fica gravada aqui: o Design só a referencia, sem criar outra.
 

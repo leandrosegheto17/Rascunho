@@ -413,6 +413,14 @@
       ],
       "usado_em": ".claude/skills/integracao-terceiros/"
     },
+    {
+      "nome": "automacao (hookify writing-rules)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/anthropics/claude-plugins-official",
+      "commit": "465f09344424225c25d438f2e052732c3d688d2f",
+      "arquivos_origem": ["plugins/hookify/skills/writing-rules/SKILL.md"],
+      "usado_em": ".claude/skills/automacao/"
+    },
     { "nome": "clone .tlc", "tipo": "referencia", "pasta": ".tlc", "origem": "https://github.com/tech-leads-club/agent-skills" },
     { "nome": "clone .superpowers", "tipo": "referencia", "pasta": ".superpowers", "origem": "https://github.com/obra/superpowers" },
     { "nome": "clone .speckit", "tipo": "referencia", "pasta": ".speckit", "origem": "https://github.com/github/spec-kit" },
