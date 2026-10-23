@@ -56,7 +56,7 @@ Liste `.specs/demandas/` (skill `demandas`, painel). Em andamento são as do tip
 - **É bug** (a sugestão descreve algo que não funciona como definido): fases 4 a 6 `dispensada — é bug`; resposta curta ao autor (fase 7) e encaminhamento ao `bug` (fase 8), que faz a triagem dele.
 - **Falha de segurança ou vazamento relatado**: não espere a fase 2. Encaminhe já (fase 8, mapa de destinos: `bug` P0/P1 ou `incidente`) e só depois responda ao autor, sem detalhes da falha.
 - **É suporte** (dúvida de uso, a capacidade existe): **já atendida**; responda com o caminho (fase 7) e feche. Muitas dúvidas iguais são evidência de um problema de clareza: ofereça registrar uma sugestão interna (autor `equipe`, **Originada de**).
-- **É solicitação** (quem pede decide, paga ou cobra prazo): troque o **Tipo** e siga o fluxo 11 (em preparação: conduza pelo desenho dele, `.rascunho/FLUXO-SOLICITACAO-FEATURE.md`).
+- **É solicitação** (quem pede decide, paga ou cobra prazo): troque o **Tipo** e siga a skill `solicitacao` (fluxo 11) a partir da fase 2 dela.
 - **O destino devolveu sem fazer** (não é bug, não integrar, virou feature): a sugestão volta à fase 6 com o motivo; novo destino é novo encaminhamento.
 
 ## 5. Fechar a fase

@@ -488,6 +488,36 @@
       ],
       "usado_em": ".claude/skills/sugestao/"
     },
+    {
+      "nome": "solicitacao (tlc tlc-prd, CC-BY-4.0)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/tech-leads-club/agent-skills",
+      "commit": "bc4f025632b0443ed3450aaec6fe96aec5b9a0c5",
+      "arquivos_origem": [
+        "packages/skills-catalog/skills/(development)/tlc-prd/SKILL.md",
+        "packages/skills-catalog/skills/(development)/tlc-prd/references/document-format.md"
+      ],
+      "usado_em": ".claude/skills/solicitacao/"
+    },
+    {
+      "nome": "solicitacao (bmad ticket-template)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/bmad-code-org/BMAD-METHOD",
+      "commit": "61e01f82644c4bb533750cfa0d6d61ab61d2cc9b",
+      "arquivos_origem": ["skills/bmad-agent-po/assets/ticket-template.md"],
+      "usado_em": ".claude/skills/solicitacao/"
+    },
+    {
+      "nome": "solicitacao (legado: requirement-elicitation, effort-estimation)",
+      "tipo": "adaptado",
+      "origem": ".claude_legado",
+      "commit": "15a6ad1",
+      "arquivos_origem": [
+        ".claude_legado/skills/requirement-elicitation/SKILL.md",
+        ".claude_legado/skills/effort-estimation/SKILL.md"
+      ],
+      "usado_em": ".claude/skills/solicitacao/"
+    },
     { "nome": "clone .tlc", "tipo": "referencia", "pasta": ".tlc", "origem": "https://github.com/tech-leads-club/agent-skills" },
     { "nome": "clone .superpowers", "tipo": "referencia", "pasta": ".superpowers", "origem": "https://github.com/obra/superpowers" },
     { "nome": "clone .speckit", "tipo": "referencia", "pasta": ".speckit", "origem": "https://github.com/github/spec-kit" },

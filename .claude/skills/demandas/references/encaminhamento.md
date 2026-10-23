@@ -19,7 +19,7 @@ Escolha pelo que a demanda **pede de fato** (o problema), não pela palavra que 
 | documentação do projeto (instalar, integrar, contribuir) | `documentar` | `.specs/documentacao/<slug>/documentacao.md` (formato `documentar/references/objetivo.md`) com **Chamado por** `fluxo N .specs/demandas/DEM-NNN-<slug>` e o público | **Resultado** diferente de `pendente` |
 | falha de segurança relatada | `bug` (P0 ou P1), ou `incidente` se há exploração ou vazamento agora | `bug`: como acima, marcando no Relato que é segurança; `incidente`: acione já com as palavras do autor | `fechamento.md` · `incidente.md` com `Encerrado: sim` |
 | produto ou público novo, fora do propósito deste produto | `projeto-novo` (outro repositório) ou recusar por coerência | a ideia vai para a descoberta de outro projeto, com `encaminhamento.md` como ponto de partida | `decisao.md` do outro projeto |
-| pedido de quem decide e cobra, com prazo | fluxo 11 (solicitação, em preparação) | troque o **Tipo** para `solicitação`; enquanto o fluxo 11 não existe, conduza pelo desenho em `.rascunho/FLUXO-SOLICITACAO-FEATURE.md` ou pela `feature` | conforme o destino |
+| pedido de quem decide e cobra, com prazo | skill `solicitacao` (fluxo 11) | troque o **Tipo** para `solicitação` (linha no **Histórico**); ela começa na fase 2 com o que já foi registrado | conforme o destino |
 
 Ajuda na tela, texto, e-mail do produto e configuração são comportamento do produto: `feature`. Refatoração (`refatoracao`) raramente vem de demanda externa; quando a demanda revela estrutura que impede a mudança, é a `feature` ou o `legado` que chamam a refatoração.
 
@@ -61,7 +61,7 @@ Vai no repositório: **sem dado pessoal**. O autor aparece só como `PES-NNN` e,
 - **Menor versão que resolve**: <fatia combinada, se houver>
 ```
 
-Critérios de aceite são o **ponto de partida** do destino: a `feature` e o `legado` os reescrevem em EARS no Specify; o `bug`, nos critérios de correção do relato. Mudança de escopo durante o trabalho é decisão no destino, registrada lá.
+Critérios de aceite são o **ponto de partida** do destino: a `feature` e o `legado` os reescrevem em EARS no Specify; o `bug`, nos critérios de correção do relato. Mudança de escopo durante o trabalho é decisão no destino, registrada lá; na **solicitação**, os critérios levam o ID `CA-NN` confirmado pelo solicitante, e mudança de escopo vira demanda nova (skill `solicitacao`).
 
 ## Depois de acionar
 

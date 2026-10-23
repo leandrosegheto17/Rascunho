@@ -11,7 +11,7 @@
 | Tipo | Quem pede | Fluxo dono | Arquivo do fluxo |
 |---|---|---|---|
 | `sugestão` | usuário, cliente, parceiro, equipe, sem poder de decidir | 10, skill `sugestao` | `sugestao.md` |
-| `solicitação` | quem decide e cobra (cliente contratante, dono do produto, gestor) | 11 (em preparação) | `solicitacao.md` |
+| `solicitação` | quem decide e cobra (cliente contratante, dono do produto, gestor) | 11, skill `solicitacao` | `solicitacao.md` |
 | `suporte` | quem usa e traz um problema, dúvida ou reclamação | 32 (em preparação) | `suporte.md` |
 
 O tipo diz **como a demanda entrou**. O que ela **vira** (bug, feature, redesign...) é o destino do encaminhamento, registrado em **Ligação**. Um caso de suporte que traz uma ideia gera uma demanda nova do tipo `sugestão` com **Originada de** apontando para ele. Tipo trocado na triagem (ex.: "sugestão" de quem é cliente contratante e cobra prazo) muda com uma linha no **Histórico**.
@@ -51,7 +51,7 @@ Uma linha por demanda, em ordem de ID; a linha muda junto com `demanda.md`. **In
 ```markdown
 # DEM-NNN: <o que a pessoa quer, do ponto de vista dela>
 
-- **Tipo**: <sugestão | solicitação | suporte> · **Fluxo**: <skill `sugestao` (10) | fluxo 11 | fluxo 32>
+- **Tipo**: <sugestão | solicitação | suporte> · **Fluxo**: <skill `sugestao` (10) | skill `solicitacao` (11) | fluxo 32>
 - **Situação**: <...> · **Desde**: <AAAA-MM-DD> · **Revisitar em**: <— | data | gatilho>
 - **Recebida em**: <AAAA-MM-DD> · **Canal**: <e-mail | conversa | formulário | reunião | rede social | ferramenta de suporte | interno> · **Fonte**: <colado | link (host, aberto ou recusado) | relato do usuário>
 - **Autor**: PES-NNN (<papel>) · **Contato em**: <contatos.md local | <ferramenta externa> | sem contato (anônimo)>
