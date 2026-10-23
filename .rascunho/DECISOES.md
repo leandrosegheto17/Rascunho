@@ -248,6 +248,24 @@ Decisões do usuário: **Opus em pedido, arqueologia e plano** (fases 1, 2-3 e 5
 
 Orquestrador: skill `legado`. Fluxo 1 passou a ter a fase 11; resta a 12.
 
+---
+
+## Estado ao fim da rodada (2026-10-23)
+
+**Fluxos prontos (4 de 21):** 1 Projeto novo (fases 1 a 11), 2 Uso próprio, 3 Feature em projeto IA, 4 Feature em legado. `/fluxo` com menu em dois cliques e atalhos.
+
+**Testado de verdade:** fluxo 1 nas fases 1 a 6 (teste 1, arquivado em `.rascunho/teste-1-cuidados/`); scripts com 26 testes automatizados; trava de testes em uso nesta sessão.
+
+**Próximas rodadas:**
+
+1. Testar de ponta a ponta a construção, a verificação e a liberação (fluxos 1 a partir da fase 7, 3 e 4) num projeto real.
+2. Próximo fluxo sugerido: 12 Correção de bug; depois 24 Revisão de código.
+3. Fase 12 do fluxo 1 (operação e aprendizado).
+4. Confirmar o hook de atualizações numa sessão aberta do zero.
+5. Atualizar o superpowers para 7.x (via `/plugin`).
+6. Empacotar como plugin quando estável (rules viram skill ou hook).
+7. Antes de qualquer push deste repositório: `python .claude/scripts/trava-testes.py --rodar` (a trava exige o commit verde).
+
 Mudança em relação ao passo 1: as skills `brainstorming`, `writing-plans`, `executing-plans` e `subagent-driven-development` do superpowers **não** entram no fluxo 1, porque duplicariam `descoberta` e `tlc-spec-driven`. Do superpowers ficam `systematic-debugging`, `using-git-worktrees`, `verification-before-completion` e `finishing-a-development-branch`.
 
 ### Situação das dependências
