@@ -144,6 +144,37 @@
       ],
       "usado_em": ".claude/skills/spike/"
     },
+    {
+      "nome": "escolha-tecnologia (wshobson architecture-decision-records)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/wshobson/agents",
+      "commit": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+      "arquivos_origem": [
+        "plugins/documentation-generation/skills/architecture-decision-records/SKILL.md",
+        "plugins/documentation-generation/skills/architecture-decision-records/references/decision-templates.md"
+      ],
+      "usado_em": ".claude/skills/escolha-tecnologia/"
+    },
+    {
+      "nome": "escolha-tecnologia (bmad deep-recon technical)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/bmad-code-org/BMAD-METHOD",
+      "commit": "61e01f82644c4bb533750cfa0d6d61ab61d2cc9b",
+      "arquivos_origem": ["skills/bmad-deep-recon/types/technical.md"],
+      "usado_em": ".claude/skills/escolha-tecnologia/"
+    },
+    {
+      "nome": "escolha-tecnologia (legado: adr-drafting, tech-stack-selection, build-vs-buy-analysis)",
+      "tipo": "adaptado",
+      "origem": ".claude_legado",
+      "commit": "15a6ad1",
+      "arquivos_origem": [
+        ".claude_legado/skills/adr-drafting/SKILL.md",
+        ".claude_legado/skills/tech-stack-selection/SKILL.md",
+        ".claude_legado/skills/build-vs-buy-analysis/SKILL.md"
+      ],
+      "usado_em": ".claude/skills/escolha-tecnologia/"
+    },
     { "nome": "clone .tlc", "tipo": "referencia", "pasta": ".tlc", "origem": "https://github.com/tech-leads-club/agent-skills" },
     { "nome": "clone .superpowers", "tipo": "referencia", "pasta": ".superpowers", "origem": "https://github.com/obra/superpowers" },
     { "nome": "clone .speckit", "tipo": "referencia", "pasta": ".speckit", "origem": "https://github.com/github/spec-kit" },

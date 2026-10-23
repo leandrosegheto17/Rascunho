@@ -44,7 +44,7 @@ Despache pesquisas independentes em paralelo. Spikes só com aprovação do usu�
 
 ## 3. Esboçar a stack candidata
 
-Liste opções de stack que atendem às incertezas resolvidas, **sem fechar a escolha** (isso é da fase 7). Prefira tecnologia madura e conhecida pelo time.
+Liste opções de stack que atendem às incertezas resolvidas, **sem fechar a escolha** (isso é da fase 7, pela skill `escolha-tecnologia` quando a decisão for difícil de reverter). Prefira tecnologia madura e conhecida pelo time.
 
 ## 4. Veredito
 

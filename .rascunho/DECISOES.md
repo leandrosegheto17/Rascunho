@@ -333,6 +333,36 @@ Decisões por analogia:
 
 Orquestrador: skill `spike`. `/fluxo` marca o 17 como pronto. **Pendente:** teste real com uma pergunta de verdade (ex.: limite de uma API gratuita) e, quando os fluxos 25 e 6 forem construídos, conferir o contrato de entrada.
 
+## Passo 16: fluxo 25, escolha de tecnologia
+
+**Status:** construído em 2026-10-23 por subagente, seguindo `ROTEIRO-CONSTRUCAO.md`; decisões tomadas por analogia com `spike`, `bug` e o `tlc-spec-driven`, pendentes de revisão do usuário.
+
+Decisões por analogia:
+
+- **Artefatos em `.specs/escolhas/<slug>/`**: `escolha.md` (fases 1-2 e estado: `Reversibilidade`, `Modo`, `Critérios aprovados`, `Decisão`, `Registro`, como o `incidente.md` concentra o estado) e `avaliacao.md` (fases 3 a 8: opções, eliminação, comparativo, `Finalistas`, `Teste prático`, riscos e saída, justificativa). Em andamento = sem `Registro`. Spikes em `.specs/spikes/<pergunta>-<finalista>/`, como a skill `spike` já previa.
+- **Modo rigoroso ou enxuto pela reversibilidade** (do desenho: "reversibilidade pesa"; do tlc: só o difícil de reverter vira `AD-NNN`). Rigoroso: 3 a 5 opções, pesquisa em paralelo por opção, spike por finalista, ADR completo e `AD-NNN`. Enxuto: 2 a 3 opções, um pesquisador, sem spike, ADR leve, sem `AD-NNN`. A skill sugere; o usuário confirma. Na dúvida, rigoroso; dá para subir de modo no meio.
+- **Blocos de aprovação** (como o `spike`): rigoroso 1-2, 3-5, 6, 7-8, 9; enxuto 1-2, 3-5, 7-9. Lista curta confirmada antes da pesquisa por opção (evita pesquisa paga à toa).
+- **Modelo:** Opus em 1-5 e 7-8 (critérios, julgamento de evidência, decisão); Sonnet em 6 (a skill `spike` avisa por etapa) e 9 (registro). Enxuto pode seguir no modelo atual.
+- **Critérios congelados** na aprovação das fases 1-2, antes de citar opções (favorita declarada fica anotada à parte); mudar exige motivo e aprovação, como o critério do spike.
+- **Pesquisa no `pesquisador`**, que não pontua nem recomenda: a sessão dá as notas e o usuário escolhe. A sessão roda `date` e passa a data da consulta; toda evidência leva fonte e "consultado em" (o agente não tem relógio). Pedido com as 5 dimensões e os cuidados de frescor e de duas fontes do bmad.
+- **Teste prático pela skill `spike`**: pergunta, critério e prazo combinados uma vez e copiados para cada `spike.md`; um spike de cada vez; prazo estourado de um finalista é dado da comparação. Sem ponto incerto relevante, dispensa com motivo.
+- **Decisão do usuário** via `AskUserQuestion`, com a recomendação da sessão primeiro, fator decisivo nomeado e condição em que a escolha mudaria (do `build-vs-buy-analysis`). Empate: a mais simples e a mais reversível.
+- **ADR:** pasta de ADR do projeto, se existir (convenção do projeto vence, como na `feature`); senão `.specs/decisoes/ADR-NNN-<slug>.md`. MADR adaptado em português (completo) ou frase "no contexto de..." (leve). Imutável: troca por ADR que substitui.
+- **Compatível com o tlc sem duplicar:** o ADR é o registro completo; a entrada `AD-NNN` em `.specs/STATE.md` (formato do `memory.md` do tlc, só no rigoroso) é a restrição curta com o caminho do ADR. Chamada pelo Design do tlc, a entrada já existe e o `design.md` só a referencia. Substituição vale nos dois: ADR novo e `AD-NNN` novo com `superseded by`.
+- **Entrada por outros fluxos** (como `bug` e `spike`): o chamador grava `escolha.md` com **Chamado por** e **Usar em**; as fases 1-2 viram uma confirmação (modo e critérios são do usuário); a skill vai até a fase 9 e devolve opção, ADR e `AD-NNN`. Chamadores: fluxo 1 (fase 7, stack), 6 (fornecedor), 30 (ferramenta).
+- **Ajustes em peças existentes:** `projeto-novo` (fase 7 aciona a escolha para stack difícil de reverter), `viabilidade-tecnica` (a stack candidata fecha na fase 7 pela escolha), `spike/references/fases.md` (**Usar em** aponta para `avaliacao.md`).
+- `the-jury` não entra (caro: 3 a 5 subagentes por decisão); só a ideia de pré-mortem nos riscos.
+
+| Fases | Peça | Origem |
+|---|---|---|
+| 1-2 Decisão e critérios | `escolha-tecnologia/references/criterios.md` (decisão, reversibilidade e modo, eliminatórios, desejáveis com peso e requisito que motiva; modelo de `escolha.md`, que é também o contrato de entrada) | nova; legado `tech-stack-selection` |
+| 3-5 Opções, eliminação, avaliação | agente `pesquisador` (panorama, depois um por opção em paralelo) com os pedidos de `references/avaliacao.md`; comparativo ponderado pela sessão | reaproveitada; bmad `deep-recon/types/technical.md` (MIT) |
+| 6 Teste prático | skill `spike`, um por finalista, critério e prazo idênticos | reaproveitada |
+| 7-8 Riscos, saída e decisão | `references/decisao.md` (dependência, custo de migrar, projeto morrer, plano B, pré-mortem; fator decisivo e condição de mudança) | nova; legado `build-vs-buy-analysis` |
+| 9 Registro | `references/decisao.md` (ADR completo e leve, local, numeração, imutabilidade, `AD-NNN` do tlc) | adaptada do wshobson `architecture-decision-records` (MIT) e legado `adr-drafting` |
+
+Orquestrador: skill `escolha-tecnologia`. `/fluxo` marca o 25 como pronto. **Pendente:** teste real com uma escolha de verdade (ex.: banco de um projeto do fluxo 1 na fase 7) e, quando os fluxos 6 e 30 forem construídos, conferir o contrato de entrada.
+
 ---
 
 ## Estado ao fim da rodada (2026-10-23)

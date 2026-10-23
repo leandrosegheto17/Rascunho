@@ -20,7 +20,7 @@ As fases andam em quatro blocos, cada um com uma aprovação (seguir / ajustar /
 | Chamador | Em que fase dele | O que ele grava em `spike.md` | Usar em |
 |---|---|---|---|
 | 1 Projeto novo (`viabilidade-tecnica`) | 4 (incerteza que só testando se sabe) | pergunta, dimensão da incerteza, por que importa | linha da incerteza em `.specs/produto/viabilidade-tecnica.md` |
-| 25 Escolha de tecnologia | 6 (teste prático), **um spike por finalista** | pergunta, finalista, critério e prazo **iguais para todos os finalistas** | comparativo do fluxo 25 |
+| 25 Escolha de tecnologia | 6 (teste prático), **um spike por finalista** | pergunta, finalista, critério e prazo **iguais para todos os finalistas** | seção Teste prático de `.specs/escolhas/<slug>/avaliacao.md` |
 | 6 Integração | contrato no sandbox do fornecedor | pergunta sobre o contrato (formato, limites, erros, autenticação) | artefato de integração do fluxo 6 |
 
 O chamador grava `spike.md` com o que tem e aciona esta skill; a preparação completa o que falta e pede uma confirmação. A skill segue até a fase 8 e devolve ao chamador o caminho de `registro.md`, o veredito e a confiança. Spikes comparativos (fluxo 25): slug `<pergunta>-<finalista>`, critério copiado sem alteração, para que os resultados sejam comparáveis.
