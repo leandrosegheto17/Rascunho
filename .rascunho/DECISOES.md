@@ -683,6 +683,36 @@ Decisões por analogia:
 
 Orquestrador: skill `redesign`. `/fluxo` marca o 7 como pronto. **Pendente:** teste real (ex.: um app web de exemplo com 4 telas — lista, detalhe, formulário com validação, painel —, Playwright instalado, percorrendo as 10 fases com a flag por rota, os testes de comportamento nas duas posições, a comparação visual calibrada na primeira tela e uma violação crítica de acessibilidade plantada para a fase 9 achar; é também o primeiro uso do `comparar-visual.mjs` com navegador).
 
+## Passo 26: fluxo 8, projeto de aprendizado
+
+**Status:** construído em 2026-10-23 por subagente, seguindo `ROTEIRO-CONSTRUCAO.md`; decisões tomadas por analogia com `spike`, `necessidade` e `redesign`, pendentes de revisão do usuário.
+
+Decisões por analogia:
+
+- **Artefatos em `.specs/aprendizado/<slug>/`**: `plano.md` (fases 1 a 4: objetivos `O-1` a `O-3` com **Como vou provar**, **Prazo**, **Extensão**, ponto de partida, fontes com data e versão, veículo, fatias, **Fora do objetivo**, **Onde mora o código**, **Objetivos aprovados**, **Plano aprovado**), `diario.md` (fase 5: tabela de fatias com situação, degrau máximo, **Código mostrado** e se explicou; uma seção por fatia), `verificacao.md` (fase 6, **Resultado**), `notas.md` (fases 7-8, **Destino**, **Revisitar em**). Em andamento = `notas.md` sem **Destino**. Os `.md` ficam no repositório da sessão; o **código do veículo nunca** fica no repositório de um produto (padrão: pasta de estudos própria, com git próprio opcional). Diferente do spike, o código não vai para `.specs/` porque é do usuário e pode ser arquivado para consulta.
+- **Cinco aprovações para oito fases** (1-2, 3-4, 5, 6, 7-8), como os blocos do spike: objetivo e ponto de partida são uma conversa só; fontes e veículo dependem um do outro (o projeto de referência inspira o veículo). Na fase 5, cada fatia fecha com uma pergunta de próximo passo (próxima, reforçar, verificação, parar) e a aprovação da fase vem com a última fatia.
+- **Tutora, não autora**: na fase 5 a sessão não usa Edit nem Write nos arquivos do veículo; lê, roda para conferir, pergunta, aponta arquivo e linha, sugere quebrar de propósito e pede explicação com as próprias palavras. **Escada de ajuda** em 5 degraus (pergunta, onde olhar, conceito em palavras, pseudocódigo ou contexto análogo, exemplo mínimo), um por vez e só depois de uma tentativa. **Código só em três casos**, todos registrados na coluna **Código mostrado**: exemplo mínimo no degrau 5 (análogo, não a solução), pedido explícito do usuário (atendido sem sermão, seguido de explicação do trecho) e **andaime** listado na fase 4 como fora do objetivo (ideia do `learning-output-style`, ao contrário dele: a lógica é sempre do usuário). Fatias com código mostrado ou degrau 4-5 são as preferidas para refazer na verificação.
+- **Uma pergunta por vez e pare depois dela** (do `learning-opportunities` e da postura do `brainstorming`, que não é acionado). Resposta errada recebe correção direta. **Conflito com a regra de perguntas do `CLAUDE.md` resolvido assim**: o exercício passa pela caixa de `AskUserQuestion`, mas com palpites plausíveis em ordem qualquer, **sem "(Recomendado)"** (marcar a recomendada entregaria a resposta); pedidos de explicação oferecem ações (explicar agora, quero uma dica, ainda não sei). Proposta de exceção de uma linha para o `CLAUDE.md`.
+- **Ciclo da fatia** (fase 5): recordação da fatia anterior sem consulta (espaçamento), apresentar com onde ler na fonte, o usuário tenta primeiro, ajuda pela escada, revisão do que ele escreveu, quebrar de propósito com previsão, explicar com as próprias palavras, registrar. Fecha quando **funciona e foi explicada**. Testes como objetivo: a fatia começa pelo teste que o usuário escreve.
+- **Objetivos verificáveis**: verbo observável e **Como vou provar** sem consulta, decididos na fase 1; é contra eles que a fase 6 avalia. Maior risco de não entender vai cedo na ordem das fatias.
+- **Fontes** (fase 3) pelo `pesquisador`: documentação oficial, um tutorial ou curso, um projeto de referência (último commit e licença), com data da consulta e versão; no máximo 4 fontes no total, cada uma ligada a um objetivo.
+- **Verificação** (fase 6) em três partes, **sem ensinar durante a avaliação**: refazer sem consulta (padrão: a fatia com mais ajuda), explicação como se ensinasse (escrita pelo usuário), perguntas por objetivo (por quê, e se, transferência, análise de erro). Escala atingido / parcial / não atingido com evidência; parcial volta à fase 5 com uma fatia de reforço (o **Resultado** volta a `pendente`) ou vira lacuna.
+- **Prazo** como no spike: data fixa, conferida a cada retomada; vencido ou objetivo atingido antes → verificação com o que há (recomendado), fatias restantes `cortada`; no máximo uma extensão.
+- **Decisão final** (fase 8): arquivar (código na pasta, para consulta), aprofundar (estudo `<slug>-2` a partir das lacunas), **aproveitar como base** (regra de promoção do spike: abrir `uso-proprio`, `projeto-novo` ou `feature` com `notas.md` como entrada, reescrita com testes, código de estudo não copiado) ou descartar (com confirmação do que será apagado). Recomendada pelo resultado da verificação.
+- **Exceção à regra de testes** só enquanto o código é de estudo (já prevista no `CLAUDE.md`). Publicar o veículo é ação externa no repositório dele.
+- **Modelo:** Opus em 1-4 (objetivos e escopo) e 6 (avaliação); **Sonnet na 5**, a conversa mais longa, sobre tecnologia documentada, com Opus sugerido só para uma fatia em que a explicação não assenta depois de duas tentativas ou de conceito profundo; Sonnet em 7-8.
+- **Ajustes em peças existentes:** só `/fluxo` (8 pronto, atalho `aprendizado`). Nenhum agente novo: o `pesquisador` serve como está; quem avalia é a sessão (subagente não pode perguntar ao usuário).
+
+| Fases | Peça | Origem |
+|---|---|---|
+| 1-2 Objetivo e ponto de partida | `aprendizado/references/plano.md` (perguntas, objetivos com prova, prazo, maior risco, modelo de `plano.md`) | nova; postura do `brainstorming` |
+| 3-4 Fontes e veículo | agente `pesquisador` com o pedido de `plano.md` + conversa (2 ou 3 veículos, fatias, fora do objetivo, onde mora o código) | reaproveitada; nova |
+| 5 Construção guiada | `references/tutoria.md` (pergunte e pare, ciclo da fatia, escada de ajuda, quando mostrar código, exercícios, modelo de `diario.md`) | adaptada do tlc `learning-opportunities` (CC-BY-4.0 no frontmatter, repositório MIT); `learning-output-style` (Apache 2.0) só referência |
+| 6 Verificação | `references/verificacao.md` (refazer sem consulta, ensinar, perguntas por objetivo, escala, modelo) | nova; tipos de pergunta do `learning-opportunities` |
+| 7-8 Registro e decisão final | `references/registro.md` (notas nas palavras do usuário, revisitar em, destino, modelo de `notas.md`) | nova; promoção como no `spike` |
+
+Orquestrador: skill `aprendizado`. `/fluxo` marca o 8 como pronto. Bloom e learn-faster-kit (`.awesome`) ficaram só como ponteiros. **Pendente:** teste real (ex.: aprender FastAPI com autenticação por token em uma semana, veículo "lista de leituras pessoal" em 4 fatias, conferindo que a sessão não edita o veículo, que um pedido explícito de código fica registrado e que a fase 6 não dá respostas).
+
 ---
 
 ## Estado ao fim da rodada (2026-10-23)

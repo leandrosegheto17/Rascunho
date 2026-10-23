@@ -30,6 +30,7 @@ Este projeto usa **fluxos de trabalho** em `.claude/skills/`. O ponto de entrada
 - **Pergunta aberta** (sem opções naturais): ofereça uma sugestão plausível, quando houver, e a opção **"Ainda não sei"**, que registra o ponto como `[A ESCLARECER]` no artefato. O usuário descreve a resposta dele em "Other".
 - **Subagentes nunca perguntam ao usuário** (não têm como). Quando precisarem de uma decisão, param e devolvem no relatório uma seção "Perguntas para o usuário"; a sessão principal faz as perguntas via `AskUserQuestion` e repassa as respostas.
 - Até 4 perguntas por chamada, as de maior impacto primeiro. Cada opção tem rótulo curto e uma descrição do que acontece se for escolhida. A recomendada vem primeiro, com "(Recomendado)" no rótulo.
+- **Exceção nos exercícios do fluxo 8 (aprendizado):** a pergunta continua na caixa de `AskUserQuestion`, mas as opções são palpites possíveis em ordem qualquer, sem "(Recomendado)" e sem indicar a certa; pedidos de explicação oferecem ações (explicar agora, quero uma dica, ainda não sei).
 - Nunca faça pergunta só em texto corrido esperando resposta digitada.
 
 ## Aprovação

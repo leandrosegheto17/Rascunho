@@ -55,7 +55,7 @@ Se o usuário descreveu o que quer em texto livre (ex.: "o login quebrou"), esco
 | 5 | Performance e escala | `performance`, `lento` | **Pronto** | skill `performance` |
 | 6 | Integração com terceiros | `integracao`, `api` | **Pronto** | skill `integracao-terceiros` |
 | 7 | Redesign de interface | `redesign`, `visual` | **Pronto** | skill `redesign` |
-| 8 | Aprendizado | `estudo`, `aprender` | Em preparação | — |
+| 8 | Aprendizado | `estudo`, `aprender`, `aprendizado` | **Pronto** | skill `aprendizado` |
 | 9 | Investigação de incidentes | `incidente`, `caiu` | **Pronto** | skill `incidente` |
 | 10 | Sugestão de melhoria de terceiros | `sugestao` | Em preparação | — |
 | 11 | Solicitação de feature sob demanda | `pedido`, `solicitacao` | Em preparação | `tlc-spec-driven` |

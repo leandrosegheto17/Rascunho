@@ -455,6 +455,17 @@
       ],
       "usado_em": ".claude/skills/redesign/, .claude/skills/mockup-visual/ e .claude/scripts/comparar-visual.mjs"
     },
+    {
+      "nome": "aprendizado (tlc learning-opportunities, CC-BY-4.0)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/tech-leads-club/agent-skills",
+      "commit": "bc4f025632b0443ed3450aaec6fe96aec5b9a0c5",
+      "arquivos_origem": [
+        "packages/skills-catalog/skills/(learning)/learning-opportunities/SKILL.md",
+        "packages/skills-catalog/skills/(learning)/learning-opportunities/references/PRINCIPLES.md"
+      ],
+      "usado_em": ".claude/skills/aprendizado/"
+    },
     { "nome": "clone .tlc", "tipo": "referencia", "pasta": ".tlc", "origem": "https://github.com/tech-leads-club/agent-skills" },
     { "nome": "clone .superpowers", "tipo": "referencia", "pasta": ".superpowers", "origem": "https://github.com/obra/superpowers" },
     { "nome": "clone .speckit", "tipo": "referencia", "pasta": ".speckit", "origem": "https://github.com/github/spec-kit" },
