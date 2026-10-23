@@ -96,6 +96,35 @@
       "arquivos_origem": [".claude_legado/skills/bug-documentation/SKILL.md"],
       "usado_em": ".claude/skills/bug/"
     },
+    {
+      "nome": "incidente (wshobson incident-response)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/wshobson/agents",
+      "commit": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+      "arquivos_origem": [
+        "plugins/incident-response/skills/postmortem-writing/SKILL.md",
+        "plugins/incident-response/skills/postmortem-writing/references/details.md",
+        "plugins/incident-response/skills/incident-runbook-templates/SKILL.md",
+        "plugins/incident-response/skills/incident-runbook-templates/references/details.md"
+      ],
+      "usado_em": ".claude/skills/incidente/"
+    },
+    {
+      "nome": "incidente (bmad codebase-historian)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/bmad-code-org/BMAD-METHOD",
+      "commit": "61e01f82644c4bb533750cfa0d6d61ab61d2cc9b",
+      "arquivos_origem": ["skills/bmad-deep-recon/references/codebase-historian.md"],
+      "usado_em": ".claude/skills/incidente/"
+    },
+    {
+      "nome": "incidente (legado)",
+      "tipo": "adaptado",
+      "origem": ".claude_legado",
+      "commit": "15a6ad1",
+      "arquivos_origem": [".claude_legado/skills/observability-setup/SKILL.md"],
+      "usado_em": ".claude/skills/incidente/"
+    },
     { "nome": "clone .tlc", "tipo": "referencia", "pasta": ".tlc", "origem": "https://github.com/tech-leads-club/agent-skills" },
     { "nome": "clone .superpowers", "tipo": "referencia", "pasta": ".superpowers", "origem": "https://github.com/obra/superpowers" },
     { "nome": "clone .speckit", "tipo": "referencia", "pasta": ".speckit", "origem": "https://github.com/github/spec-kit" },

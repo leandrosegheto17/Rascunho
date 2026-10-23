@@ -277,6 +277,35 @@ Decisões por analogia:
 
 Orquestrador: skill `bug`. `/fluxo` marca o 12 como pronto. **Pendente:** teste real com um bug de verdade.
 
+## Passo 14: fluxo 9, investigação de incidentes
+
+**Status:** construído em 2026-10-23 por subagente, seguindo `ROTEIRO-CONSTRUCAO.md`; decisões tomadas por analogia com `bug`, `feature` e `legado`, pendentes de revisão do usuário.
+
+Decisões por analogia:
+
+- **Artefatos em `.specs/incidentes/<AAAA-MM-DD>-<slug>/`**: `incidente.md` (fases 1 a 3, registro vivo com campos de estado `Veredito da triagem`, `Contido`, `Estável`, `Encerrado`, e tabelas de evidências, ações e comunicações), `evidencias/`, `linha-do-tempo.md`, `causa-raiz.md` (`Causa confirmada`), `correcao.md` (`Em produção`), `prevencao.md`, `postmortem.md` (`Status: final`), `comunicacao.md`. Em andamento = sem `Encerrado: sim`. O encerramento mora no `incidente.md` para servir também às saídas antecipadas (não é incidente, duplicado, parado).
+- **Severidade P0–P3, a mesma do `bug`** (não a SEV1–SEV4 do wshobson): a triagem do incidente vira o `relato.md` do bug sem tradução. P3 não é incidente: vai para a skill `bug`.
+- **Urgência nas fases 1 a 3:** sem pedido de troca de modelo (emergência não espera), perguntas curtas, registro enquanto age; aprovação de fase com rótulos da emergência (contido / outra medida / parar). **Cada ação em produção com confirmação específica** (o que, onde, como desfazer), separada da aprovação da fase. Fases 4, 5 e 7 em Opus; 6, 8 e 9 em Sonnet.
+- **Evidências antes de mexer**, em minutos; se a cópia atrasar a contenção com dano grave em curso, pergunta-se. Evidência com dado pessoal ou segredo fica fora do git.
+- **Código novo na restauração só pela skill `bug`** (hotfix): a regra de testes vale na emergência. Reverter, flag e reinício não precisam.
+- **Caminho de segurança** (do desenho): isolar sem destruir, evidência forense, trocar credenciais, relógio da LGPD, só então restaurar; `auditor-seguranca` na causa raiz.
+- **Correção definitiva (fase 6) pela skill `bug`**, com `relato.md` gravado pelo incidente (`Chamado por: incidente <id>`, `Devolver após: verificação`); o incidente faz checagem final, integração e `liberacao`. Comportamento novo vai a `feature`/`legado`; configuração com checagem automatizada; causa externa vai direto à prevenção. Vindo do `bug` ("grave em produção"), o incidente reusa a mesma pasta do bug.
+- **Prevenção obrigatória** (ao menos uma ação de prevenção e uma de detecção, ou motivo), cada uma com responsável e prazo; alerta acionável com disparo testado (do `observability-setup` do legado). Runbook do projeto em `.specs/runbook.md`, criado ou atualizado quando o incidente mostrar a falta; consultado na triagem.
+- **LGPD:** relógio iniciado na triagem (data e hora do conhecimento), porque o prazo de comunicação à ANPD é curto e não pode esperar a fase 9. Regra citada (LGPD art. 48, Resolução CD/ANPD nº 15/2024, 3 dias úteis) marcada `PREMISSA`, conferida pelo `pesquisador` na hora. A skill junta o material; a decisão é humana (controlador, encarregado, jurídico); operador avisa o cliente controlador. Incidente com LGPD em avaliação não se encerra.
+- **Skill `bug` atualizada:** a saída "grave em produção" recomenda a skill `incidente`; hotfix direto só com o dano já contido.
+
+| Fases | Peça | Origem |
+|---|---|---|
+| 1-3 Triagem, contenção, restauração | `incidente/references/resposta.md` (perguntas de triagem, P0–P3, classificação por sintoma, menu de medidas reversíveis, evidências, caminho de segurança, modelo de `incidente.md`); reversão pela `liberacao`; código novo pela `bug` | nova; adaptada do wshobson `incident-runbook-templates` (MIT) |
+| 4 Linha do tempo | `references/analise.md` + `leitor-codigo` (git, deploys) | nova; técnica do bmad `codebase-historian` (MIT) |
+| 5 Causa raiz | superpowers `systematic-debugging` + 5 porquês, gatilho × causa sistêmica, sem culpa; `pesquisador` (terceiros), `auditor-seguranca` (segurança) | reaproveitadas; wshobson `postmortem-writing` (MIT) |
+| 6 Correção definitiva | skill `bug` (entra na fase 3, devolve após verificação), checagem final, `finishing-a-development-branch`, `liberacao`; `correcao.md` | reaproveitadas |
+| 7 Prevenção | `references/postmortem.md` (prevenção, detecção, mitigação; runbook) | nova; wshobson + legado `observability-setup` |
+| 8 Post-mortem | `references/postmortem.md` (sem culpa, completo ou curto) | adaptada do wshobson `postmortem-writing` (MIT) |
+| 9 Comunicação | `references/comunicacao.md` (avisos durante e depois, LGPD/ANPD com avaliação humana) | nova; modelos de aviso do wshobson |
+
+Orquestrador: skill `incidente`. `/fluxo` marca o 9 como pronto. **Pendente:** teste real (pode ser um simulado: derrubar uma aplicação de teste e percorrer as 9 fases) e revisão humana da seção de LGPD.
+
 ---
 
 ## Estado ao fim da rodada (2026-10-23)

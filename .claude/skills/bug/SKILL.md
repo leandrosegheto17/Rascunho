@@ -60,7 +60,7 @@ A **primeira linha que se aplica** define a fase (campos de `causa.md` conforme 
 
 - **Não é bug** (o sistema faz o que foi definido): é pedido de feature. Grave `fechamento.md` com o motivo e ofereça o fluxo 3 (`feature`) ou 4 (`legado`).
 - **Duplicado**: aponte para o bug original em `fechamento.md` e encerre.
-- **Grave em produção** (P0, ou P1 afetando usuários agora): o caminho certo é o fluxo 9 (Incidente), **ainda em preparação**. Pergunte via `AskUserQuestion`: **seguir aqui com caminho de hotfix (Recomendado enquanto o fluxo 9 não existe)**, conduzir o incidente manualmente pelo `.rascunho/FLUXO-INCIDENTE.md`, ou parar. Contenção (reverter a última liberação, desligar a flag) pode vir antes da causa raiz, com confirmação específica.
+- **Grave em produção** (P0, ou P1 afetando usuários agora): o caminho certo é o fluxo 9. Pergunte via `AskUserQuestion`: **passar para a skill `incidente` (Recomendado)**, que contém e restaura primeiro, usa este `relato.md` na triagem e volta a esta pasta na correção definitiva; **seguir aqui com caminho de hotfix**, só se o dano já estiver contido e faltar apenas corrigir; ou parar.
 - **Não reproduz**: não corrija no escuro. Pergunte via `AskUserQuestion`: **pedir mais dados** ao relator (o que faltou, com sugestão), **instrumentar** (log ou diagnóstico temporário para colher evidência) ou **encerrar como não reproduzido** em `fechamento.md`.
 - **Causa é falha de arquitetura**, ou 3 tentativas de correção falharam: **pare**. Proponha refatoração (fluxo 13, **ainda em preparação**: conduzir manualmente pelo desenho) e pergunte via `AskUserQuestion`: refatorar antes, correção de contenção mínima com o risco e a refatoração registrados em `causa.md`, ou parar.
 

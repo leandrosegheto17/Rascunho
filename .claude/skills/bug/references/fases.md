@@ -27,7 +27,7 @@ O chamador grava `relato.md` com relato e triagem completos (formato de `relato.
 ## Laços comuns
 
 - Triagem diz "não é bug" → fechamento com o motivo; pedido de feature pelos fluxos 3 ou 4.
-- Grave em produção → fluxo 9 (em preparação); enquanto isso, hotfix por este fluxo, com contenção antes se preciso.
+- Grave em produção → skill `incidente` (contenção e restauração primeiro; ela volta a esta pasta na fase 6 dela). Hotfix por este fluxo só com o dano já contido.
 - Não reproduz → mais dados, instrumentação, ou encerrar como não reproduzido. Nunca corrigir no escuro.
 - Teste passa de primeira → não reproduz o bug; refazer o teste (fase 4), nunca seguir.
 - Hipótese errada → nova hipótese, uma variável por vez; 3 correções falharam → questionar a arquitetura.

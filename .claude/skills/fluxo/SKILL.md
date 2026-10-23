@@ -56,7 +56,7 @@ Se o usuário descreveu o que quer em texto livre (ex.: "o login quebrou"), esco
 | 6 | Integração com terceiros | `integracao`, `api` | Em preparação | `pesquisador`, `tlc-spec-driven` |
 | 7 | Redesign de interface | `redesign`, `visual` | Em preparação | `mockup-visual` |
 | 8 | Aprendizado | `estudo`, `aprender` | Em preparação | — |
-| 9 | Investigação de incidentes | `incidente`, `caiu` | Em preparação | `systematic-debugging`, skill `bug` (correção, com hotfix) |
+| 9 | Investigação de incidentes | `incidente`, `caiu` | **Pronto** | skill `incidente` |
 | 10 | Sugestão de melhoria de terceiros | `sugestao` | Em preparação | — |
 | 11 | Solicitação de feature sob demanda | `pedido`, `solicitacao` | Em preparação | `tlc-spec-driven` |
 | 12 | Correção de bug | `bug`, `erro` | **Pronto** | skill `bug` |
