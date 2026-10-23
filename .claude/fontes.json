@@ -320,6 +320,44 @@
       ],
       "usado_em": ".claude/skills/performance/"
     },
+    {
+      "nome": "documentar (claude-md-improver)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/anthropics/claude-plugins-official",
+      "commit": "465f09344424225c25d438f2e052732c3d688d2f",
+      "arquivos_origem": [
+        "plugins/claude-md-management/skills/claude-md-improver/SKILL.md",
+        "plugins/claude-md-management/skills/claude-md-improver/references/quality-criteria.md",
+        "plugins/claude-md-management/skills/claude-md-improver/references/templates.md",
+        "plugins/claude-md-management/skills/claude-md-improver/references/update-guidelines.md"
+      ],
+      "usado_em": ".claude/skills/documentar/"
+    },
+    {
+      "nome": "documentar (bmad project-context e deep-recon)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/bmad-code-org/BMAD-METHOD",
+      "commit": "61e01f82644c4bb533750cfa0d6d61ab61d2cc9b",
+      "arquivos_origem": [
+        "skills/bmad-project-context/SKILL.md",
+        "skills/bmad-project-context/references/best-practices.md",
+        "skills/bmad-project-context/references/template.md",
+        "skills/bmad-deep-recon/assets/codebase.template.md"
+      ],
+      "usado_em": ".claude/skills/documentar/"
+    },
+    {
+      "nome": "documentar (wshobson c4-architecture)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/wshobson/agents",
+      "commit": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+      "arquivos_origem": [
+        "plugins/c4-architecture/commands/c4-architecture.md",
+        "plugins/c4-architecture/agents/c4-context.md",
+        "plugins/c4-architecture/agents/c4-container.md"
+      ],
+      "usado_em": ".claude/skills/documentar/"
+    },
     { "nome": "clone .tlc", "tipo": "referencia", "pasta": ".tlc", "origem": "https://github.com/tech-leads-club/agent-skills" },
     { "nome": "clone .superpowers", "tipo": "referencia", "pasta": ".superpowers", "origem": "https://github.com/obra/superpowers" },
     { "nome": "clone .speckit", "tipo": "referencia", "pasta": ".speckit", "origem": "https://github.com/github/spec-kit" },

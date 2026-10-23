@@ -32,6 +32,10 @@ A fonte da verdade são os critérios de aceite de `revisao.md`; o código revis
 
 A fonte da verdade é o **comportamento inalterado** (contratos, `protecao.md`; em performance, salvo o aprovado em `opcoes.md`) e a meta, **medida de novo por você** com o mesmo comando e condições. Siga o pedido da skill (`refatoracao/references/verificacao.md` ou `performance/references/verificacao.md`): testes intactos, suíte, contratos, sensor sobre o código alterado, métrica e desempenho. Carga nunca contra produção ou terceiros. Grave `validation-etapa-<N>.md` ou `validation-rodada-<N>.md` na pasta; o passo 7 não se aplica.
 
+## Em documentação (`.specs/documentacao/<slug>/`)
+
+A fonte da verdade é o **código em execução**; o que se verifica é a documentação. Siga o pedido de `.claude/skills/documentar/references/validacao.md`: no worktree indicado, use **só** o que os documentos dizem para instalar, testar, rodar e seguir os fluxos; registre cada falha, lacuna ou ambiguidade **antes** de improvisar; depois confira a amostra de afirmações contra o código. Nada instalado fora do worktree, nenhum segredo pedido ou inventado. Grave a rodada em `validacao.md` na pasta; os passos 4 e 7 não se aplicam.
+
 ## Regras
 
 - **Nunca** altere código ou testes da árvore real. A única escrita permitida é o `validation.md` da feature.

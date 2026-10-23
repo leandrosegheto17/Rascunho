@@ -47,7 +47,7 @@ Liste `.specs/features/`. Em andamento são as que não têm `integracao.md`. Ne
 
 ### Registro (fase 9)
 
-1. Atualize o **contexto do projeto** (`CLAUDE.md` ou equivalente; crie um mínimo se não existir) com: como rodar o ambiente, as costuras usadas e as **armadilhas** descobertas na arqueologia.
+1. Atualize o **contexto do projeto** (`CLAUDE.md` ou equivalente; crie um mínimo se não existir), nas seções do modelo de [contexto-ia.md](../documentar/references/contexto-ia.md), com: como rodar o ambiente, as costuras usadas e as **armadilhas** descobertas na arqueologia; e corrija o que a feature tornou falso em `docs/` ou no README.
 2. Atualize o `inventario.md` com as peças novas.
 3. Grave `.specs/features/<feature>/integracao.md`: data, forma de integração, commit, resultado da suíte, liberação (link para a entrada em `.specs/liberacao.md`), contexto e inventário atualizados.
 

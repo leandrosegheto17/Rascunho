@@ -27,7 +27,7 @@
 **O que ficou melhor e o que sobrou?**
 
 1. **Meta:** compare **antes**, **depois** e **alvo** em `refatoracao.md`. Atingida: **Resultado** `concluída`. Parcial: `meta parcial — <motivo>`.
-2. **Contexto do projeto** (`CLAUDE.md` ou equivalente; crie um mínimo se não existir): o padrão novo a seguir, onde mora agora a regra que estava espalhada, o que não fazer para a dívida não voltar. Mostre o diff ao usuário.
+2. **Contexto do projeto** (`CLAUDE.md` ou equivalente, nas seções de `.claude/skills/documentar/references/contexto-ia.md`; crie um mínimo se não existir): o padrão novo a seguir, onde mora agora a regra que estava espalhada, o que não fazer para a dívida não voltar. Mostre o diff ao usuário.
 3. **Inventário:** atualize `.specs/projeto/inventario.md` nas áreas que mudaram (peça nova, duplicação removida, coluna "Usar").
 4. **Dívida:** em `.specs/projeto/dividas.md`, marque a dívida paga (data e pasta) e acrescente a que sobrou ou foi vista no caminho (**Achados fora do escopo**), com pontuação.
 5. **Prevenção:** proponha ao menos uma forma de a dívida não voltar, ou registre por que não há: regra de lint ou limite de complexidade, checagem de imports ou de ciclos no CI, regra no contexto do projeto, teste de contrato. Mudar o CI ou o lint é mudança no projeto: com aprovação, em commit próprio (`chore:`), com a suíte verde.

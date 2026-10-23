@@ -14,7 +14,7 @@ Responde: **onde esta mudança entra, como o projeto já faz coisas parecidas, e
 
 ## 1. Contexto do projeto
 
-Procure o arquivo de instruções do projeto (`CLAUDE.md`, `AGENTS.md`, `.cursorrules`), o README e as convenções documentadas. Se não houver nenhum contexto escrito, registre isso: ao fim da feature, a fase de integração vai criar um contexto mínimo.
+Procure o arquivo de instruções do projeto (`CLAUDE.md`, `AGENTS.md`, `.cursorrules`), o README e as convenções documentadas. Se não houver nenhum contexto escrito, registre isso: ao fim da feature, a fase de integração vai criar um contexto mínimo. Se o projeto é difícil de entender e nada está escrito, ofereça antes a skill `documentar` (fluxo 14). Se `.specs/documentacao/*/` existir, use `arquitetura.md`, `comportamento.md` e `convencoes.md` como ponto de partida.
 
 ## 2. Mapear com o `leitor-codigo`
 

@@ -17,7 +17,7 @@ Rode antes, nesta ordem, se ainda não existirem: skill `inventario` (projeto) e
 
 ## 1. Ambiente: o projeto roda?
 
-Tente instalar e rodar seguindo o que estiver escrito. Registre versões (linguagem, runtime, banco), dependências sem suporte, passos manuais de build e o que precisou ser descoberto. **Se não roda, fazê-lo rodar vira a primeira tarefa do plano**: sem isso, não há rede de proteção.
+Se houver `.specs/documentacao/*/execucao.md` (skill `documentar`), parta dele e confira se ainda vale. Tente instalar e rodar seguindo o que estiver escrito. Registre versões (linguagem, runtime, banco), dependências sem suporte, passos manuais de build e o que precisou ser descoberto. **Se não roda, fazê-lo rodar vira a primeira tarefa do plano**: sem isso, não há rede de proteção.
 
 ## 2. Histórico
 

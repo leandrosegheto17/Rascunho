@@ -497,6 +497,42 @@ Decisões por analogia:
 
 Orquestrador: skill `performance`. `/fluxo` marca o 5 como pronto. **Pendente:** teste real (ex.: uma API de exemplo com consulta N+1 e sem índice, base com 100 mil registros, percorrendo as 9 fases com autocannon ou k6 locais) e, num segundo teste, uma página web com Lighthouse CI.
 
+## Passo 21: fluxo 14, documentar projeto existente
+
+**Status:** construído em 2026-10-23 por subagente, seguindo `ROTEIRO-CONSTRUCAO.md`; decisões tomadas por analogia com `performance`, `refatoracao`, `auditoria-seguranca` e `feature`, pendentes de revisão do usuário.
+
+Decisões por analogia:
+
+- **Artefatos em `.specs/documentacao/<slug>/`** (uma pasta por trabalho, como os outros fluxos, para permitir revisões depois): `documentacao.md` (fase 1 e estado: tabela **Fases** com `pendente`, `feita (<data>)` ou `dispensada — <motivo>`, tabela **Documentos** com destino e situação, **Achados fora do escopo**, **Manutenção**, **Resultado**; também o contrato de entrada), `levantamento.md`, `execucao.md`, `arquitetura.md`, `comportamento.md`, `convencoes.md`, `riscos.md`, `contexto.md`, `validacao.md` (uma seção por rodada), `evidencias/` (fora do git). Fase atual = primeira `pendente`; em andamento = **Resultado** `pendente`.
+- **Dois níveis de fonte:** o artefato de trabalho tem a fonte completa (`arquivo:linha` ou comando com resultado e data); o documento do projeto cita caminho (linha muda a cada commit) e só traz comandos executados. O não verificado fica marcado **no próprio documento**, para o leitor ver: `Não verificado` (lido, não executado), `Premissa` (veio de pessoa ou documento antigo), `[A ESCLARECER]`.
+- **Documentação no lugar que o projeto já usa** (README, `docs/`, `CLAUDE.md`/`AGENTS.md`), decidido na fase 1; sem convenção, README + `docs/` + `CLAUDE.md`. Escrita na branch `docs/<slug>`, criada na fase 3, commit `docs:` por fase aprovada. Cada fase de 3 a 8 escreve o seu pedaço (o usuário aprova o texto real), em vez de juntar tudo no fim.
+- **Público define as fases:** tabela público × documentos × fases dispensadas (você, novo dev, IA, cliente, auditor); inventário e execução nunca são dispensados. Profundidade **enxuta** (README que roda, arquitetura, contexto para IA) como recomendada.
+- **Reaproveitamento sem duplicar:** fase 2 = skill `inventario` + levantamento só do que ele não cobre (estrutura, versões, pontos de entrada, scripts, CI, ambientes, nomes de variáveis, documentos existentes com estado atual/desatualizado/contraditório, trabalhos anteriores dos fluxos). Fases 3 e 5 = método das seções 1 e 3 da `arqueologia`, para o projeto inteiro (a `arqueologia` não é acionada: costuras e raio de impacto não servem aqui). Fase 6 = perguntas de padrões do `reconhecimento` com as inconsistências no centro (qual seguir: o mais recente e mais seguido; empate, pergunta). Fase 7 = levantamento com `git log`, `leitor-codigo` e `varredura-seguranca.py ferramentas`; dívidas em `.specs/projeto/dividas.md` (modelo da `refatoracao`); `auditoria-seguranca` oferecida como trabalho separado, sem contrato de chamada.
+- **Execução num worktree limpo** (fase 3): sem `node_modules`, `.env` e caches, que escondem passos faltantes. Segredo só num `.env` local do worktree, posto pelo usuário; instalar fora do worktree é decisão do usuário; nunca produção.
+- **Arquitetura (fase 4):** C4 do wshobson como referência de níveis, contexto e contêiner bastam; contêiner tirado dos arquivos de deploy. Mermaid `flowchart` (renderiza em qualquer lugar; a sintaxe C4 do Mermaid ficou como `Premissa`, experimental). Cada caixa e seta com evidência; **um segundo `leitor-codigo` confere o diagrama** (quem desenha não confere). Opus nesta fase.
+- **Contexto para IA (fase 8) é o modelo único do contexto do projeto:** seções do BMAD traduzidas (orientação, regras, onde fica cada coisa, rodar e verificar, convenções que fogem do padrão, armadilhas, documentação) com a linha de verificação (data e commit). `feature`, `legado`, `refatoracao` e `performance` passam a apontar para esse modelo e dizem em que seção vai cada coisa (comando novo, padrão novo, costura, armadilha). Avaliação com a rubrica do `claude-md-improver` antes de mudar; destino de cada instrução existente (manter, reescrever, mover, automatizar, apagar) com os quatro motivos do BMAD para apagar, generalizado em `escrita.md` para qualquer documento existente. Sem marcadores de bloco gerenciado.
+- **Validação (fase 9) pelo agente `verificador`**, novo modo documentação: é o agente de verificação independente, só escreve o relatório e não corrige; o `implementador` faz commits e segue spec, papel errado. O pedido passa só a documentação e o worktree limpo do commit da doc, sem resumo da sessão; o agente registra a falha **antes** de improvisar e confere uma amostra de afirmações. Alternativas oferecidas: sessão nova do usuário ou uma pessoa, no mesmo formato. Rodadas até passar; três sem passar, escala.
+- **Manutenção:** linha "atualize na mesma mudança" no contexto do projeto; `feature` e `legado` passam a corrigir `docs/` e README que a mudança torna falsos; checagem de links e dos comandos do "Como rodar" no CI como proposta; revisão periódica por um novo trabalho em modo `revisão` (parte do commit anterior e do `git diff`).
+- **Testes:** a documentação não muda comportamento, mas a checagem final e a trava valem para o merge; projeto sem testes pergunta (criar a infraestrutura antes, recomendado; dispensa com aprovação; manter a branch).
+- **Modelo:** Opus em 1 e 4; Sonnet no resto.
+- **Entrada por outros fluxos:** avaliação de terceiros (27) e quem precisar de documentação grava `documentacao.md` com **Chamado por**, **Usar em** e **Fases**; a fase 1 vira confirmação.
+- **Ajustes em peças existentes:** `verificador` (modo documentação), `feature` e `legado` (modelo de contexto e docs na mesma mudança), `refatoracao/references/registro.md` e `performance/references/registro.md` (modelo de contexto), `arqueologia` (parte de `execucao.md` se existir), `reconhecimento` (oferece `documentar` e usa seus artefatos), `/fluxo` (14 pronto).
+
+| Fases | Peça | Origem |
+|---|---|---|
+| 1 Objetivo e público | `documentar/references/objetivo.md` (perguntas, público × documentos × fases, modelo de `documentacao.md` = contrato de entrada) | nova |
+| 2 Inventário | skill `inventario` + `references/levantamento.md` com `leitor-codigo` | reaproveitada; ideia do BMAD `codebase.template.md` (MIT) |
+| 3 Execução | `references/execucao.md` (worktree limpo, seguir o escrito, tropeços, "Como rodar") | método da `arqueologia` §1 |
+| 4 Arquitetura | `references/arquitetura.md` (níveis, pedido ao `leitor-codigo`, Mermaid, conferência por segundo leitor) | adaptada do wshobson `c4-architecture` (MIT) |
+| 5 Comportamento | `references/comportamento.md` (3 a 7 fluxos, rodar, provocar erros, estranho como é) | método da `arqueologia` §3 |
+| 6 Convenções | `references/convencoes.md` com `leitor-codigo` | perguntas do `reconhecimento` |
+| 7 Riscos e dívidas | `references/riscos.md` (`git log`, `varredura-seguranca.py`, `dividas.md`) | reaproveitadas; `auditoria-seguranca` oferecida |
+| 8 Contexto para IA | `references/contexto-ia.md` (arquivo, avaliação, o que entra e não entra, modelo de seções, destinos) | adaptada do `claude-md-improver` (Apache 2.0) e do BMAD `bmad-project-context` (MIT) |
+| 9 Validação e manutenção | `references/validacao.md` (pedido ao `verificador`, classificação, rodadas, manutenção, integração) | nova; agente ganhou seção |
+| 3 a 8 | `references/escrita.md` (fonte, marcas, porquê, curto, sem segredo, destino do que existe) | nova; motivos para apagar do BMAD (MIT); ideia do `docs-writer` (MIT) |
+
+Orquestrador: skill `documentar`. `/fluxo` marca o 14 como pronto. **Pendente:** teste real (ex.: um projeto pequeno de exemplo com README desatualizado e um passo de instalação faltando, percorrendo as 9 fases com público "novo dev + IA" e conferindo se o `verificador` acha o passo faltante na fase 9).
+
 ---
 
 ## Estado ao fim da rodada (2026-10-23)
