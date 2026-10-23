@@ -45,7 +45,8 @@ Vale para todos os fluxos. Só ficam de fora spikes e projetos de aprendizado, p
 - **Testes nascem do critério de aceite**, nunca do código que já foi escrito.
 - **Nunca apague, pule, comente ou enfraqueça um teste** para fazê-lo passar. Mudar um teste existente exige motivo registrado e aprovação do usuário.
 - **Projeto sem testes:** a primeira tarefa é criar a infraestrutura mínima (framework do ecossistema e um teste que roda).
-- **Checagem final antes de integrar ou implantar:** rode a **suíte inteira de verdade** e mostre o resultado (passaram / falharam / ignorados). Só segue com tudo verde, ou com as mesmas falhas preexistentes registradas na linha de base (`protecao.md`), nunca com falha nova. "Os testes devem passar" sem rodar não conta.
+- **Checagem final antes de integrar ou implantar:** com tudo commitado, rode `python .claude/scripts/trava-testes.py --rodar` (usa o comando de `.specs/projeto/testes.json`) e mostre o resultado. Só segue com a suíte verde. "Os testes devem passar" sem rodar não conta.
+- **Trava técnica:** um hook bloqueia `git push`, `gh pr create` e `git merge <branch>` quando o commit não tem a suíte verde registrada. Não tente contorná-lo; se bloquear, corrija ou rode a checagem na branch indicada. Projeto sem testes de propósito registra `{"dispensado": true, "motivo": "..."}` em `testes.json`, **só com aprovação do usuário**.
 - **CI:** todo projeto construído ou alterado pelos fluxos roda a suíte no CI; se não houver CI, criar faz parte da preparação.
 
 ## Modelos

@@ -67,6 +67,16 @@ Cada item com caminho (`arquivo:linha` quando fizer sentido) e uma linha do que 
 |---|---|---|
 ```
 
+## 4. Registrar o comando de testes
+
+Grave `.specs/projeto/testes.json` com o comando que roda a suíte inteira (o mesmo da linha "Testes" do inventário), confirmando antes que ele roda:
+
+```json
+{"comando": "npm test"}
+```
+
+É o arquivo que a checagem final e a trava de testes (`.claude/scripts/trava-testes.py`) usam. Se o projeto não tem testes, não invente um comando: registre isso no inventário e avise que a primeira tarefa de qualquer mudança será criar a infraestrutura de testes.
+
 ## Ao terminar
 
 Responda com o caminho, o tamanho do inventário (quantas peças por categoria), as duplicações encontradas e o comando de testes. Não precisa de aprovação própria: o orquestrador segue para o reconhecimento.

@@ -51,7 +51,7 @@ Uma linha: "**Feature <nome>, fase N de 7, <fase>.**" Avise a troca de modelo:
 
 ### Integração (fase 7)
 
-0. **Checagem final de testes:** na branch, rode a suíte inteira e compare com a linha de base de `protecao.md`. Falha nova bloqueia a integração e volta à fase 5. Mostre o resultado ao usuário.
+0. **Checagem final de testes:** na branch, com tudo commitado, rode `python .claude/scripts/trava-testes.py --rodar` e mostre o resultado. Falha bloqueia a integração e volta à fase 5. (Falha preexistente registrada em `protecao.md` precisa ser corrigida ou excluída da suíte com aprovação do usuário antes de integrar, porque a trava exige suíte verde.)
 1. **Contexto do projeto:** atualize o arquivo de instruções do projeto (`CLAUDE.md` ou equivalente) com o que esta feature ensinou: novo padrão, comando novo, armadilha. Se não existia contexto, crie um mínimo (como rodar, testar, estrutura, convenções) a partir do `reconhecimento.md`. Mostre o diff ao usuário.
 2. **Forma de integrar:** pergunte via `AskUserQuestion`: **merge local** na branch principal, **PR no GitHub** (push e abertura do PR são ações externas, com confirmação) ou **manter a branch**. Use `finishing-a-development-branch` para executar.
 3. Grave `.specs/features/<feature>/integracao.md`: data, forma (merge, PR com link, branch mantida), commit final, resultado da suíte na checagem final, contexto atualizado (sim/não).

@@ -14,10 +14,23 @@
       "Bash(git ls-remote:*)",
       "Bash(ls:*)",
       "Bash(python .claude/scripts/verificar-atualizacoes.py:*)",
-      "Bash(python .claude/scripts/checar-tokens.py:*)"
+      "Bash(python .claude/scripts/checar-tokens.py:*)",
+      "Bash(python .claude/scripts/trava-testes.py:*)"
     ]
   },
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/.claude/scripts/trava-testes.py\"",
+            "timeout": 600
+          }
+        ]
+      }
+    ],
     "SessionStart": [
       {
         "matcher": "startup",
