@@ -46,7 +46,7 @@ Escritos **antes** de olhar opções e congelados na aprovação.
 # Escolha de tecnologia: <o que se escolhe>
 
 - **Slug**: <slug> · **Data**: <AAAA-MM-DD>
-- **Chamado por**: <nenhum | projeto-novo fase 7 (<feature>) | integração <capacidade> | automação <processo>>
+- **Chamado por**: <nenhum | projeto-novo fase 7 (<feature>) | integração <capacidade> | automação <processo> | avaliacao-terceiros <slug>>
 - **Usar em**: <arquivo e seção onde a escolha será usada | —>
 - **Reversibilidade**: <difícil | fácil> — <o que custaria trocar daqui a um ano>
 - **Modo**: <rigoroso | enxuto>

@@ -28,7 +28,7 @@ Aprovações (seguir / ajustar / parar): 1-2, 3, 4-8, 9 e 10.
 
 | Chamador | Em que fase dele | Alvo | Fases | Devolver após |
 |---|---|---|---|---|
-| 27 Avaliação de terceiros | qualidade do projeto candidato | **cópia local** do repositório do terceiro; sem diff: um recorte (caminhos centrais) revisado como se fosse uma mudança inteira, com o README e a documentação como "pedido" | 1-2, 3 (rodar só com confirmação: é código de fora), 4, 5, 7, 8 (a 6 fica com a `auditoria-seguranca`, que o 27 chama à parte) | `análise` |
+| 27 Avaliação de terceiros | qualidade do projeto candidato | **cópia local** do repositório do terceiro; sem diff: um recorte (caminhos centrais) revisado como se fosse uma mudança inteira, com o README e a documentação como "pedido" | 1-2, 3 (rodar só com confirmação: é código de fora; no ambiente isolado e com os comandos de `.specs/avaliacoes/<slug>/execucao.md`, nunca com o `testes.json` do usuário), 4, 5, 7, 8 (a 6 fica com a `auditoria-seguranca`, que o 27 chama à parte). Contrato em `avaliar-terceiros/references/composicao.md` | `análise` |
 | 3 Feature, 4 Legado, 12 Bug (proposta, ver `DECISOES.md`) | verificação, depois do PASS do `verificador` | diff da branch contra a base; pedido = `spec.md` ou `relato.md` | 4, 7, 8 (a 5 já foi feita pelo `verificador` do fluxo; a 6 o fluxo despacha à parte) | `análise` |
 
 O chamador grava `revisao.md` (formato de `admissao.md`) e aciona esta skill; as fases 1-2 viram uma confirmação. Bloqueante devolvido vira tarefa no chamador (feature: volta à fase 5; bug: à fase 6; terceiros: condição ou motivo de recusa).

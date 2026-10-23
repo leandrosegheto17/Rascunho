@@ -358,6 +358,36 @@
       ],
       "usado_em": ".claude/skills/documentar/"
     },
+    {
+      "nome": "avaliar-terceiros (tlc security-ownership-map)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/tech-leads-club/agent-skills",
+      "commit": "bc4f025632b0443ed3450aaec6fe96aec5b9a0c5",
+      "arquivos_origem": [
+        "packages/skills-catalog/skills/(security)/security-ownership-map/SKILL.md",
+        "packages/skills-catalog/skills/(security)/security-ownership-map/scripts/build_ownership_map.py"
+      ],
+      "usado_em": ".claude/skills/avaliar-terceiros/ e .claude/scripts/propriedade-git.py"
+    },
+    {
+      "nome": "avaliar-terceiros (bmad deep-recon technical, dimensão 5)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/bmad-code-org/BMAD-METHOD",
+      "commit": "61e01f82644c4bb533750cfa0d6d61ab61d2cc9b",
+      "arquivos_origem": ["skills/bmad-deep-recon/types/technical.md"],
+      "usado_em": ".claude/skills/avaliar-terceiros/"
+    },
+    {
+      "nome": "avaliar-terceiros (legado: build-vs-buy-analysis, risk-and-compliance-check)",
+      "tipo": "adaptado",
+      "origem": ".claude_legado",
+      "commit": "15a6ad1",
+      "arquivos_origem": [
+        ".claude_legado/skills/build-vs-buy-analysis/SKILL.md",
+        ".claude_legado/skills/risk-and-compliance-check/SKILL.md"
+      ],
+      "usado_em": ".claude/skills/avaliar-terceiros/"
+    },
     { "nome": "clone .tlc", "tipo": "referencia", "pasta": ".tlc", "origem": "https://github.com/tech-leads-club/agent-skills" },
     { "nome": "clone .superpowers", "tipo": "referencia", "pasta": ".superpowers", "origem": "https://github.com/obra/superpowers" },
     { "nome": "clone .speckit", "tipo": "referencia", "pasta": ".speckit", "origem": "https://github.com/github/spec-kit" },

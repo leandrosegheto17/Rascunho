@@ -20,7 +20,7 @@ Liste `.specs/escolhas/`. Em andamento são as que não têm **Registro** preenc
 
 ### Chamado por outro fluxo
 
-Projeto novo (fase 7, stack no desenho), integração (fluxo 6, escolha do fornecedor) e automação (fluxo 30, escolha da ferramenta) gravam `.specs/escolhas/<slug>/escolha.md` no formato de [references/criterios.md](references/criterios.md), com a decisão a tomar, as restrições conhecidas e, se houver, critérios já sabidos, preenchendo **Chamado por** e **Usar em**, e acionam esta skill. As fases 1-2 só completam o que falta e viram **uma confirmação**: modo e critérios com pesos são sempre decisão do usuário. Ao concluir a fase 9, leve a escolha ao **Usar em**, responda ao chamador com a opção escolhida, o caminho do ADR e a entrada `AD-NNN` (se houver), e pare.
+Projeto novo (fase 7, stack no desenho), integração (fluxo 6, escolha do fornecedor), automação (fluxo 30, escolha da ferramenta) e avaliação de terceiros (fluxo 27, fase 9: o candidato contra alternativas ou construir, com os critérios da avaliação) gravam `.specs/escolhas/<slug>/escolha.md` no formato de [references/criterios.md](references/criterios.md), com a decisão a tomar, as restrições conhecidas e, se houver, critérios já sabidos, preenchendo **Chamado por** e **Usar em**, e acionam esta skill. As fases 1-2 só completam o que falta e viram **uma confirmação**: modo e critérios com pesos são sempre decisão do usuário. Ao concluir a fase 9, leve a escolha ao **Usar em**, responda ao chamador com a opção escolhida, o caminho do ADR e a entrada `AD-NNN` (se houver), e pare.
 
 ## 2. Descobrir a fase
 

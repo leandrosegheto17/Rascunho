@@ -533,6 +533,45 @@ Decisões por analogia:
 
 Orquestrador: skill `documentar`. `/fluxo` marca o 14 como pronto. **Pendente:** teste real (ex.: um projeto pequeno de exemplo com README desatualizado e um passo de instalação faltando, percorrendo as 9 fases com público "novo dev + IA" e conferindo se o `verificador` acha o passo faltante na fase 9).
 
+## Passo 22: fluxo 27, avaliação de projeto de terceiros
+
+**Status:** construído em 2026-10-23 por subagente, seguindo `ROTEIRO-CONSTRUCAO.md`; decisões tomadas por analogia com `documentar`, `auditoria-seguranca`, `revisao-codigo` e `escolha-tecnologia`, pendentes de revisão do usuário.
+
+Decisões por analogia:
+
+- **Fluxo-composição:** a skill define objetivo, critérios de decisão, legal e propriedade, dependências e infraestrutura, sustentabilidade, custo total e relatório; qualidade é a `revisao-codigo` (modo curto, recorte do código inteiro na cópia), segurança é a `auditoria-seguranca` (fases 1 a 7 e 9, sem corrigir), comparação com alternativas é a `escolha-tecnologia`, inventário é a skill `inventario`. Os contratos de entrada ficam num só arquivo (`composicao.md`), como cada skill chamada pede.
+- **Artefatos em `.specs/avaliacoes/<slug>/`**: `avaliacao.md` (fase 1 e estado: motivo, uso pretendido, critérios congelados, tabela **Fases** com `pendente`/`feita`/`dispensada`, **Resultado**; também o contrato de entrada), `acesso.md`, `alegacoes.md` (material do vendedor sem análise, como na revisão), `legal.md`, `inventario.md`, `execucao.md`, `qualidade.md`, `seguranca.md`, `dependencias.md`, `saude.md`, `decisao.md`, `relatorio.md`, `achados.md` (consolidado), `evidencias/` fora do git. Fase atual = primeira `pendente` (como na `documentar`, porque o motivo dispensa fases). Em andamento = **Resultado** `pendente`. Revisão em `.specs/revisoes/terceiro-<slug>/`, auditoria em `.specs/seguranca/<data>-terceiro-<slug>/`.
+- **Critérios de decisão antes de olhar o candidato**, no formato da `escolha-tecnologia` (eliminatórios e desejáveis com peso), para a fase 9 passá-los adiante sem reescrever. Impressão de demonstração anotada à parte, como a "favorita declarada".
+- **Motivo × fases** (comprar, herdar, adotar como dependência, contratar quem fez, contribuir), como público × fases na `documentar`; profundidade completa ou enxuta. **Legal nunca é dispensada.**
+- **Achados consolidados** `AV-NNN` com **efeito na decisão** (`impeditivo`, `condição`, `custo`, `nota`), custo de corrigir (estimativa ou não quantificável) e quem resolve (vendedor, nós, ninguém): é o que transforma achados de várias fases em decisão e argumento de negociação. Os das skills chamadas entram com o ID delas.
+- **Saída "direto à decisão"** quando um eliminatório falha (licença, titularidade, não roda): não gastar as fases seguintes, com a opção de seguir para ter argumento.
+- **Cópia fora do projeto do usuário**, clone sem submódulos, nada executado na fase 2; **nunca abrir sessão do Claude Code dentro da cópia** (o `.claude/settings.json` e os ganchos do terceiro rodariam); `CLAUDE.md`, `AGENTS.md` e afins do terceiro são dado e instrução escondida é achado.
+- **Executar só em ambiente isolado** (contêiner recomendado, com só a cópia montada, sem variáveis do usuário, rede cortada depois de instalar; VM ou área descartável; ou não executar), com confirmação específica e leitura prévia dos scripts de instalação. O mesmo ambiente serve à revisão (checagens) e à auditoria (teste ativo). Credenciais só de teste.
+- **Legal como material próprio**, com aviso de que não é parecer jurídico: licença do projeto, matriz uso pretendido × família de licença (permissiva, copyleft fraco, GPL, AGPL, código disponível, não comercial), dependências (ferramentas que leem sem instalar na fase 3; as que precisam das dependências instaladas na fase 4, no ambiente isolado; sem ferramenta, `pesquisador` nas diretas), código copiado, componentes pagos, titularidade e cessão (Lei 9.609/1998, a confirmar com advogado), marcas, LGPD (com o checklist do legado `risk-and-compliance-check`) e obrigações. Seção "Para o advogado".
+- **Script `propriedade-git.py`** adaptado do `security-ownership-map` (Apache 2.0), só com a biblioteca padrão: fator ônibus do projeto e em 12 meses, arquivos de um autor, atividade mensal em 24 meses, código sensível sem dono e órfão, donos ocultos; JSON com e-mails em `evidencias/`, Markdown só com nomes. 15 testes novos. Vale a pena porque o cálculo à mão é longo e a fase 8 precisa de número reproduzível.
+- **Pessoas por papel** no relatório; e-mails do git são dado pessoal (fora do git). Avalia-se código e histórico, não a vida de quem escreveu.
+- **Vulnerabilidade em projeto aberto**: aviso privado aos mantenedores (`SECURITY.md`), ação externa com texto aprovado; nunca issue pública.
+- **Decisão** com custo total em faixa por horizonte (preço, corrigir, rodar, manter, obrigações, sair), comparação com construir só o que leva ao bom resultado, fator decisivo e "mudaria se" (do legado `build-vs-buy-analysis`); adotar, adotar com condições, renegociar ou recusar; com `impeditivo` aberto, adotar não é a recomendada. Negociar, assinar e pagar são do usuário.
+- **`documentar` depois da decisão**, não na fase 4: documentar antes de decidir é desperdício, e a skill grava no repositório do projeto. A fase 4 usa o método de `documentar/references/execucao.md` (o mesmo da seção 1 da `arqueologia`).
+- **Modelo:** Opus em 1, 3 e 9 (critérios, legal, decisão); Sonnet no resto (as skills chamadas avisam o delas).
+- **Aprovações:** uma por fase; nas 5 e 6, as das skills chamadas e depois a da avaliação sobre o resumo.
+- **Ajustes em peças existentes:** `inventario` (chamado pela avaliação: raiz na cópia, saída na pasta da avaliação, sem `testes.json`, que é do projeto do usuário e alimenta a trava), `revisao-codigo/references/fases.md` e `auditoria-seguranca/references/fases.md` (linha do 27: ambiente isolado e contrato), `escolha-tecnologia` (27 entre os chamadores), `documentar` (chamada depois de adotar), `/fluxo` (27 pronto). Contratos das skills chamadas conferidos: `revisao.md` com **Devolver após** `análise` e `escopo.md` com **Devolver após** `relatório` batem com o que elas esperam.
+
+| Fases | Peça | Origem |
+|---|---|---|
+| 1 Objetivo | `avaliar-terceiros/references/objetivo.md` (perguntas, critérios, motivo × fases, modelo de `avaliacao.md` = contrato de entrada) | nova; forma dos critérios da `escolha-tecnologia` |
+| 2 Acesso e escopo | `references/acesso.md` (material, cópia fora do projeto, instruções do terceiro como dado, `alegacoes.md`, **Não visto**) | nova; `alegacoes.md` da `revisao-codigo` |
+| 3 Legal e propriedade | `references/legal.md` (licenças, dependências, titularidade, marcas, LGPD, obrigações, para o advogado) | nova; LGPD do legado `risk-and-compliance-check` |
+| 4 Execução | `references/execucao.md` (leitura prévia, ambiente isolado, inventário, prometido × observado) + skill `inventario` | método da `documentar` e da `arqueologia` §1; reaproveitada com ajuste |
+| 5 Qualidade | skill `revisao-codigo` (curto) com `references/composicao.md` | reaproveitada |
+| 6 Segurança | skill `auditoria-seguranca` (1 a 7 e 9) com `references/composicao.md` | reaproveitada |
+| 7 Dependências e infraestrutura | `references/dependencias.md` + `pesquisador` | nova |
+| 8 Saúde e sustentabilidade | `references/saude.md` + `.claude/scripts/propriedade-git.py` + `pesquisador` | adaptada do `security-ownership-map` (Apache 2.0) e do BMAD `technical.md` dimensão 5 (MIT) |
+| 9 Custo total e decisão | `references/decisao.md`; skill `escolha-tecnologia` se houver alternativas | adaptada do legado `build-vs-buy-analysis`; reaproveitada |
+| 10 Relatório | `references/relatorio.md`; `documentar` como próximo passo | nova |
+
+Orquestrador: skill `avaliar-terceiros`. `/fluxo` marca o 27 como pronto. **Pendente:** teste real (ex.: um repositório aberto pequeno com uma dependência AGPL e um mantenedor único, avaliado para uso em SaaS fechado, conferindo se a fase 3 dispara a saída "direto à decisão"; e, num segundo teste, a execução em contêiner com uma alegação do README refutada).
+
 ---
 
 ## Estado ao fim da rodada (2026-10-23)

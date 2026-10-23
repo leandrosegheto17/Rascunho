@@ -20,7 +20,7 @@ Liste `.specs/documentacao/`. Em andamento são os que têm `documentacao.md` co
 
 ### Chamado por outro fluxo
 
-A avaliação de terceiros (fluxo 27) e quem precisar de documentação antes de mudar grava `documentacao.md` no formato de [references/objetivo.md](references/objetivo.md), com **Chamado por**, **Usar em**, público e **Fases** preenchidos (as de fora ficam `dispensada — <motivo>`), e aciona esta skill. A fase 1 vira **uma confirmação**. Ao concluir a última fase pedida, responda ao chamador com o caminho da pasta, os documentos escritos e as lacunas, e pare.
+A avaliação de terceiros (fluxo 27, depois de adotar ou herdar o projeto; a fase 3 parte do `execucao.md` da avaliação) e quem precisar de documentação antes de mudar grava `documentacao.md` no formato de [references/objetivo.md](references/objetivo.md), com **Chamado por**, **Usar em**, público e **Fases** preenchidos (as de fora ficam `dispensada — <motivo>`), e aciona esta skill. A fase 1 vira **uma confirmação**. Ao concluir a última fase pedida, responda ao chamador com o caminho da pasta, os documentos escritos e as lacunas, e pare.
 
 ## 2. Descobrir a fase
 
