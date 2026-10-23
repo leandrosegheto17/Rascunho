@@ -29,7 +29,7 @@ Próximos passos: análise da causa e prevenção em andamento.
 
 | Público | O que dizer | Quando |
 |---|---|---|
-| Usuários afetados | o que aconteceu, por quanto tempo, se algo deles foi afetado, o que fazer | ao fim, se houve impacto percebido |
+| Usuários afetados | o que aconteceu, por quanto tempo, se algo deles foi afetado, o que fazer | ao fim, se houve impacto percebido; quem abriu caso de suporte (**Casos de suporte**) recebe o aviso pela skill `suporte`, já ao estabilizar |
 | Cliente ou contratante | resumo do post-mortem e ações, conforme o contrato (prazo de aviso, SLA) | conforme o contrato |
 | Equipe | post-mortem e ações com responsável | ao fim |
 | Terceiros envolvidos | fornecedor cuja falha causou o incidente, parceiro afetado | quando couber |

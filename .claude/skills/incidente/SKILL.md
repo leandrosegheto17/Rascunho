@@ -17,6 +17,7 @@ Liste `.specs/incidentes/`. Em andamento são os que não têm `Encerrado: sim` 
 - Um ou mais: pergunte via `AskUserQuestion` qual retomar, com a opção **Incidente novo**.
 - Incidente novo: pasta `.specs/incidentes/<AAAA-MM-DD>-<slug>/` (data da detecção, slug curto em kebab-case pelo sintoma, ex.: `2026-10-23-checkout-500`); se existir, acrescente `-2`. Nunca sobrescreva outra pasta.
 - **Vindo da skill `bug`** (saída "grave em produção"): o `relato.md` do bug é o ponto de partida da triagem; na fase 6, use a mesma pasta do bug.
+- **Vindo do suporte** (skill `suporte`, ou casos ligados depois): as palavras da pessoa são o ponto de partida da triagem (**Origem do relato** `demanda DEM-NNN`). Os casos ligados ficam em **Casos de suporte** no `incidente.md`; as mensagens às pessoas atendidas saem pela skill `suporte` (modelo "falha conhecida" durante, "entrega" ao estabilizar), sem contato no git.
 
 ## 2. Descobrir a fase
 

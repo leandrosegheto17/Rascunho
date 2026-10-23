@@ -68,7 +68,7 @@ Se o usuário descreveu o que quer em texto livre (ex.: "o login quebrou"), esco
 | 25 | Escolha de tecnologia | `tecnologia`, `stack` | **Pronto** | skill `escolha-tecnologia` |
 | 27 | Avaliação de projeto de terceiros | `avaliar`, `terceiros` | **Pronto** | skill `avaliar-terceiros` |
 | 30 | Automação de processo | `automacao`, `automatizar` | **Pronto** | skill `automacao` |
-| 32 | Suporte ao cliente | `suporte` | Em preparação | skill `demandas` (registro, duplicados, aviso ao autor, encaminhamento ao `bug`) |
+| 32 | Suporte ao cliente | `suporte`, `atendimento` | **Pronto** | skill `suporte` |
 
 Ao construir um fluxo novo, atualize a coluna "Situação" e a skill aqui.
 

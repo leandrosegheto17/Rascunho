@@ -518,6 +518,37 @@
       ],
       "usado_em": ".claude/skills/solicitacao/"
     },
+    {
+      "nome": "suporte (wshobson on-call-handoff-patterns)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/wshobson/agents",
+      "commit": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+      "arquivos_origem": [
+        "plugins/incident-response/skills/on-call-handoff-patterns/SKILL.md",
+        "plugins/incident-response/skills/on-call-handoff-patterns/references/details.md"
+      ],
+      "usado_em": ".claude/skills/suporte/"
+    },
+    {
+      "nome": "suporte (anthropic-skills internal-comms)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/anthropics/skills",
+      "commit": "dbd4588f9e1033efb41dad4bef2f7947c8993d44",
+      "arquivos_origem": [
+        "skills/internal-comms/SKILL.md",
+        "skills/internal-comms/examples/faq-answers.md",
+        "skills/internal-comms/examples/general-comms.md"
+      ],
+      "usado_em": ".claude/skills/suporte/"
+    },
+    {
+      "nome": "suporte (legado: bug-documentation)",
+      "tipo": "adaptado",
+      "origem": ".claude_legado",
+      "commit": "15a6ad1",
+      "arquivos_origem": [".claude_legado/skills/bug-documentation/SKILL.md"],
+      "usado_em": ".claude/skills/suporte/"
+    },
     { "nome": "clone .tlc", "tipo": "referencia", "pasta": ".tlc", "origem": "https://github.com/tech-leads-club/agent-skills" },
     { "nome": "clone .superpowers", "tipo": "referencia", "pasta": ".superpowers", "origem": "https://github.com/obra/superpowers" },
     { "nome": "clone .speckit", "tipo": "referencia", "pasta": ".speckit", "origem": "https://github.com/github/spec-kit" },

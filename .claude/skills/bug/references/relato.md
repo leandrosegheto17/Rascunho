@@ -30,7 +30,7 @@ Urgência: **agora** (hotfix) · **próxima liberação** · **quando houver esp
 
 - **Slug**: <slug> · **Data**: <AAAA-MM-DD>
 - **Relatado por**: <pessoa ou canal> · **Fonte**: <colado | URL (host, aberto ou recusado) | teste | monitoramento>
-- **Chamado por**: <nenhum | incidente <id> | auditoria <achado> | suporte <chamado> | demanda <DEM-NNN>>
+- **Chamado por**: <nenhum | incidente <id> | auditoria <achado> | suporte <DEM-NNN> | demanda <DEM-NNN>>
 - **Devolver após**: <— | verificação | liberação | fechamento>
 
 ## Relato

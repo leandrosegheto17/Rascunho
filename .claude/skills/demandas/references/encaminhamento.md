@@ -21,6 +21,8 @@ Escolha pelo que a demanda **pede de fato** (o problema), não pela palavra que 
 | produto ou público novo, fora do propósito deste produto | `projeto-novo` (outro repositório) ou recusar por coerência | a ideia vai para a descoberta de outro projeto, com `encaminhamento.md` como ponto de partida | `decisao.md` do outro projeto |
 | pedido de quem decide e cobra, com prazo | skill `solicitacao` (fluxo 11) | troque o **Tipo** para `solicitação` (linha no **Histórico**); ela começa na fase 2 com o que já foi registrado | conforme o destino |
 
+**Do suporte (skill `suporte`, fluxo 32)**, o `bug` recebe o `relato.md` **com** a Triagem (o suporte já reproduziu com a pessoa), **Chamado por** `suporte DEM-NNN` e **Devolver após** `liberação`: o bug começa na reprodução e devolve com um `fechamento.md` curto, deixando o aviso à pessoa a cargo do suporte (contrato em `bug/references/fases.md`). O artefato de fim é o mesmo `fechamento.md`. Caso de suporte ligado a um `incidente` passa a `entregue` com `Estável: sim` no `incidente.md`, sem esperar o `Encerrado: sim`.
+
 Ajuda na tela, texto, e-mail do produto e configuração são comportamento do produto: `feature`. Refatoração (`refatoracao`) raramente vem de demanda externa; quando a demanda revela estrutura que impede a mudança, é a `feature` ou o `legado` que chamam a refatoração.
 
 **Feature ou legado?** Siga o que o projeto já registrou (`inventario.md`, contexto do projeto, demandas anteriores). Sem registro, pergunte via `AskUserQuestion`.

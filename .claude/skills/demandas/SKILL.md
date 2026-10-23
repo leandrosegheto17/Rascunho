@@ -13,6 +13,7 @@ Princípio: **um registro só, com as palavras de quem pediu e o mínimo de dado
 
 - `.specs/demandas/registro.md`: uma linha por demanda (índice e painel).
 - `.specs/demandas/DEM-NNN-<slug>/demanda.md`: a demanda (comum aos três fluxos), mais o arquivo do fluxo dono (`sugestao.md`, `solicitacao.md`, `suporte.md`) e, se houver, `encaminhamento.md`.
+- `.specs/demandas/base-conhecimento.md`: respostas do suporte, problemas conhecidos e combinados (prazos de resposta, alçadas), sem dado pessoal; mantida pela skill `suporte` e consultada também ao **Procurar**.
 - `.specs/demandas/contatos.md` e `.specs/demandas/*/evidencias/`: **fora do git**. Na primeira demanda do projeto, garanta as duas linhas no `.gitignore` e mostre o diff.
 
 ## Operações
@@ -31,7 +32,7 @@ Cada operação é chamada pelo fluxo dono no ponto dele. Toda mudança em `dema
 
 Em ordem, parando quando a resposta ficar clara:
 
-1. **Registro**: títulos, palavras do autor e o problema (seção do arquivo do fluxo) de todas as demandas, inclusive fechadas. Compare o **problema**, não a solução pedida: "exportar para Excel" e "quero levar os dados para a contabilidade" podem ser a mesma dor.
+1. **Registro**: títulos, palavras do autor e o problema (seção do arquivo do fluxo) de todas as demandas, inclusive fechadas, e as entradas de `base-conhecimento.md`, se houver. Compare o **problema**, não a solução pedida: "exportar para Excel" e "quero levar os dados para a contabilidade" podem ser a mesma dor.
 2. **Trabalho aberto ou feito** em `.specs/`: `features/`, `bugs/`, `redesign/`, `integracoes/`, `automacoes/`, `performance/`.
 3. **Produto**: `.specs/projeto/inventario.md` (skill `inventario`, se faltar e houver código) e o agente `leitor-codigo` com a capacidade procurada; documentação de uso, se houver.
 

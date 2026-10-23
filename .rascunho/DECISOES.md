@@ -789,23 +789,57 @@ Decisões por analogia:
 
 Orquestrador: skill `solicitacao`. `/fluxo` marca o 11 como pronto. **Pendente:** teste real (ex.: num projeto de exemplo com `inventario.md`, o gestor pede "relatório de vendas por vendedor até o dia 30, para a reunião de metas": data pedida registrada sem promessa; esclarecimento com 4 `CA-NN` e um desejável (exportar); confirmação por escrito simulada; triagem acha uma consulta parecida existente; opções mínima × completa; acordo com 3 marcos e o exportar adiado como DEM nova; `feature` com o Specify traduzindo os `CA-NN` sem repetir perguntas; um desvio no reconhecimento avisado antes do marco; aceite com um ajuste de rótulo e um pedido novo virando DEM; conferindo que nenhum nome ou contato entra no git e nenhuma mensagem sai sem confirmação).
 
+## Passo 29: fluxo 32, suporte ao cliente
+
+**Status:** construído em 2026-10-23 por subagente, seguindo `ROTEIRO-CONSTRUCAO.md`; decisões tomadas por analogia com `sugestao`, `solicitacao`, `demandas`, `bug` e `incidente`, pendentes de revisão do usuário. Último dos 21 fluxos: `/fluxo` tem todos **Pronto**.
+
+Decisões por analogia:
+
+- **Irmã da `sugestao` e da `solicitacao`**: mesma forma (orquestrador com 9 fases, tabela **Fases** em `suporte.md`, fase descoberta pela primeira não feita nem dispensada, com exceções pela situação de `demanda.md`; saídas; dispensas por veredito em `fases.md`) e mesma base (skill `demandas` nas fases 1, 3, 5, 6, 7 e 9). O arquivo `suporte.md`, já reservado, fica em `.specs/demandas/DEM-NNN-<slug>/`. Nenhum agente novo.
+- **Base de conhecimento em `.specs/demandas/base-conhecimento.md`**, e não em `.specs/suporte/`: a contagem de casos repetidos vem do registro de demandas, a busca de duplicados da `demandas` passa a olhar também a base, e não se cria pasta nova. Entradas `BC-NNN` (ID livre) no formato pergunta em uma frase e resposta em uma ou duas, com fonte oficial e incerto marcado (do `internal-comms`), **Tag**, **Contagem**, **Casos**, **Vale para** e **Revisada em**; tabela **Problemas conhecidos** (bugs abertos com contorno); **Combinados** do projeto no topo (prazo da próxima notícia por prioridade, espera por resposta, janela de repetição, alçadas por papel e canal, sem nomes). Entrada que deixou de valer não se apaga.
+- **Tags de causa raiz com vocabulário fixo** (`clareza`, `documentacao`, `defeito`, `conta`, `cobranca`, `terceiro`, `desempenho`, `falta-funcao`, `expectativa`, `seguranca`), cada uma com o sinal para o produto, para a contagem funcionar. **3 ou mais casos com a mesma causa e tema** numa janela de 90 dias (`PREMISSA`), como a recorrência da skill `bug` e o `bug-documentation` do legado, viram sugestão interna (autor `equipe`, **Originada de**, os casos como evidência) na skill `sugestao`, ou os autores entram como **Interessados** de uma sugestão existente (que sai de observação): assim "pedidos recorrentes viram prioridade".
+- **Tipos** do desenho (dúvida de uso, bug, pedido de feature, cobrança, conta, segurança); reclamação é tom, não tipo. **Prioridade P0–P3 pela escala da skill `bug`**, vista por quem usa, justificada por impacto e contorno, nunca pela insistência. Primeira resposta diz o prazo da **próxima notícia**, nunca o da solução.
+- **Verificação rápida** em quatro camadas (base, casos anteriores pela `demandas`, bugs abertos e runbook, incidentes abertos), com **falha em andamento** detectada por incidente aberto ou 3 casos iguais em poucas horas (`PREMISSA`) ou liberação recente na função: o caso liga ao incidente em vez de diagnosticar a pessoa.
+- **Acesso mínimo e registrado**: reproduzir com dados de exemplo primeiro; conta real só se preciso, em modo leitura, pelo meio previsto do projeto, com confirmação antes de cada acesso e linha na tabela **Acessos** (`A-N`, o quê sem o dado visto, onde, por quê, como, quem autorizou). Escrita na conta é ação externa com valor anterior e como desfazer; correção em massa ou por script é mudança de comportamento (skill `bug` ou `feature`, com teste). Nunca pedir senha, código de verificação ou dado de cartão.
+- **Bug pelo contrato do fluxo 32 que a skill `bug` já tinha**: `relato.md` **com** a triagem (o suporte reproduziu com a pessoa), **Chamado por** `suporte DEM-NNN`, **Devolver após** `liberação`; a `bug` começa na reprodução e devolve com `fechamento.md` curto deixando o aviso ao suporte. Não o contrato "vinda de demanda" (sem triagem, devolver após fechamento), que fica para sugestão e solicitação. A pessoa recebe contorno e expectativa honesta, sem data inventada; mais casos do mesmo bug viram **Interessados**.
+- **Incidente**: caso ligado sai de espera com `Estável: sim` no `incidente.md` (a pessoa não espera o post-mortem); os casos ficam em **Casos de suporte** do incidente e são avisados pela skill `suporte`. **Segurança** em três saídas: exploração ou vazamento agora → `incidente`; defeito localizado → `bug` P0/P1; suspeita ampla → `auditoria-seguranca`. Sempre antes do diagnóstico e sem detalhe da falha à pessoa.
+- **Comunicação** com regras próprias em `suporte/references/mensagens.md` (o mais importante primeiro, sem culpar ninguém, admitir o erro nosso com desculpa curta, incerteza dita, posição oficial passada a quem decide, uma mensagem de perguntas só) e modelos de solução, contorno, falha conhecida, escalonamento, lembrete, decisão negativa, mais os da `demandas`. Toda mensagem enviada só com confirmação.
+- **Confirmação** fecha só com "resolveu" ou prazo vencido: espera de 3 dias úteis com um único lembrete (`PREMISSA`, ajustável nos combinados); não resolveu volta ao diagnóstico sem repetir perguntas; na terceira volta, oferecer escalar. Caso reaberto depois de fechado é demanda nova com **Originada de**.
+- **Escalonamento acionável de qualquer fase** (2, 4, 5): a fase 8 começa `pendente` e só entra na conta da fase atual quando `em andamento`; sem uso, `dispensada — não precisou`. **Pacote de passagem** adaptado do `on-call-handoff-patterns` (situação agora, o que sabemos, o que já foi feito, o que precisa ser decidido, quem é quem, retorno), sem dado pessoal no git e com **Retorno esperado em**. Cobrança, contrato, legal, pedido do titular (LGPD) e acesso de terceiro à conta vão a quem decide; a sessão não promete valor nem interpreta a lei.
+- **Modelo:** Opus nas fases 2, 4, 5 e 8 (triagem, diagnóstico, decisão de resolução, passagem); Sonnet em 1, 3, 6, 7 e 9. Em P0, nenhuma troca de modelo é pedida e a aprovação é curta (como nas fases 1 a 3 do `incidente`).
+- **Ajustes em peças existentes:** `/fluxo` (32 pronto, atalho `atendimento`); `demandas` (tabela de tipos e campo **Fluxo** apontando a skill, `base-conhecimento.md` em "Onde fica" e na camada do registro do **Procurar**, nota do contrato do suporte com o `bug` e do `Estável: sim` do incidente em `encaminhamento.md`, modelos do fluxo dono em `mensagens.md`); `bug` (frase: do suporte o relato chega com triagem; `relato.md` com `suporte <DEM-NNN>`); `incidente` (entrada "vindo do suporte", campos **Origem do relato** `demanda DEM-NNN` e **Casos de suporte**, aviso pela skill `suporte` em `comunicacao.md`); `sugestao` (saída "é suporte" passa à skill `suporte` quando a pessoa tem um problema).
+
+| Fases | Peça | Origem |
+|---|---|---|
+| 1 Recebimento | skill `demandas` (registrar, busca rápida, aviso) + modelo de `suporte.md` em `suporte/references/fases.md` + mensagem "recebimento" | reaproveitada; nova |
+| 2 Classificação | `suporte/references/atendimento.md` (tipos, P0–P3 da skill `bug`, combinados) | nova; escala do `bug` |
+| 3 Verificação rápida | `atendimento.md` + `base-conhecimento.md` + `demandas` (procurar) + `.specs/bugs/` e `.specs/incidentes/` | nova; reaproveitadas |
+| 4 Diagnóstico | `atendimento.md` (reprodução, acesso mínimo com tabela **Acessos**, perguntas uma vez) + `leitor-codigo` | nova |
+| 5 Resolução | `atendimento.md` + `demandas` (encaminhar) + skill `bug` (contrato do fluxo 32) | nova; relato com o rigor do legado `bug-documentation` |
+| 6 Comunicação | `suporte/references/mensagens.md` + `demandas` (avisar) | nova; princípios do `internal-comms` (Apache 2.0) |
+| 7 Confirmação | laço "pessoa não responde" em `fases.md` + mensagens de lembrete e fechamento | nova |
+| 8 Escalonamento | `suporte/references/escalonamento.md` (alçadas, pacote de passagem) | adaptada do wshobson `on-call-handoff-patterns` (MIT) |
+| 9 Aprendizado | `suporte/references/base-conhecimento.md` (tags, contagem, base, sugestão interna) + `sugestao` + `demandas` | nova; limiar de 3 do legado `bug-documentation`; formato pergunta e resposta do `internal-comms` |
+
+Orquestrador: skill `suporte`. `/fluxo` marca o 32 como pronto; nenhuma skill diz mais "em preparação" sobre outro fluxo. **Pendente:** teste real (ex.: num projeto de exemplo com `inventario.md`, três casos — "não acho onde muda a senha" (dúvida de uso, vira `BC-001`; dois casos depois com a mesma tag `clareza` geram a sugestão interna no terceiro); "fui cobrado duas vezes" (cobrança, acesso de leitura registrado, escalonamento com pacote de passagem e retorno); "o relatório sai em branco desde ontem" (bug reproduzido, relato com triagem à skill `bug`, contorno à pessoa, devolução após a liberação e confirmação) —, conferindo que nenhum nome, contato ou dado da conta entra no git e que nenhuma mensagem sai sem confirmação). O "Estado ao fim da rodada" abaixo ainda descreve a primeira rodada (4 de 21) e precisa ser atualizado pela sessão principal.
+
 ---
 
 ## Estado ao fim da rodada (2026-10-23)
 
-**Fluxos prontos (4 de 21):** 1 Projeto novo (fases 1 a 11), 2 Uso próprio, 3 Feature em projeto IA, 4 Feature em legado. `/fluxo` com menu em dois cliques e atalhos.
+**Fluxos prontos (21 de 21):** os 4 da rodada anterior e, nesta rodada (passos 13 a 29, construídos em sequência por um agente por fluxo, revisados e commitados um a um): 12 Bug, 9 Incidente, 17 Spike, 25 Escolha de tecnologia, 16 Auditoria de segurança, 24 Revisão de código, 13 Refatoração, 5 Performance, 14 Documentar, 27 Avaliar terceiros, 6 Integração, 30 Automação, 7 Redesign, 8 Aprendizado, 10 Sugestão (com a peça comum `demandas`), 11 Solicitação, 32 Suporte. Material de terceiros escolhido em `.rascunho/REAPROVEITAMENTO.md` e adaptado com registro em `fontes.json`; roteiro de construção em `.rascunho/ROTEIRO-CONSTRUCAO.md`.
 
-**Testado de verdade:** fluxo 1 nas fases 1 a 6 (teste 1, arquivado em `.rascunho/teste-1-cuidados/`); scripts com 26 testes automatizados; trava de testes em uso nesta sessão.
+**Testado de verdade:** fluxo 1 nas fases 1 a 6 (teste 1). Os 17 fluxos novos foram percorridos só no papel. Scripts com 74 testes automatizados (inclui o teste estrutural das skills, `varredura-seguranca.py`, `propriedade-git.py` e `comparar-visual.mjs`, que exige `node` no PATH).
 
 **Próximas rodadas:**
 
-1. Testar de ponta a ponta a construção, a verificação e a liberação (fluxos 1 a partir da fase 7, 3 e 4) num projeto real.
-2. Próximo fluxo sugerido: 12 Correção de bug; depois 24 Revisão de código.
+1. Teste real dos fluxos, começando pelos de base: bug, revisão de código, spike e escolha de tecnologia. Cada passo 13 a 29 descreve o teste sugerido.
+2. Conferir as `PREMISSA` legais (LGPD/ANPD em incidente, integração e avaliação de terceiros) com uma pessoa antes de uso real.
 3. Fase 12 do fluxo 1 (operação e aprendizado).
 4. Confirmar o hook de atualizações numa sessão aberta do zero.
 5. Atualizar o superpowers para 7.x (via `/plugin`).
 6. Empacotar como plugin quando estável (rules viram skill ou hook).
-7. Antes de qualquer push deste repositório: `python .claude/scripts/trava-testes.py --rodar` (a trava exige o commit verde).
+7. Antes de qualquer push deste repositório: olhar o commit `d273d66` (senhas de teste e URL de postgres no histórico, achadas pela varredura) e rodar `python .claude/scripts/trava-testes.py --rodar`.
 
 Mudança em relação ao passo 1: as skills `brainstorming`, `writing-plans`, `executing-plans` e `subagent-driven-development` do superpowers **não** entram no fluxo 1, porque duplicariam `descoberta` e `tlc-spec-driven`. Do superpowers ficam `systematic-debugging`, `using-git-worktrees`, `verification-before-completion` e `finishing-a-development-branch`.
 

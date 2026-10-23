@@ -87,7 +87,8 @@ Indício de invasão, acesso indevido ou vazamento:
 - **Sintoma**: <...> · **Início provável**: <hora> · **Erro literal**: <...>
 - **Afetados**: <quem, quantos, % do tráfego> · **Impacto**: <negócio, dados, dinheiro>
 - **Mudanças recentes**: <liberação, configuração, terceiro | nenhuma encontrada>
-- **Origem do relato**: <colado | link (host) | bug <slug>>
+- **Origem do relato**: <colado | link (host) | bug <slug> | demanda DEM-NNN>
+- **Casos de suporte**: <— | DEM-NNN, DEM-NNN (avisados pela skill `suporte`)>
 
 ## Evidências
 
