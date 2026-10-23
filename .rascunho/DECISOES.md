@@ -165,7 +165,7 @@ Reforços aprovados (1, 2 e 3): a regra vale também dentro do `tlc-spec-driven`
 
 ## Conclusão desta rodada (2026-10-23)
 
-Teste encerrado na decisão, por escolha do usuário.
+Teste encerrado por escolha do usuário. A sessão de teste chegou a gerar a spec do MVP (fase 6, `tlc-spec-driven`): `spec.md` com 9 histórias e 61 critérios EARS, títulos de seção em inglês (exigidos pelo validador) e conteúdo em português; `validate_spec.py` passou sem erros nem avisos. Artefatos arquivados em `.rascunho/teste-1-cuidados/`. Branch `novo-fluxo-claude` juntada na `main` local (sem push).
 
 **Pronto e testado:** fases 1 a 5 e decisão do fluxo 1 (skills `fluxo`, `projeto-novo`, `descoberta`, `viabilidade-tecnica`, `plano-comercial`, `decisao`), agentes (`leitor-codigo` testado isoladamente; `pesquisador` usado no teste), rules por `paths`, perguntas com opções, verificação de atualizações (script, skill e hook simulado).
 
