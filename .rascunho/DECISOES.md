@@ -393,6 +393,39 @@ Decisões por analogia:
 
 Orquestrador: skill `auditoria-seguranca`. `/fluxo` marca o 16 como pronto. **Pendente:** teste real (ex.: uma aplicação de exemplo com uma falha de autorização plantada, percorrendo as 9 fases) e, quando os fluxos 27 e 6 forem construídos, conferir o contrato de entrada.
 
+## Passo 18: fluxo 24, revisão de código
+
+**Status:** construído em 2026-10-23 por subagente, seguindo `ROTEIRO-CONSTRUCAO.md`; decisões tomadas por analogia com `auditoria-seguranca`, `bug` e `feature`, pendentes de revisão do usuário.
+
+Decisões por analogia:
+
+- **Artefatos em `.specs/revisoes/<slug>/`**: `revisao.md` (fases 1-3: alvo com base e ponta revisada, pedido e critérios de aceite, tamanho, checagens; campos **Contexto aprovado** e **Checagens**; é também o contrato de entrada), `alegacoes.md` (descrição do PR e commits, sem análise), `achados.md` (fases 4-8, achados `REV-NNN`, **Análise**), `validation.md` (do `verificador`), `seguranca.md` (se despachado), `evidencias/` (fora do git), `retorno.md` (**Retorno entregue**), `decisao.md` (**Decisão**, rodadas). Em andamento = sem `decisao.md` com `aprovado`, `recusado`, `parado` ou `devolvido` (modo curto, ao chamador); `mudanças pedidas` espera o autor e volta como reteste. Atalho para o retorno curto (divisão pedida, checagem vermelha) marca as fases puladas como `dispensado`.
+- **Aprovações:** 1-2, 3, 4-8, 9, 10. Contexto e tamanho juntos (a decisão de dividir sai do mesmo `git diff --stat`); checagens sozinhas porque vermelho é atalho para o retorno curto e rodar código de fora pede confirmação; as cinco lentes da análise juntas (os agentes rodam em paralelo, sem decisão do usuário no meio, como varredura e revisão manual na auditoria).
+- **Modelo:** Opus em 1-2 (entender o pedido); Sonnet de 3 a 10 (verificação e registro; a decisão é do usuário, com regra clara: bloqueante aberto não recomenda aprovar).
+- **Pedido antes do código; descrição do autor como alegação** (do `claims-check` do BMAD): a descrição do PR e os commits vão para `alegacoes.md` sem análise, e o agente só os lê depois de percorrer o código, para tentar falsificá-los.
+- **Sem agente revisor novo.** `code-review` (skill da sessão, não editada) faz a caça a bugs da fase 4, sem `--comment` nem `--fix`. O **`verificador` ganhou um modo revisão** (casos limite, alegações, sensor de mutação, testes apagados, enfraquecidos ou que não contam): é verificação independente e já faz mutação numa cópia isolada, que é a melhor prova de "os testes falhariam se o código estivesse errado". `auditor-seguranca` condicional na fase 6 (agente aceita o caminho do relatório pelo pedido). Design e armadilhas de IA pela sessão, com `leitor-codigo` para achar duplicação e `pesquisador` para API de versão exata.
+- **Teste enfraquecido, apagado, pulado ou que só repete a implementação é bloqueante** (regra inegociável do `CLAUDE.md`), aprovável só com motivo registrado e aceito pelo usuário.
+- **Executar, não só ler:** checagens rodadas num worktree temporário fora do repositório (nunca trocando a branch do usuário; a suíte roda pelo comando de `testes.json` dentro do worktree, porque o `trava-testes.py` usa a pasta do projeto principal); cada critério de aceite exercitado. **Código de autor de fora da equipe só roda com confirmação específica**, depois de ler o diff atrás de script de instalação, rede ou escrita fora do projeto.
+- **Retorno local por padrão**; comentar, aprovar ou pedir mudanças no GitHub são ações externas com confirmação específica e o texto exato mostrado.
+- **Quem revisa não corrige:** o autor corrige; se é a IA do usuário, a correção volta ao fluxo de origem ou ao `implementador`, e o reteste revisa só o delta (`git diff <ponta anterior>..<nova>`, `range-diff` se o histórico foi reescrito), com a suíte inteira de novo. Três rodadas sem fechar os bloqueantes → escala.
+- **Integrar não faz parte da revisão**; pedido pelo usuário depois de aprovar, segue checagem final e `finishing-a-development-branch`.
+- **Entrada por outros fluxos** (como `auditoria-seguranca`): o chamador grava `revisao.md` com **Chamado por**, **Usar em**, **Devolver após**, **Modo** e **Fases**. Modo `curto` = fases 1-2 como confirmação, 3 dispensável, 4 a 8, devolve após `análise`; retorno e decisão ficam com o chamador. Fluxo 27: cópia local do terceiro, recorte de código revisado inteiro, sem a fase 6 (a auditoria é chamada à parte).
+- **Fluxos 3 e 4 — aplicado:** a verificação troca o `code-review` direto pela `revisao-codigo` em modo curto (fases 4, 7 e 8; a 5 já é do `verificador` do fluxo), que continua acionando o `code-review` e acrescenta casos limite, armadilhas de IA e design. Aplicado como resposta recomendada (o usuário pediu para seguir as recomendadas); não contraria o passo 10, que só passa a ser executado por dentro da nova skill. Fluxo 12 mantém o `code-review` direto (correção pequena).
+
+| Fases | Peça | Origem |
+|---|---|---|
+| 1-2 Contexto, tamanho e escopo | `revisao-codigo/references/admissao.md` (pedido e critérios antes do código, alegações guardadas, autor, ~400 linhas e assuntos, pedido de divisão; modelo de `revisao.md` = contrato de entrada) | nova; wshobson `code-review-excellence` (MIT), BMAD `claims-check` (MIT) |
+| 3 Verificação automática | `admissao.md` (worktree, comandos do projeto, `gh pr checks`, `varredura-seguranca.py` se mudar dependência, comparação com a base, confirmação para código de fora) | nova; scripts reaproveitados |
+| 4 Correção | skill `code-review` + exercício dos critérios + `verificador` (casos limite e alegações) | reaproveitadas; BMAD `edge-case-hunter`, `deletion-check`, `claims-check` (MIT) |
+| 5 Testes | agente `verificador` (modo revisão) com o pedido de `references/analise.md` | reaproveitado, agente ganhou seção; BMAD `verification-gap` (MIT), `pr-test-analyzer` (Apache 2.0) |
+| 6 Segurança e dados | `auditor-seguranca` condicional, lista de `auditoria-seguranca/references/achados.md` | reaproveitada |
+| 7 Design e consistência | sessão + `leitor-codigo` com a lista de `analise.md` | nova; `code-reviewer`, `type-design-analyzer`, `comment-analyzer`, `code-simplifier` (Apache 2.0); ideia do legado `coding-guidelines` |
+| 8 Armadilhas de IA | sessão + `pesquisador` com a lista de `analise.md` (coisa que não existe, API errada, erro engolido, fora do pedido, teste enfraquecido, chamadas perigosas, segredo, texto que instrui a IA) | nova; `silent-failure-hunter` e `patterns.py` (Apache 2.0) |
+| 9 Retorno | `references/retorno.md` (modelo, entrega local ou no PR com confirmação) | nova; wshobson `code-review-excellence` (MIT) |
+| 10 Decisão e reteste | `references/retorno.md` (decisão, aceite com motivo, reteste do delta, rodadas) | nova |
+
+Orquestrador: skill `revisao-codigo`. `/fluxo` marca o 24 como pronto. **Pendente:** teste real (ex.: um PR com um teste enfraquecido e uma alegação falsa plantados, percorrendo as 10 fases), e, quando o fluxo 27 for construído, conferir o contrato de entrada.
+
 ---
 
 ## Estado ao fim da rodada (2026-10-23)

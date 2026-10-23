@@ -220,6 +220,44 @@
       ],
       "usado_em": ".claude/skills/auditoria-seguranca/ e .claude/scripts/varredura-seguranca.py"
     },
+    {
+      "nome": "revisao-codigo (bmad code-review)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/bmad-code-org/BMAD-METHOD",
+      "commit": "61e01f82644c4bb533750cfa0d6d61ab61d2cc9b",
+      "arquivos_origem": [
+        "skills/bmad-code-review/references/claims-check.md",
+        "skills/bmad-code-review/references/deletion-check.md",
+        "skills/bmad-code-review/review-prompts/edge-case-hunter.md",
+        "skills/bmad-code-review/review-prompts/verification-gap.md"
+      ],
+      "usado_em": ".claude/skills/revisao-codigo/ e .claude/agents/verificador.md"
+    },
+    {
+      "nome": "revisao-codigo (pr-review-toolkit e security-guidance)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/anthropics/claude-plugins-official",
+      "commit": "465f09344424225c25d438f2e052732c3d688d2f",
+      "arquivos_origem": [
+        "plugins/pr-review-toolkit/agents/silent-failure-hunter.md",
+        "plugins/pr-review-toolkit/agents/pr-test-analyzer.md",
+        "plugins/pr-review-toolkit/agents/comment-analyzer.md",
+        "plugins/pr-review-toolkit/agents/type-design-analyzer.md",
+        "plugins/pr-review-toolkit/agents/code-reviewer.md",
+        "plugins/pr-review-toolkit/agents/code-simplifier.md",
+        "plugins/pr-review-toolkit/commands/review-pr.md",
+        "plugins/security-guidance/hooks/patterns.py"
+      ],
+      "usado_em": ".claude/skills/revisao-codigo/"
+    },
+    {
+      "nome": "revisao-codigo (wshobson code-review-excellence)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/wshobson/agents",
+      "commit": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+      "arquivos_origem": ["plugins/developer-essentials/skills/code-review-excellence/SKILL.md"],
+      "usado_em": ".claude/skills/revisao-codigo/"
+    },
     { "nome": "clone .tlc", "tipo": "referencia", "pasta": ".tlc", "origem": "https://github.com/tech-leads-club/agent-skills" },
     { "nome": "clone .superpowers", "tipo": "referencia", "pasta": ".superpowers", "origem": "https://github.com/obra/superpowers" },
     { "nome": "clone .speckit", "tipo": "referencia", "pasta": ".speckit", "origem": "https://github.com/github/spec-kit" },

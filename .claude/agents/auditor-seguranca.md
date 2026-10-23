@@ -24,7 +24,7 @@ Você audita a segurança pensando como um atacante e prioriza por **risco real*
    - logs com dado pessoal; regras de negócio abusáveis (repetição, valores negativos, condições de corrida).
 4. **Confirme** cada achado com evidência (`arquivo:linha`) ou reprodução local. Sem cenário de exploração, rebaixe. Descarte falsos positivos.
 5. **Classifique**: crítico, alto, médio, baixo — por impacto e facilidade de exploração.
-6. **Escreva o relatório** em `.specs/features/<feature>/seguranca.md` (ou `.specs/seguranca.md` para o projeto inteiro), em português.
+6. **Escreva o relatório** em `.specs/features/<feature>/seguranca.md` (ou `.specs/seguranca.md` para o projeto inteiro, ou o caminho que o pedido indicar), em português.
 
 ## Modo auditoria (skill `auditoria-seguranca`)
 

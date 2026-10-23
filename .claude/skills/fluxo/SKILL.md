@@ -64,7 +64,7 @@ Se o usuário descreveu o que quer em texto livre (ex.: "o login quebrou"), esco
 | 14 | Documentar projeto existente | `documentar`, `docs` | Em preparação | `leitor-codigo` |
 | 16 | Auditoria de segurança | `seguranca`, `auditoria` | **Pronto** | skill `auditoria-seguranca` |
 | 17 | Prova de conceito (spike) | `spike`, `poc` | **Pronto** | skill `spike` |
-| 24 | Revisão de código | `revisao`, `review` | Em preparação | `code-review` |
+| 24 | Revisão de código | `revisao`, `review` | **Pronto** | skill `revisao-codigo` |
 | 25 | Escolha de tecnologia | `tecnologia`, `stack` | **Pronto** | skill `escolha-tecnologia` |
 | 27 | Avaliação de projeto de terceiros | `avaliar`, `terceiros` | Em preparação | `leitor-codigo`, `auditor-seguranca` |
 | 30 | Automação de processo | `automacao`, `automatizar` | Em preparação | — |

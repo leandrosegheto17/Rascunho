@@ -17,6 +17,8 @@ paths:
   - `.specs/spikes/<slug>/`: prova de conceito (skill `spike`): `spike.md`, `resultado.md`, `registro.md`; o código fica em `codigo/`, fora do git (`.specs/spikes/*/codigo/` no `.gitignore`). Em andamento = `registro.md` sem **Destino do código**.
   - `.specs/escolhas/<slug>/`: escolha de tecnologia (skill `escolha-tecnologia`): `escolha.md` (decisão, modo, critérios e estado) e `avaliacao.md` (opções, comparativo com fonte e data da consulta, teste prático, riscos, justificativa). Em andamento = `escolha.md` sem **Registro**.
   - `.specs/decisoes/ADR-NNN-<slug>.md`: registros de decisão (ADR), quando o projeto não tiver pasta própria de ADR. ADR aceito não se edita; troca é ADR novo que substitui. No modo rigoroso, cada ADR tem uma entrada `AD-NNN` curta em `.specs/STATE.md` apontando para ele.
+  - `.specs/seguranca/<AAAA-MM-DD>-<slug>/`: auditoria de segurança (skill `auditoria-seguranca`): `escopo.md`, `ameacas.md`, `achados.md`, `correcoes.md`, `relatorio.md`; saídas brutas em `evidencias/`, fora do git.
+  - `.specs/revisoes/<slug>/`: revisão de código (skill `revisao-codigo`): `revisao.md`, `alegacoes.md`, `achados.md`, `validation.md`, `seguranca.md`, `retorno.md`, `decisao.md`.
   - `.specs/runbook.md`: roteiro de resposta a incidentes do projeto (skill `incidente`, fase 7), com data da última verificação.
   - `.specs/features/<feature>/` e `.specs/STATE.md`: fases 6 a 10 (`tlc-spec-driven`).
 - **Idioma:** português do Brasil. Nos artefatos do `tlc-spec-driven`, mantenha a estrutura, os nomes de seção que os scripts de validação procuram e os IDs (ex.: `AUTH-01`, `AD-001`, palavras-chave EARS como `SHALL`); traduza o texto livre. Se um script de validação reclamar de seção ausente, use o nome que ele espera.

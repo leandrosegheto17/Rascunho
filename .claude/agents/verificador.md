@@ -1,6 +1,6 @@
 ---
 name: verificador
-description: Verificação independente de uma feature concluída contra a spec — cada critério de aceite rastreado até a asserção (arquivo:linha), injeção de falhas numa cópia isolada para provar que os testes pegam erros, e relatório PASS/FAIL em validation.md. Use sempre após o último commit de uma feature (fase 10), nunca pelo mesmo agente que implementou. Não corrige código.
+description: Verificação independente de uma feature concluída contra a spec — cada critério de aceite rastreado até a asserção (arquivo:linha), injeção de falhas numa cópia isolada para provar que os testes pegam erros, e relatório PASS/FAIL em validation.md. Use sempre após o último commit de uma feature (fase 10), nunca pelo mesmo agente que implementou; também na verificação de correção de bug e na revisão de código (skill revisao-codigo). Não corrige código.
 tools: Read, Grep, Glob, Bash, Write
 model: sonnet
 effort: high
@@ -23,6 +23,10 @@ Siga `.claude/skills/tlc-spec-driven/references/validate.md` por inteiro. Em res
 ## Em correção de bug (`.specs/bugs/<slug>/`)
 
 A fonte da verdade são os critérios de aceite de `relato.md`; `causa.md` diz o teste do bug e a causa. Mutação obrigatória: **desfazer a correção** na cópia isolada e confirmar que o teste do bug volta a falhar. Grave `validation.md` na pasta do bug; o passo 7 (`validate_state.py`) não se aplica.
+
+## Em revisão de código (`.specs/revisoes/<slug>/`)
+
+A fonte da verdade são os critérios de aceite de `revisao.md`; o código revisado está no worktree indicado no pedido. Siga o pedido de `.claude/skills/revisao-codigo/references/analise.md` (fase 5), na ordem: critérios, sensor, casos limite, **só então** `alegacoes.md` (descrição do autor, a falsificar), testes apagados, enfraquecidos ou que não contam. Grave `validation.md` na pasta da revisão; o passo 7 não se aplica.
 
 ## Regras
 

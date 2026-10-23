@@ -41,7 +41,7 @@ Liste `.specs/features/`. Em andamento são as que não têm `integracao.md`. Ne
 | 4 Rede de proteção | crie a branch `feature/<nome>`; skill `rede-de-protecao` | Se o ambiente não roda (`arqueologia.md`), fazê-lo rodar vem antes. Caracterize **todo** comportamento do raio de impacto, não só o trecho alterado. |
 | 5 Plano | `tlc-spec-driven`, **Design** e **Tasks** | Código novo **ao lado** do antigo, pelo ponto único de integração de `arqueologia.md`; mudança mínima no código antigo; feature flag quando possível; plano de volta. Refatoração não entra. |
 | 6 Implementação | `tlc-spec-driven`, **Execute**, na branch | Suíte inteira ao fim de cada lote: nenhuma falha nova, e os testes de caracterização continuam passando. |
-| 7 Verificação | agente `verificador`; com PASS, `code-review` no diff; `auditor-seguranca` se tocar login, permissões, pagamento ou dados pessoais | Teste manual dos fluxos vizinhos listados no raio de impacto. |
+| 7 Verificação | agente `verificador`; com PASS, `revisao-codigo` em modo curto (fases 4, 7 e 8; aciona o `code-review`) no diff; `auditor-seguranca` se tocar login, permissões, pagamento ou dados pessoais | Teste manual dos fluxos vizinhos listados no raio de impacto. |
 | 8 Liberação | checagem final (`trava-testes.py --rodar`), integração da branch (merge local ou PR, perguntado via `AskUserQuestion`, com `finishing-a-development-branch`), depois skill `liberacao` | Usa staging e flag conforme `arqueologia.md`. |
 | 9 Registro | veja abaixo | |
 

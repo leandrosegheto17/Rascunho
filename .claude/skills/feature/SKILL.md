@@ -1,6 +1,6 @@
 ---
 name: feature
-description: Orquestra o fluxo de feature em projeto existente feito com IA — pedido (spec), reconhecimento do código, plano, rede de proteção, implementação em branch isolada, verificação (verificador + /code-review) e integração — descobrindo a fase pelos artefatos em .specs/features/<feature>/ e pedindo aprovação a cada fase. Use quando o usuário quiser adicionar uma funcionalidade a um projeto que já existe, ou via /fluxo. Não use para projeto do zero (projeto-novo, uso-proprio) nem para código legado sem testes (fluxo de legado).
+description: Orquestra o fluxo de feature em projeto existente feito com IA — pedido (spec), reconhecimento do código, plano, rede de proteção, implementação em branch isolada, verificação (verificador + revisao-codigo em modo curto) e integração — descobrindo a fase pelos artefatos em .specs/features/<feature>/ e pedindo aprovação a cada fase. Use quando o usuário quiser adicionar uma funcionalidade a um projeto que já existe, ou via /fluxo. Não use para projeto do zero (projeto-novo, uso-proprio) nem para código legado sem testes (fluxo de legado).
 ---
 
 # Feature em projeto existente (fluxo 3)
@@ -46,7 +46,7 @@ Uma linha: "**Feature <nome>, fase N de 7, <fase>.**" Avise a troca de modelo:
 | 3 Plano | `tlc-spec-driven`, fases **Design** e **Tasks** (ele pula o que não precisa) | Passe o `reconhecimento.md`: o plano segue a tabela de reaproveitamento, o modelo a seguir e as convenções. Peça nova fora da tabela precisa de justificativa. Toda tarefa tem teste. |
 | 4 Rede de proteção | crie a branch `feature/<nome>` (ou worktree, com `using-git-worktrees`); depois a skill `rede-de-protecao` | |
 | 5 Implementação | `tlc-spec-driven`, fase **Execute**, na branch | Lotes com `implementador` ou `implementador-dominio`. A suíte inteira roda no fim de cada lote: nenhuma falha nova além das preexistentes de `protecao.md`. |
-| 6 Verificação | verificador do `tlc-spec-driven` (agente `verificador`); com PASS, a skill `code-review` sobre o diff da branch | Se a feature toca login, permissões, pagamento ou dados pessoais, despache também o `auditor-seguranca`. Achado bloqueante vira tarefa e volta à fase 5. |
+| 6 Verificação | verificador do `tlc-spec-driven` (agente `verificador`); com PASS, a skill `revisao-codigo` em modo curto (grave `.specs/revisoes/<feature>/revisao.md` com `spec.md` como pedido, **Fases** 4, 7 e 8, **Devolver após** `análise`), que aciona o `code-review` no diff da branch | Se a feature toca login, permissões, pagamento ou dados pessoais, despache também o `auditor-seguranca`. Achado bloqueante vira tarefa e volta à fase 5. |
 | 7 Integração | veja abaixo | |
 
 ### Integração (fase 7)
