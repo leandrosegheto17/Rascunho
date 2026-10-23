@@ -52,6 +52,14 @@
       ],
       "usado_em": ".claude/skills/plano-comercial/"
     },
+    {
+      "nome": "mockup-visual (legado)",
+      "tipo": "adaptado",
+      "origem": ".claude_legado",
+      "commit": "15a6ad1",
+      "arquivos_origem": [".claude_legado/skills/visual-mockup-drafting/SKILL.md"],
+      "usado_em": ".claude/skills/mockup-visual/"
+    },
     { "nome": "clone .tlc", "tipo": "referencia", "pasta": ".tlc", "origem": "https://github.com/tech-leads-club/agent-skills" },
     { "nome": "clone .superpowers", "tipo": "referencia", "pasta": ".superpowers", "origem": "https://github.com/obra/superpowers" },
     { "nome": "clone .speckit", "tipo": "referencia", "pasta": ".speckit", "origem": "https://github.com/github/spec-kit" },

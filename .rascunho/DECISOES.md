@@ -131,6 +131,25 @@ Acréscimo: **verificação de atualizações** (peça 11), aprovada em 2026-10-
 - **Etapa 6:** skills `viabilidade-tecnica` (incertezas por dimensão, resolvidas por pesquisa, spike ou risco aceito; custo mensal; veredito) e `plano-comercial` (7 seções do legado, método de ponto de equilíbrio, checklist de consistência; opcional). `plano-comercial` registrado em `fontes.json` como adaptado de origem local congelada.
 - **Etapa 7:** skills `projeto-novo` (orquestrador: fase pelos arquivos, aviso de modelo, peça por fase, aprovação; lacunas de esqueleto/CI e segurança tratadas nas fases 8 e 10) e `fluxo` (roteador com os 21 fluxos; só o 1 pronto).
 - **Total:** 1.264 linhas nossas em `.claude` (sem contar o pacote do TLC); maior `SKILL.md` com 101 linhas. **Pendente:** teste de ponta a ponta numa sessão nova (agentes, hook `SessionStart`, fluxo com uma ideia pequena e real).
+- **Commit local** `281183c` na branch `novo-fluxo-claude` (sem push). `.specs/` do teste em andamento ficou fora.
+
+---
+
+## Passo 5: mockup visual enxuto
+
+**Status:** aprovado e construído em 2026-10-23.
+
+O legado era pesado demais (toda tela × 4 estados × PC e celular, respostas da API no formato do contrato, comparação pixel a pixel com Playwright). Princípio da versão nova: **o resultado não sai diferente porque todas as telas usam as mesmas peças**, não porque todas foram desenhadas.
+
+- **Aprovação em três passos:** 2 ou 3 direções de uma tela-chave → guia de estilo (`tokens.css`, componentes base, padrões de vazio / carregando / erro, tabela de contraste) → 2 ou 3 telas-chave em PC e celular. Galeria publicada como Artifact.
+- **Fidelidade sem pixel a pixel:** a implementação copia `tokens.css`; `.claude/scripts/checar-tokens.py` acusa cores e fontes soltas (roda antes do commit e no CI; espaçamentos ficam de fora por gerarem ruído); na fase 10, prints do app ao lado do mockup para aceite visual do usuário.
+- **Peças:** skill `mockup-visual` (fase 7 depois do Design do tlc; etapa 3 na fase 10), em `.specs/mockup/`; `projeto-novo`, `fases.md` e os dois implementadores atualizados; `fontes.json` com a origem no legado.
+
+## Passo 6: perguntas sempre com opções
+
+**Status:** pedido do usuário em 2026-10-23.
+
+Toda pergunta ao usuário usa `AskUserQuestion`, inclusive aprovações e perguntas abertas (com respostas de exemplo e "Other"). Gravado no `CLAUDE.md` (seção "Perguntas"), na rule de manutenção, nas skills `fluxo`, `descoberta` e `plano-comercial`, e na memória do Claude.
 
 Mudança em relação ao passo 1: as skills `brainstorming`, `writing-plans`, `executing-plans` e `subagent-driven-development` do superpowers **não** entram no fluxo 1, porque duplicariam `descoberta` e `tlc-spec-driven`. Do superpowers ficam `systematic-debugging`, `using-git-worktrees`, `verification-before-completion` e `finishing-a-development-branch`.
 

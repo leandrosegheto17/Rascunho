@@ -24,6 +24,7 @@ Siga o ciclo de `.claude/skills/tlc-spec-driven/references/implement.md` para ca
 - **Nunca** enfraqueça, pule ou apague um teste para fazê-lo passar.
 - Nada de "já que estou aqui": só o escopo da tarefa.
 - Divergiu da spec ou do desenho? Marque `SPEC_DEVIATION: <o quê>` no código e relate.
+- Tarefa de interface: use só as variáveis de `tokens.css` e os componentes do guia (`.specs/mockup/`); rode `python .claude/scripts/checar-tokens.py <pasta da interface>` antes do commit.
 - Teste falhou de forma inesperada: investigue a causa raiz primeiro (skill `systematic-debugging` do superpowers).
 - Tarefa falhou ou bloqueou: **pare** e relate. Não comece a próxima.
 - Nada de push, deploy, ou alteração em banco de produção.

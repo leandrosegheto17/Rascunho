@@ -22,9 +22,16 @@ Este projeto usa **fluxos de trabalho** em `.claude/skills/`. O ponto de entrada
 
 - **Não usar** no fluxo 1: `brainstorming`, `writing-plans`, `executing-plans`, `subagent-driven-development`. A skill `descoberta` e o `tlc-spec-driven` fazem esses papéis.
 
+## Perguntas
+
+- **Toda pergunta ao usuário usa a ferramenta `AskUserQuestion`**, com opções clicáveis: aprovações de fase, escolhas, esclarecimentos e até perguntas abertas.
+- Pergunta aberta (sem opções naturais): ofereça 2 ou 3 respostas plausíveis como exemplo; o usuário escreve a dele em "Other".
+- Até 4 perguntas por chamada, as de maior impacto primeiro. Cada opção tem rótulo curto e uma descrição do que acontece se for escolhida. A recomendada vem primeiro, com "(Recomendado)" no rótulo.
+- Nunca faça pergunta só em texto corrido esperando resposta digitada.
+
 ## Aprovação
 
-- Cada fase termina com um resumo curto e as opções **seguir / ajustar / parar**. Nada avança para a fase seguinte sem aprovação explícita.
+- Cada fase termina com um resumo curto e a pergunta de aprovação (via `AskUserQuestion`) com as opções **seguir / ajustar / parar**. Nada avança para a fase seguinte sem aprovação explícita.
 - Parar é um resultado válido e fica registrado.
 - Ação externa ou difícil de desfazer (push, deploy, banco de produção, apagar dados, publicar) exige confirmação específica para aquela ação, mesmo com a fase aprovada.
 

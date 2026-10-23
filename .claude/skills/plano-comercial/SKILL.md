@@ -25,7 +25,7 @@ Rende melhor em **Opus**. Se a sessão estiver em outro modelo, avise: "O plano 
    - concorrentes diretos e indiretos (inclusive alternativas gratuitas), com **preços praticados** e modelo de cobrança;
    - canais por onde esse público compra ou encontra soluções, com custos conhecidos (comissão de loja, custo de anúncio);
    - sinais de tamanho do público e disposição a pagar.
-2. **Pergunte ao usuário** o que só ele sabe, em no máximo 3 perguntas com opções: quanto tempo pode investir, quanto vale a hora dele, se há orçamento para aquisição de clientes.
+2. **Pergunte ao usuário** o que só ele sabe, numa chamada de `AskUserQuestion` com no máximo 3 perguntas: quanto tempo pode investir, quanto vale a hora dele, se há orçamento para aquisição de clientes.
 3. **Monte as seções 1 a 5** com base na pesquisa e nos artefatos.
 4. **Faça a conta do ponto de equilíbrio** (seção 6), seguindo [references/modelo.md](references/modelo.md).
 5. **Rode o checklist de consistência** de `references/modelo.md`. Se algo não bate, corrija a seção de origem, não o número final.

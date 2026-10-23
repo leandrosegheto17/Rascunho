@@ -7,11 +7,9 @@ description: Ponto de entrada dos fluxos de trabalho — entende o que o usuári
 
 ## 1. Entender o pedido
 
-Se o usuário já disse o que quer, escolha o fluxo pela tabela abaixo. Se não, pergunte em uma linha, com as opções mais comuns:
+Se o usuário já disse o que quer, escolha o fluxo pela tabela abaixo. Se não, pergunte com `AskUserQuestion` ("O que vamos fazer?"), com as opções: projeto novo para vender, feature num projeto existente, corrigir um bug; o usuário descreve outro em "Other".
 
-> "O que vamos fazer? A) projeto novo para vender, B) feature num projeto existente, C) corrigir um bug, D) outro (diga qual)."
-
-Se ficar entre dois fluxos, pergunte qual, explicando a diferença em uma linha.
+Se ficar entre dois fluxos, pergunte qual com `AskUserQuestion`, uma opção por fluxo, com a diferença na descrição.
 
 ## 2. Fluxos
 

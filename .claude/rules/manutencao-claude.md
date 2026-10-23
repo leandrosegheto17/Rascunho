@@ -20,6 +20,7 @@ Vale quando se cria ou altera skills, agentes, rules, scripts ou configurações
 - **Skill:** `SKILL.md` com até ~150 linhas, só o fluxo de trabalho. Modelos de documento e detalhes ficam em `references/`, lidos apenas na etapa que precisa deles.
 - **`description`** diz o que faz, quando usar e quando **não** usar.
 - **Modelo e effort** seguem a política do `CLAUDE.md`. Fases de conversa: `model` da skill vale só no primeiro turno, então a skill avisa o usuário para trocar com `/model`. Trabalho pesado: agente com `model` fixo.
+- **Perguntas ao usuário** dentro de skills sempre via `AskUserQuestion` (regra do `CLAUDE.md`), inclusive a aprovação seguir / ajustar / parar.
 - **Agente:** até ~60 linhas, ferramentas mínimas, resposta num formato curto e fixo.
 - **Rule:** só com `paths` (sem `paths` ela carrega sempre e é melhor ir para o `CLAUDE.md`). Plugins não levam rules: o que for essencial para o fluxo precisa estar em skill ou hook.
 - Tudo em português.

@@ -11,10 +11,10 @@ Princípio: **reduzir incerteza o mais barato possível antes de gastar com cons
 | 5 | Viabilidade de negócio (opcional) | Os números fecham? | `plano-comercial.md` | Veredito explícito; se não fecha, o usuário decide seguir ou não | Opus |
 | — | Decisão | Seguir, esclarecer ou matar? | `decisao.md` | Veredito `seguir` com entrada do MVP | Opus |
 | 6 | Definição do MVP | O que entra, o que fica de fora, como saber se deu certo? | `features/<mvp>/spec.md` | Spec aprovada e aceita pelo `validate_spec.py` | Opus |
-| 7 | Desenho | Como será estruturado? | `design.md`, mockup (se houver interface) | Arquitetura e decisões aprovadas | Opus |
-| 8 | Preparação | Como vamos trabalhar? | `tasks.md`; repositório, ambiente, esqueleto, CI | Tarefas aprovadas e aceitas pelo `validate_tasks.py`; esqueleto rodando | Sonnet |
+| 7 | Desenho | Como será estruturado e como vai parecer? | `design.md`; com interface, `.specs/mockup/` (direção, `tokens.css`, guia, 2 a 3 telas-chave) | Arquitetura e decisões aprovadas; com interface, guia de estilo e telas-chave aprovados na galeria | Opus |
+| 8 | Preparação | Como vamos trabalhar? | `tasks.md`; repositório, ambiente, esqueleto, CI (com checagem de tokens, se houver interface) | Tarefas aprovadas e aceitas pelo `validate_tasks.py`; esqueleto rodando | Sonnet |
 | 9 | Construção | Cada fatia entrega valor? | código, testes, um commit por tarefa | Todas as tarefas concluídas com o gate passando | Sonnet (trabalhadores por lote) |
-| 10 | Validação | Está correto, seguro e utilizável? | `validation.md` (PASS), `seguranca.md` | PASS do verificador e nenhum achado crítico ou alto em aberto | Sonnet |
+| 10 | Validação | Está correto, seguro, utilizável e com a aparência aprovada? | `validation.md` (PASS), `seguranca.md`; com interface, "Mockup × app" na galeria | PASS do verificador, nenhum achado crítico ou alto em aberto e, com interface, aceite visual do usuário | Sonnet |
 | 11 | Lançamento | Como colocar no ar com segurança? | (a definir) | Em staging, liberação gradual, reversão testada | Sonnet |
 | 12 | Operação e aprendizado | A hipótese se confirmou? | (a definir) | Métricas acompanhadas; decisão de persistir, pivotar ou encerrar | Sonnet |
 
@@ -25,6 +25,7 @@ Princípio: **reduzir incerteza o mais barato possível antes de gastar com cons
 - Decisão `esclarecer` → a fase indicada em `decisao.md`.
 - Verificador FAIL → correções voltam à fase 9 (até 3 rodadas; depois, escala ao usuário).
 - Achado crítico ou alto de segurança → tarefa de correção na fase 9.
+- Diferença visual rejeitada na comparação → tarefa de correção na fase 9. Mudança de aparência desejada → começa no mockup (fase 7), depois vira tarefa.
 
 ## Princípios
 

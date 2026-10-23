@@ -19,13 +19,7 @@ Se não houver ideia coerente, diga isso e pare. Não fabrique uma.
 
 ## Perguntas ao usuário
 
-Se faltar algo que muda o rumo, pergunte **no máximo 3 coisas**, juntas, em ordem de impacto (escopo > público > restrições). Para cada uma:
-
-```
-Pergunta 1: <tema>
-Contexto: <por que importa>
-Opções: A) <...> B) <...> C) <...> | outra resposta
-```
+Se faltar algo que muda o rumo, pergunte **no máximo 3 coisas**, numa única chamada de `AskUserQuestion`, em ordem de impacto (escopo > público > restrições). Cada pergunta tem 2 a 4 opções com descrição curta do que implica; o usuário pode escrever outra resposta em "Other".
 
 O resto vira `[A ESCLARECER: ...]` no arquivo.
 
