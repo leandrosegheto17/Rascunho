@@ -1,0 +1,65 @@
+{
+  "intervalo_dias": 7,
+  "fontes": [
+    {
+      "nome": "tlc-spec-driven",
+      "tipo": "pacote",
+      "origem": "https://github.com/tech-leads-club/agent-skills",
+      "registro": "https://cdn.jsdelivr.net/npm/@tech-leads-club/skills-catalog@latest/skills-registry.json",
+      "lockfile": ".agents/.skill-lock.json",
+      "versao": "3.3.0",
+      "usado_em": ".claude/skills/tlc-spec-driven/",
+      "atualizar_com": "npx @tech-leads-club/agent-skills update -s tlc-spec-driven"
+    },
+    {
+      "nome": "superpowers",
+      "tipo": "plugin",
+      "origem": "https://github.com/obra/superpowers",
+      "plugin_id": "superpowers@superpowers-marketplace",
+      "usado_em": "plugin do usuário (~/.claude/plugins/)",
+      "atualizar_com": "/plugin, aba de plugins instalados"
+    },
+    {
+      "nome": "descoberta (spec-kit assess)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/github/spec-kit",
+      "commit": "27d14e20c187c1f2916540ea201ecbdc9f8ed588",
+      "arquivos_origem": [
+        "extensions/assess/commands/speckit.assess.intake.md",
+        "extensions/assess/commands/speckit.assess.research.md",
+        "extensions/assess/commands/speckit.assess.define.md",
+        "extensions/assess/commands/speckit.assess.shape.md"
+      ],
+      "usado_em": ".claude/skills/descoberta/"
+    },
+    {
+      "nome": "decisao (spec-kit assess)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/github/spec-kit",
+      "commit": "27d14e20c187c1f2916540ea201ecbdc9f8ed588",
+      "arquivos_origem": ["extensions/assess/commands/speckit.assess.decide.md"],
+      "usado_em": ".claude/skills/decisao/"
+    },
+    {
+      "nome": "plano-comercial (legado)",
+      "tipo": "adaptado",
+      "origem": ".claude_legado",
+      "commit": "15a6ad1",
+      "arquivos_origem": [
+        ".claude_legado/agents/dono.md",
+        ".claude_legado/skills/plano-comercial-drafting/SKILL.md",
+        ".claude_legado/skills/break-even-modeling/SKILL.md"
+      ],
+      "usado_em": ".claude/skills/plano-comercial/"
+    },
+    { "nome": "clone .tlc", "tipo": "referencia", "pasta": ".tlc", "origem": "https://github.com/tech-leads-club/agent-skills" },
+    { "nome": "clone .superpowers", "tipo": "referencia", "pasta": ".superpowers", "origem": "https://github.com/obra/superpowers" },
+    { "nome": "clone .speckit", "tipo": "referencia", "pasta": ".speckit", "origem": "https://github.com/github/spec-kit" },
+    { "nome": "clone .anthropic-skills", "tipo": "referencia", "pasta": ".anthropic-skills", "origem": "https://github.com/anthropics/skills" },
+    { "nome": "clone .anthropic-plugins", "tipo": "referencia", "pasta": ".anthropic-plugins", "origem": "https://github.com/anthropics/claude-plugins-official" },
+    { "nome": "clone .bmad", "tipo": "referencia", "pasta": ".bmad", "origem": "https://github.com/bmad-code-org/BMAD-METHOD" },
+    { "nome": "clone .openspec", "tipo": "referencia", "pasta": ".openspec", "origem": "https://github.com/Fission-AI/OpenSpec" },
+    { "nome": "clone .wshobson", "tipo": "referencia", "pasta": ".wshobson", "origem": "https://github.com/wshobson/agents" },
+    { "nome": "clone .awesome", "tipo": "referencia", "pasta": ".awesome", "origem": "https://github.com/hesreallyhim/awesome-claude-code" }
+  ]
+}
