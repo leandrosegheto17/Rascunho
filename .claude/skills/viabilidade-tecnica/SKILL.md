@@ -37,7 +37,7 @@ Para a opção recomendada, percorra as dimensões e anote só o que **não é �
 Para cada uma, escolha **um** caminho e registre:
 
 - **Pesquisa**: despache o `pesquisador` com perguntas objetivas (ex.: "a API X permite uso comercial e quais os limites do plano gratuito?").
-- **Spike**: quando só testando se sabe. Antes de despachar, combine com o usuário a pergunta, o critério de sucesso e o prazo (horas). Despache o `implementador` em **modo spike**, numa pasta descartável (`.specs/produto/spikes/<nome>/`). Uma pergunta por spike; o código é descartável e nunca vira produto. Estourar o prazo também é uma resposta: é mais difícil do que parecia.
+- **Spike**: quando só testando se sabe. Grave `.specs/spikes/<slug>/spike.md` com a pergunta (formato da skill `spike`, **Chamado por**: `viabilidade-tecnica, incerteza N`; **Usar em**: esta linha de `viabilidade-tecnica.md`) e acione a skill `spike`: ela combina critério e prazo com o usuário, roda o experimento descartável e devolve o veredito com a confiança.
 - **Risco aceito**: incerteza pequena ou de impacto baixo; registre sem investigar.
 
 Despache pesquisas independentes em paralelo. Spikes só com aprovação do usuário, um de cada vez.

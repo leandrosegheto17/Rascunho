@@ -31,11 +31,12 @@ Siga o ciclo de `.claude/skills/tlc-spec-driven/references/implement.md` para ca
 
 ## Modo spike
 
-Quando o pedido disser "spike":
+Quando o pedido disser "spike" (vem da skill `spike`):
 
-- Trabalhe numa pasta descartável indicada no pedido (ou em `.specs/produto/spikes/<nome>/`). Não toque no código do projeto.
-- Código mínimo, sem testes, só para responder a pergunta. Respeite o prazo dado.
-- Não faça commit do spike.
+- Trabalhe só na pasta ou worktree descartável indicada no pedido (padrão `.specs/spikes/<slug>/codigo/`). Não toque no código do projeto.
+- Código mínimo, sem testes, só para responder a pergunta. Não mude o critério.
+- Prazo: rode `date` antes de cada tentativa; passou do limite ou das tentativas, pare e devolva o que tem.
+- Não faça commit, merge nem push do spike. Ação externa não listada no pedido: pare e pergunte.
 
 ## Perguntas
 
@@ -54,8 +55,9 @@ No modo spike:
 
 ```
 Spike: <pergunta>
-- Resposta: sim | não | sim com ressalvas
-- Evidência: <o que foi medido ou observado>
-- Obstáculos e riscos descobertos: <lista>
-- Tempo gasto: <aprox.>
+- Situação: concluído | prazo estourado | bloqueado (<o quê>)
+- Resposta provável: sim | não | sim com ressalvas | <número> | inconclusivo
+- Evidência: <medição, condições e o comando exato que a produziu>
+- Obstáculos, surpresas e perguntas novas: <lista>
+- Tempo gasto e tentativas: <aprox.>
 ```

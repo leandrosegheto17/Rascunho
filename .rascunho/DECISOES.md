@@ -306,6 +306,33 @@ Decisões por analogia:
 
 Orquestrador: skill `incidente`. `/fluxo` marca o 9 como pronto. **Pendente:** teste real (pode ser um simulado: derrubar uma aplicação de teste e percorrer as 9 fases) e revisão humana da seção de LGPD.
 
+## Passo 15: fluxo 17, prova de conceito (spike)
+
+**Status:** construído em 2026-10-23 por subagente, seguindo `ROTEIRO-CONSTRUCAO.md`; decisões tomadas por analogia com `bug`, `necessidade` e `viabilidade-tecnica`, pendentes de revisão do usuário.
+
+Decisões por analogia:
+
+- **Artefatos em `.specs/spikes/<slug>/`**: `spike.md` (fases 1-3, campos `Preparação aprovada`, `Início`, `Limite`, `Extensão`), `resultado.md` (fases 4-5, `Situação`), `registro.md` (fases 6-8, `Veredito`, `Confiança`, `Destino do código`). Em andamento = sem `Destino do código` preenchido. Saem de `.specs/produto/spikes/` (usado só pela viabilidade) para servir a qualquer fluxo.
+- **Quatro aprovações para oito fases** (1-3, 4-5, 6-7, 8), como `necessidade` (1 a 3 num artefato) e `bug` (relato e triagem juntos): spike é curto e cada bloco produz um artefato só.
+- **Modelo:** Opus em 1-3 (pergunta e critério) e 6-7 (veredito); Sonnet em 4-5 (experimento no `implementador`) e 8.
+- **Prazo como decisão central:** relógio e número de tentativas (padrão 3, como as 3 correções falhas do `bug`), o que estourar primeiro; `Início` e `Limite` gravados ao despachar, conferidos pelo `implementador` com `date` e pela sessão a cada retomada. Estouro vira `resultado.md` com `prazo estourado` e segue para a conclusão. Extensão só por decisão do usuário, no máximo uma.
+- **Critério congelado** na aprovação da preparação, com "deu certo", "deu errado", "inconclusivo" e "o resultado que provaria que não" (falsificação, do `the-fool`). Mudar o critério depois de ver o resultado invalida o spike.
+- **Quem experimenta não dá o veredito:** o `implementador` devolve medições com o comando exato; a sessão reproduz a medição principal e compara com o critério (analogia com "quem escreve não verifica"). Confiança pela qualidade da evidência e explicações concorrentes.
+- **Isolamento do código:** padrão `.specs/spikes/<slug>/codigo/`, fora do git (linha no `.gitignore` do projeto, com diff mostrado); quando precisa do código do projeto, worktree fora do repositório na branch `spike/<slug>`, nunca com merge, push ou PR (a trava de testes já bloqueia o merge). Os `.md` são versionados.
+- **Descarte ou promoção:** descartar é o padrão (com confirmação do que será apagado). Promover = abrir o trabalho no fluxo que constrói, com `registro.md` como entrada e testes dos critérios de aceite; o código não é copiado e também é descartado. Trechos essenciais ficam como texto em `registro.md` ("não copiar: reescrever com testes"). Opção de manter fora do git até uma data.
+- **Entrada por outros fluxos** (como o `bug`): o chamador grava `spike.md` com **Chamado por** e **Usar em**; a preparação completa o que falta numa confirmação (o prazo é sempre do usuário); a skill vai até a fase 8 e devolve veredito e confiança. Fluxo 25: um spike por finalista, critério e prazo idênticos. Fluxo 6: contrato no sandbox.
+- **`viabilidade-tecnica` ajustada:** o caminho "spike" agora grava `spike.md` e aciona a skill `spike` (antes despachava o `implementador` direto); o modelo aponta para `.specs/spikes/<slug>/registro.md`. O **modo spike do `implementador`** passou a ter pasta padrão nova, controle de prazo por `date` e retorno com situação e comando da medição.
+- `brainstorming` não é acionado (postura apenas, como dizia o levantamento): nada a registrar na tabela do `CLAUDE.md`.
+
+| Fases | Peça | Origem |
+|---|---|---|
+| 1-3 Pergunta, critério e prazo | `spike/references/preparacao.md` (é spike? 4 motivos; pergunta sim/não ou número; critério falsificável; prazo em relógio e tentativas; modelo de `spike.md`, que é também o contrato de entrada); `pesquisador` quando a documentação responde | nova; bmad `spike-template` (MIT), legado `technical-spike-identification`, `the-fool` `evidence-audit` (CC-BY-4.0) |
+| 4-5 Experimento e observação | agente `implementador` (modo spike) com o pedido de `references/experimento.md`; medição reproduzida pela sessão; `resultado.md` | reaproveitada, agente ajustado |
+| 6-7 Conclusão e registro | `references/registro.md` (veredito, confiança, explicações concorrentes, riscos, trechos de referência), resposta levada ao **Usar em** | nova; `the-fool` e bmad |
+| 8 Descarte ou promoção | `references/registro.md` (descartar, promover reescrevendo por `feature`/`legado`/`uso-proprio`/`projeto-novo`/chamador, ou manter até uma data) | nova |
+
+Orquestrador: skill `spike`. `/fluxo` marca o 17 como pronto. **Pendente:** teste real com uma pergunta de verdade (ex.: limite de uma API gratuita) e, quando os fluxos 25 e 6 forem construídos, conferir o contrato de entrada.
+
 ---
 
 ## Estado ao fim da rodada (2026-10-23)

@@ -40,7 +40,7 @@ Este projeto usa **fluxos de trabalho** em `.claude/skills/`. O ponto de entrada
 
 ## Testes (inegociável)
 
-Vale para todos os fluxos. Só ficam de fora spikes e projetos de aprendizado, por serem descartáveis.
+Vale para todos os fluxos. Só ficam de fora spikes e projetos de aprendizado, por serem descartáveis. O código de spike fica isolado (`.specs/spikes/<slug>/codigo/`, fora do git, ou branch `spike/<slug>`), nunca é integrado, e a promoção reescreve com testes por outro fluxo.
 
 - **Toda mudança de comportamento tem teste automatizado** que falharia sem ela. Correção de bug começa pelo teste que reproduz o bug.
 - **Testes nascem do critério de aceite**, nunca do código que já foi escrito.

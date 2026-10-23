@@ -12,7 +12,7 @@
 | # | Incerteza | Dimensão | Caminho | Resultado | Evidência |
 |---|---|---|---|---|---|
 | 1 | <...> | integrações | pesquisa | <resposta> | <fonte> |
-| 2 | <...> | funcionalidade central | spike | sim / não / sim com ressalvas | `.specs/produto/spikes/<nome>/` |
+| 2 | <...> | funcionalidade central | spike | sim / não / sim com ressalvas | `.specs/spikes/<slug>/registro.md` |
 | 3 | <...> | volume | risco aceito | — | <motivo> |
 
 ## Dados e LGPD

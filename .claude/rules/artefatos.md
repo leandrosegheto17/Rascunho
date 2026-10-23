@@ -14,6 +14,7 @@ paths:
   - `.specs/implantacao.md`: destino, comandos de implantar e voltar, backup e histórico (skill `implantacao`).
   - `.specs/bugs/<slug>/`: correção de bug (skill `bug`): `relato.md`, `reconhecimento.md`, `causa.md`, `protecao.md`, `validation.md`, `fechamento.md`. Em andamento = sem `fechamento.md`.
   - `.specs/incidentes/<AAAA-MM-DD>-<slug>/`: incidente em produção (skill `incidente`): `incidente.md`, `evidencias/`, `linha-do-tempo.md`, `causa-raiz.md`, `correcao.md`, `prevencao.md`, `postmortem.md`, `comunicacao.md`. Em andamento = `incidente.md` sem `Encerrado: sim`. Evidência com dado pessoal ou segredo fica fora do repositório.
+  - `.specs/spikes/<slug>/`: prova de conceito (skill `spike`): `spike.md`, `resultado.md`, `registro.md`; o código fica em `codigo/`, fora do git (`.specs/spikes/*/codigo/` no `.gitignore`). Em andamento = `registro.md` sem **Destino do código**.
   - `.specs/runbook.md`: roteiro de resposta a incidentes do projeto (skill `incidente`, fase 7), com data da última verificação.
   - `.specs/features/<feature>/` e `.specs/STATE.md`: fases 6 a 10 (`tlc-spec-driven`).
 - **Idioma:** português do Brasil. Nos artefatos do `tlc-spec-driven`, mantenha a estrutura, os nomes de seção que os scripts de validação procuram e os IDs (ex.: `AUTH-01`, `AD-001`, palavras-chave EARS como `SHALL`); traduza o texto livre. Se um script de validação reclamar de seção ausente, use o nome que ele espera.
