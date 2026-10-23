@@ -161,6 +161,26 @@ Reforços aprovados (1, 2 e 3): a regra vale também dentro do `tlc-spec-driven`
 - **Achados:** (1) pesquisa baseada em resumos de busca, sem abrir as páginas, com um link cortado; (2) "seguir contra o parecer" não estava previsto na skill `decisao` e foi improvisado; (3) validações pendentes ficavam só em texto, sem mecanismo para não serem esquecidas.
 - **Ajustes aprovados:** 2 e 3. `decisao` agora prevê a decisão do usuário contra o parecer e cria a tabela "Validações pendentes", cada uma condição para construção, lançamento ou nenhuma. `projeto-novo` lembra as pendências a cada fase e bloqueia as fases 9 e 11 enquanto houver condição em aberto. O ajuste 1 (pesquisador abrir as fontes primárias) foi **recusado** por ora.
 
+---
+
+## Conclusão desta rodada (2026-10-23)
+
+Teste encerrado na decisão, por escolha do usuário.
+
+**Pronto e testado:** fases 1 a 5 e decisão do fluxo 1 (skills `fluxo`, `projeto-novo`, `descoberta`, `viabilidade-tecnica`, `plano-comercial`, `decisao`), agentes (`leitor-codigo` testado isoladamente; `pesquisador` usado no teste), rules por `paths`, perguntas com opções, verificação de atualizações (script, skill e hook simulado).
+
+**Pronto, ainda sem uso real:** fases 6 a 10 (`tlc-spec-driven` com nossos agentes `implementador`, `implementador-dominio`, `verificador`, `auditor-seguranca`), `mockup-visual` e `checar-tokens.py` (testado com arquivos de exemplo).
+
+**Pendências para a próxima rodada:**
+
+1. Testar as fases 6 a 10 de ponta a ponta (primeiro uso real do `tlc-spec-driven`, do mockup e dos agentes de construção e verificação).
+2. Confirmar o hook `SessionStart` numa sessão aberta do zero.
+3. Peças das fases 11 (lançamento) e 12 (operação).
+4. Os outros 20 fluxos do catálogo, reaproveitando as peças do fluxo 1.
+5. Atualizar o superpowers de 6.3.0 para 7.x (decisão do usuário, via `/plugin`).
+6. Empacotar como plugin quando estável (rules precisam virar skill ou hook).
+7. Opcionais recusados por ora: pesquisador abrir fontes primárias; hook que barra pergunta só em texto.
+
 Mudança em relação ao passo 1: as skills `brainstorming`, `writing-plans`, `executing-plans` e `subagent-driven-development` do superpowers **não** entram no fluxo 1, porque duplicariam `descoberta` e `tlc-spec-driven`. Do superpowers ficam `systematic-debugging`, `using-git-worktrees`, `verification-before-completion` e `finishing-a-development-branch`.
 
 ### Situação das dependências
