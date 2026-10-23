@@ -388,6 +388,31 @@
       ],
       "usado_em": ".claude/skills/avaliar-terceiros/"
     },
+    {
+      "nome": "integracao-terceiros (wshobson gdpr-data-handling e pci-compliance)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/wshobson/agents",
+      "commit": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+      "arquivos_origem": [
+        "plugins/hr-legal-compliance/skills/gdpr-data-handling/SKILL.md",
+        "plugins/hr-legal-compliance/skills/gdpr-data-handling/references/details.md",
+        "plugins/payment-processing/skills/pci-compliance/SKILL.md",
+        "plugins/payment-processing/skills/pci-compliance/references/details.md"
+      ],
+      "usado_em": ".claude/skills/integracao-terceiros/"
+    },
+    {
+      "nome": "integracao-terceiros (legado: api-integration, api-contract-design, compliance-validation)",
+      "tipo": "adaptado",
+      "origem": ".claude_legado",
+      "commit": "15a6ad1",
+      "arquivos_origem": [
+        ".claude_legado/skills/api-integration/SKILL.md",
+        ".claude_legado/skills/api-contract-design/SKILL.md",
+        ".claude_legado/skills/compliance-validation/SKILL.md"
+      ],
+      "usado_em": ".claude/skills/integracao-terceiros/"
+    },
     { "nome": "clone .tlc", "tipo": "referencia", "pasta": ".tlc", "origem": "https://github.com/tech-leads-club/agent-skills" },
     { "nome": "clone .superpowers", "tipo": "referencia", "pasta": ".superpowers", "origem": "https://github.com/obra/superpowers" },
     { "nome": "clone .speckit", "tipo": "referencia", "pasta": ".speckit", "origem": "https://github.com/github/spec-kit" },

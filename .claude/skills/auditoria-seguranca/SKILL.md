@@ -19,7 +19,7 @@ Liste `.specs/seguranca/`. Em andamento são as que não têm `relatorio.md` com
 
 ### Chamado por outro fluxo
 
-Avaliação de terceiros (fluxo 27) e integração (fluxo 6) gravam `escopo.md` no formato de [references/escopo.md](references/escopo.md), com **Chamado por**, **Usar em**, **Devolver após**, **Modo**: `restrito` e **Fases** a executar, e acionam esta skill. A fase 1 completa o que falta e vira **uma confirmação**, mas a **autorização é sempre confirmada com o usuário**, nunca herdada. Fases fora da lista ficam `dispensado — <motivo>` nos campos de estado. Ao concluir a fase de **Devolver após**, leve o resultado ao **Usar em**, responda ao chamador com o caminho da pasta e a contagem por severidade, e pare.
+Avaliação de terceiros (fluxo 27) e integração (fluxo 6) gravam `escopo.md` no formato de [references/escopo.md](references/escopo.md), com **Chamado por**, **Usar em**, **Devolver após**, **Modo**: `restrito` e **Fases** a executar, e acionam esta skill. A fase 1 completa o que falta e vira **uma confirmação**, mas a **autorização é sempre confirmada com o usuário**, nunca herdada. Fases fora da lista ficam `dispensado — <motivo>` nos campos de estado. Ao concluir a fase de **Devolver após**, leve o resultado ao **Usar em**, responda ao chamador com o caminho da pasta e a contagem por severidade, e pare. Se **Devolver após** vier antes da fase 9, grave um `relatorio.md` curto com `Status: final — devolvido a <chamador> após <fase>`, a contagem e o caminho do **Usar em**, para a auditoria não ficar em andamento.
 
 ## 2. Descobrir a fase
 
