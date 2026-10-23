@@ -6,7 +6,7 @@ Este é também o **modelo do contexto do projeto** que as skills `feature`, `le
 
 ## 1. Qual arquivo
 
-Procure: `CLAUDE.md` (raiz e subpastas), `.claude.local.md`, `AGENTS.md`, `.cursorrules`, `.github/copilot-instructions.md`.
+Procure: `CLAUDE.md` (raiz e subpastas), `.claude.local.md`, `AGENTS.md`, `.cursorrules`, `.github/copilot-instructions.md`. **Fora da busca:** `.claude/CLAUDE.md` é o conjunto de fluxos instalado (instalado e atualizado pelo `instalar.py`), não o contexto do projeto: nunca grave nele.
 
 - Existe um: é ele. Existem vários com o mesmo assunto: um é o principal e os outros apontam para ele (no `CLAUDE.md`, a linha `@AGENTS.md` importa o outro); nenhuma instrução em dois arquivos carregados.
 - Não existe: `CLAUDE.md` na raiz. Se o time usa outras ferramentas de IA, recomende `AGENTS.md` como principal e um `CLAUDE.md` com `@AGENTS.md`; pergunte via `AskUserQuestion`.

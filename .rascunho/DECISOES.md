@@ -839,6 +839,14 @@ Mantidos: `.claude`, `.claude_legado`, `.agents` (lock do `tlc-spec-driven`), `.
 
 ---
 
+## Passo 31: instalador dos fluxos
+
+**Status:** construído em 2026-10-23. Pergunta do usuário: começar um projeto numa pasta vazia já com os fluxos. Escolha do usuário: instalador agora; plugin depois dos testes reais (a reforma do plugin muda `CLAUDE.md`, rules, caminhos de scripts e permissões).
+
+`.claude/scripts/instalar.py <pasta>`: cria a pasta, faz `git init` se não for repositório, copia a `.claude` sem `.cache`, `__pycache__` e `settings.local.json`, completa o `.gitignore` e grava `.claude/.instalacao.json` (origem, commit, data, hash de cada arquivo). Não cria `.specs`. `--atualizar` substitui só o que o projeto não mudou, lista conflitos (`--forcar` sobrescreve), apaga o que saiu dos fluxos se não foi mudado e nunca toca arquivo criado pelo projeto; `--simular` mostra antes. Avisa se faltar `git`, `node` ou o plugin superpowers na conta. 22 testes, com injeção de falha conferida (3 mutações pegas). O `contexto-ia.md` passou a excluir `.claude/CLAUDE.md` da busca de contexto do projeto.
+
+---
+
 ## Estado ao fim da rodada (2026-10-23)
 
 **Fluxos prontos (21 de 21):** os 4 da rodada anterior e, nesta rodada (passos 13 a 29, construídos em sequência por um agente por fluxo, revisados e commitados um a um): 12 Bug, 9 Incidente, 17 Spike, 25 Escolha de tecnologia, 16 Auditoria de segurança, 24 Revisão de código, 13 Refatoração, 5 Performance, 14 Documentar, 27 Avaliar terceiros, 6 Integração, 30 Automação, 7 Redesign, 8 Aprendizado, 10 Sugestão (com a peça comum `demandas`), 11 Solicitação, 32 Suporte. Material de terceiros escolhido em `.rascunho/REAPROVEITAMENTO.md` e adaptado com registro em `fontes.json`; roteiro de construção em `.rascunho/ROTEIRO-CONSTRUCAO.md`.
