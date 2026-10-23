@@ -1,47 +1,75 @@
 ---
 name: fluxo
-description: Ponto de entrada dos fluxos de trabalho — entende o que o usuário quer fazer (projeto novo, feature, bug, refatoração, incidente etc.), escolhe o fluxo certo e o aciona. Use quando o usuário digitar /fluxo, disser que quer começar algo novo sem dizer como, ou perguntar quais fluxos existem.
+description: Ponto de entrada dos fluxos de trabalho — abre um menu de opções (tipo de trabalho e depois o fluxo) ou vai direto ao fluxo por atalho (/fluxo bug, /fluxo 12), e aciona a skill do fluxo escolhido. Use quando o usuário digitar /fluxo, disser que quer começar algo sem dizer como, ou perguntar quais fluxos existem.
+argument-hint: "[atalho ou número do fluxo, ex.: bug, 12, feature]"
 ---
 
-# Fluxo: escolher por onde começar
+# Fluxo: menu de entrada
 
-## 1. Entender o pedido
+Argumento recebido: `$ARGUMENTS`
 
-Se o usuário já disse o que quer, escolha o fluxo pela tabela abaixo. Se não, pergunte com `AskUserQuestion` ("O que vamos fazer?"), com as opções: projeto novo para vender, feature num projeto existente, corrigir um bug; o usuário descreve outro em "Other".
+## 1. Com argumento: atalho
 
-Se ficar entre dois fluxos, pergunte qual com `AskUserQuestion`, uma opção por fluxo, com a diferença na descrição.
+Se o argumento for um **número** ou uma **palavra** da tabela de fluxos (seção 4), vá direto ao passo 3 com esse fluxo. Se casar com mais de um fluxo, pergunte qual (via `AskUserQuestion`, uma opção por fluxo). Se não casar com nenhum, siga para o menu.
 
-## 2. Fluxos
+Se o usuário descreveu o que quer em texto livre (ex.: "o login quebrou"), escolha o fluxo mais provável e confirme numa pergunta com essa opção primeiro, marcada "(Recomendado)", e a segunda mais provável.
 
-| # | Fluxo | Quando | Situação |
-|---|---|---|---|
-| 1 | Projeto novo (construir para vender) | Ideia de produto do zero | **Pronto**: acione a skill `projeto-novo` |
-| 2 | Aplicação para uso próprio | Ferramenta pessoal, servidor local ou gratuito | Em preparação |
-| 3 | Feature em projeto feito com IA | Nova funcionalidade num projeto existente | Em preparação |
-| 4 | Feature em projeto legado | Nova funcionalidade em código antigo, sem testes | Em preparação |
-| 5 | Performance e escala | Sistema lento ou com mais carga | Em preparação |
-| 6 | Integração com terceiros | API, pagamento ou serviço externo | Em preparação |
-| 7 | Redesign de interface | Mudar aparência ou experiência | Em preparação |
-| 8 | Aprendizado | Projeto para estudar uma tecnologia | Em preparação |
-| 9 | Investigação de incidentes | Algo quebrou em produção | Em preparação |
-| 10 | Sugestão de melhoria de terceiros | Usuário ou cliente sugeriu algo | Em preparação |
-| 11 | Solicitação de feature sob demanda | Cliente ou gestor pediu uma funcionalidade | Em preparação |
-| 12 | Correção de bug | Algo não funciona como deveria | Em preparação |
-| 13 | Refatoração e dívida técnica | Código difícil de manter | Em preparação |
-| 14 | Documentar projeto existente | Projeto sem documentação ou contexto para IA | Em preparação |
-| 16 | Auditoria de segurança | Revisar antes de expor ou vender | Em preparação (o agente `auditor-seguranca` já pode ser usado) |
-| 17 | Prova de conceito (spike) | Testar uma dúvida técnica | Em preparação |
-| 24 | Revisão de código | Revisar contribuição ou código gerado por IA | Em preparação |
-| 25 | Escolha de tecnologia | Decidir stack, banco, fornecedor | Em preparação |
-| 27 | Avaliação de projeto de terceiros | Antes de comprar, herdar ou adotar código | Em preparação |
-| 30 | Automação de processo | Automatizar tarefa repetitiva | Em preparação |
-| 32 | Suporte ao cliente | Atender usuário com problema | Em preparação |
+## 2. Sem argumento: menu em dois cliques
 
-## 3. Acionar
+**A primeira ação é a pergunta**, sem texto antes. Use `AskUserQuestion`.
 
-- **Fluxo pronto:** acione a skill indicada e deixe que ela conduza.
-- **Fluxo em preparação:** diga que ainda não foi construído e ofereça:
-  - conduzir manualmente, seguindo o desenho do fluxo (arquivo `FLUXO-*.md` correspondente em `.rascunho/`, se existir neste projeto), com aprovação a cada fase; ou
-  - usar diretamente uma peça que já existe, quando servir (ex.: `tlc-spec-driven` para feature, `systematic-debugging` para bug, `auditor-seguranca` para auditoria).
+**Clique 1**: "O que você quer fazer?"
+
+| Opção | Descrição |
+|---|---|
+| Começar algo novo | Produto para vender, ferramenta pessoal, estudo, teste técnico ou automação |
+| Mudar projeto existente | Feature, integração, redesign, desempenho, refatoração ou documentação |
+| Corrigir ou atender | Bug, incidente, suporte, sugestão ou pedido de feature |
+| Avaliar ou decidir | Segurança, revisão de código, escolha de tecnologia, projeto de terceiros |
+
+**Clique 2**: "Qual fluxo?", com as opções da categoria escolhida. Na descrição de cada opção, diga quando usar e, se não estiver pronto, termine com "(em preparação)". Categorias com mais de 4 fluxos mostram 3 e a opção **Mais opções**, que abre os demais numa nova pergunta.
+
+| Categoria | Opções do clique 2 | Mais opções |
+|---|---|---|
+| Começar algo novo | 1 Projeto para vender · 2 Uso próprio · 17 Prova de conceito | 8 Aprendizado · 30 Automação |
+| Mudar projeto existente | 3 Feature (projeto IA) · 4 Feature (legado) · 13 Refatoração | 6 Integração · 7 Redesign · 5 Performance · 14 Documentar |
+| Corrigir ou atender | 12 Bug · 9 Incidente · 11 Pedido de feature | 32 Suporte · 10 Sugestão de terceiros |
+| Avaliar ou decidir | 24 Revisão de código · 16 Auditoria de segurança · 25 Escolha de tecnologia · 27 Avaliar terceiros | — |
+
+## 3. Acionar o fluxo escolhido
+
+- **Pronto:** acione a skill indicada na tabela e deixe que ela conduza.
+- **Em preparação:** diga em uma linha que ainda não foi construído e pergunte (via `AskUserQuestion`):
+  - **Conduzir manualmente**: seguir o desenho do fluxo (`.rascunho/FLUXO-*.md`, se existir neste projeto), com aprovação a cada fase;
+  - **Usar uma peça pronta**, quando houver (coluna "Peça que já ajuda");
+  - **Escolher outro fluxo**: volta ao menu.
+
+## 4. Fluxos
+
+| # | Fluxo | Atalhos | Situação | Skill ou peça que já ajuda |
+|---|---|---|---|---|
+| 1 | Projeto novo para vender | `novo`, `projeto`, `produto`, `ideia` | **Pronto** | skill `projeto-novo` |
+| 2 | Aplicação para uso próprio | `pessoal`, `uso-proprio` | Em preparação | `descoberta`, `tlc-spec-driven` |
+| 3 | Feature em projeto feito com IA | `feature` | Em preparação | `leitor-codigo`, `tlc-spec-driven` |
+| 4 | Feature em projeto legado | `legado` | Em preparação | `leitor-codigo`, `tlc-spec-driven` |
+| 5 | Performance e escala | `performance`, `lento` | Em preparação | `leitor-codigo` |
+| 6 | Integração com terceiros | `integracao`, `api` | Em preparação | `pesquisador`, `tlc-spec-driven` |
+| 7 | Redesign de interface | `redesign`, `visual` | Em preparação | `mockup-visual` |
+| 8 | Aprendizado | `estudo`, `aprender` | Em preparação | — |
+| 9 | Investigação de incidentes | `incidente`, `caiu` | Em preparação | `systematic-debugging` |
+| 10 | Sugestão de melhoria de terceiros | `sugestao` | Em preparação | — |
+| 11 | Solicitação de feature sob demanda | `pedido`, `solicitacao` | Em preparação | `tlc-spec-driven` |
+| 12 | Correção de bug | `bug`, `erro` | Em preparação | `systematic-debugging` |
+| 13 | Refatoração e dívida técnica | `refatorar`, `divida` | Em preparação | `leitor-codigo` |
+| 14 | Documentar projeto existente | `documentar`, `docs` | Em preparação | `leitor-codigo` |
+| 16 | Auditoria de segurança | `seguranca`, `auditoria` | Em preparação | agente `auditor-seguranca` |
+| 17 | Prova de conceito (spike) | `spike`, `poc` | Em preparação | agente `implementador` (modo spike) |
+| 24 | Revisão de código | `revisao`, `review` | Em preparação | `code-review` |
+| 25 | Escolha de tecnologia | `tecnologia`, `stack` | Em preparação | `pesquisador` |
+| 27 | Avaliação de projeto de terceiros | `avaliar`, `terceiros` | Em preparação | `leitor-codigo`, `auditor-seguranca` |
+| 30 | Automação de processo | `automacao`, `automatizar` | Em preparação | — |
+| 32 | Suporte ao cliente | `suporte` | Em preparação | — |
+
+Ao construir um fluxo novo, atualize a coluna "Situação" e a skill aqui.
 
 Tudo em português.
