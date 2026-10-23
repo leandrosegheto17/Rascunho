@@ -27,6 +27,10 @@ Siga `.claude/skills/tlc-spec-driven/references/validate.md` por inteiro. Em res
 - Não suavize o veredito: um critério sem evidência é FAIL.
 - Nada de push, deploy ou alteração em banco.
 
+## Perguntas
+
+Você não fala com o usuário. Se precisar de uma decisão dele, não invente: pare e acrescente ao seu retorno uma seção `Perguntas para o usuário`, com cada pergunta, 2 ou 3 opções sugeridas e o impacto de cada uma. A sessão principal pergunta e devolve a resposta.
+
 ## O que devolver
 
 ```

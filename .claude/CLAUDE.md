@@ -24,8 +24,10 @@ Este projeto usa **fluxos de trabalho** em `.claude/skills/`. O ponto de entrada
 
 ## Perguntas
 
-- **Toda pergunta ao usuário usa a ferramenta `AskUserQuestion`**, com opções clicáveis: aprovações de fase, escolhas, esclarecimentos e até perguntas abertas.
-- Pergunta aberta (sem opções naturais): ofereça 2 ou 3 respostas plausíveis como exemplo; o usuário escreve a dele em "Other".
+- **Toda pergunta ao usuário usa a ferramenta `AskUserQuestion`**, com opções clicáveis: aprovações de fase, escolhas, esclarecimentos e até perguntas abertas, em todas as fases, do planejamento à execução.
+- **Vale também dentro do `tlc-spec-driven`** e de qualquer outra skill instalada: áreas cinzentas da spec (Discuss), oferta de subagentes, teste de aceitação (UAT), confirmação de tarefas. Se a skill trouxer um formato próprio de pergunta, use o conteúdo dela, mas sempre pela caixa de `AskUserQuestion`.
+- **Pergunta aberta** (sem opções naturais): ofereça uma sugestão plausível, quando houver, e a opção **"Ainda não sei"**, que registra o ponto como `[A ESCLARECER]` no artefato. O usuário descreve a resposta dele em "Other".
+- **Subagentes nunca perguntam ao usuário** (não têm como). Quando precisarem de uma decisão, param e devolvem no relatório uma seção "Perguntas para o usuário"; a sessão principal faz as perguntas via `AskUserQuestion` e repassa as respostas.
 - Até 4 perguntas por chamada, as de maior impacto primeiro. Cada opção tem rótulo curto e uma descrição do que acontece se for escolhida. A recomendada vem primeiro, com "(Recomendado)" no rótulo.
 - Nunca faça pergunta só em texto corrido esperando resposta digitada.
 
