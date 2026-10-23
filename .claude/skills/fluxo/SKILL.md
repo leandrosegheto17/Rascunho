@@ -54,7 +54,7 @@ Se o usuário descreveu o que quer em texto livre (ex.: "o login quebrou"), esco
 | 4 | Feature em projeto legado | `legado` | **Pronto** | skill `legado` |
 | 5 | Performance e escala | `performance`, `lento` | **Pronto** | skill `performance` |
 | 6 | Integração com terceiros | `integracao`, `api` | **Pronto** | skill `integracao-terceiros` |
-| 7 | Redesign de interface | `redesign`, `visual` | Em preparação | `mockup-visual` |
+| 7 | Redesign de interface | `redesign`, `visual` | **Pronto** | skill `redesign` |
 | 8 | Aprendizado | `estudo`, `aprender` | Em preparação | — |
 | 9 | Investigação de incidentes | `incidente`, `caiu` | **Pronto** | skill `incidente` |
 | 10 | Sugestão de melhoria de terceiros | `sugestao` | Em preparação | — |

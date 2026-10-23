@@ -421,6 +421,40 @@
       "arquivos_origem": ["plugins/hookify/skills/writing-rules/SKILL.md"],
       "usado_em": ".claude/skills/automacao/"
     },
+    {
+      "nome": "redesign (wshobson wcag-audit-patterns)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/wshobson/agents",
+      "commit": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+      "arquivos_origem": [
+        "plugins/accessibility-compliance/skills/wcag-audit-patterns/SKILL.md",
+        "plugins/accessibility-compliance/skills/wcag-audit-patterns/references/details.md"
+      ],
+      "usado_em": ".claude/skills/redesign/"
+    },
+    {
+      "nome": "redesign (tlc web-accessibility)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/tech-leads-club/agent-skills",
+      "commit": "bc4f025632b0443ed3450aaec6fe96aec5b9a0c5",
+      "arquivos_origem": [
+        "packages/skills-catalog/skills/(quality)/web-accessibility/SKILL.md",
+        "packages/skills-catalog/skills/(quality)/web-accessibility/references/WCAG.md"
+      ],
+      "usado_em": ".claude/skills/redesign/"
+    },
+    {
+      "nome": "redesign (legado: accessibility-review, design-system-consistency-check, comparar-visual)",
+      "tipo": "adaptado",
+      "origem": ".claude_legado",
+      "commit": "15a6ad1",
+      "arquivos_origem": [
+        ".claude_legado/skills/accessibility-review/SKILL.md",
+        ".claude_legado/skills/design-system-consistency-check/SKILL.md",
+        ".claude_legado/scripts/comparar-visual.mjs"
+      ],
+      "usado_em": ".claude/skills/redesign/, .claude/skills/mockup-visual/ e .claude/scripts/comparar-visual.mjs"
+    },
     { "nome": "clone .tlc", "tipo": "referencia", "pasta": ".tlc", "origem": "https://github.com/tech-leads-club/agent-skills" },
     { "nome": "clone .superpowers", "tipo": "referencia", "pasta": ".superpowers", "origem": "https://github.com/obra/superpowers" },
     { "nome": "clone .speckit", "tipo": "referencia", "pasta": ".speckit", "origem": "https://github.com/github/spec-kit" },

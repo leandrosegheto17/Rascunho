@@ -9,7 +9,7 @@ Responde: **onde esta mudança entra, como o projeto já faz coisas parecidas, e
 
 ## Pré-requisitos
 
-- A spec da feature (`.specs/features/<feature>/spec.md`) ou, para outros fluxos, a descrição da mudança. Em correção de bug, a entrada é `.specs/bugs/<slug>/relato.md` e o arquivo vai para essa mesma pasta; a tabela de reaproveitamento pode ficar curta. Em refatoração, a entrada é `.specs/refatoracoes/<slug>/refatoracao.md` (alvo e meta) e o arquivo vai para essa pasta; a skill `refatoracao` acrescenta depois a seção de contratos e acoplamento. Em performance, a entrada é `.specs/performance/<slug>/performance.md` (meta) com `opcoes.md` (mudanças escolhidas), e o arquivo vai para essa pasta.
+- A spec da feature (`.specs/features/<feature>/spec.md`) ou, para outros fluxos, a descrição da mudança. Em correção de bug, a entrada é `.specs/bugs/<slug>/relato.md` e o arquivo vai para essa mesma pasta; a tabela de reaproveitamento pode ficar curta. Em refatoração, a entrada é `.specs/refatoracoes/<slug>/refatoracao.md` (alvo e meta) e o arquivo vai para essa pasta; a skill `refatoracao` acrescenta depois a seção de contratos e acoplamento. Em performance, a entrada é `.specs/performance/<slug>/performance.md` (meta) com `opcoes.md` (mudanças escolhidas), e o arquivo vai para essa pasta. Em redesign, a entrada é `.specs/redesign/<slug>/redesign.md` (escopo de telas e o que não muda), o arquivo vai para essa pasta e as perguntas extras estão em `redesign/references/inventario-telas.md`.
 - Se `reconhecimento.md` já existir, confirme antes de refazer; se o código mudou desde a data dele, ofereça atualizar.
 
 ## 1. Contexto do projeto

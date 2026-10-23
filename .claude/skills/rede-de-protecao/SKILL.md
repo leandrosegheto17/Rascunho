@@ -13,6 +13,7 @@ Responde: **se eu quebrar algo, vou perceber?** A mudança só começa com a lin
 - Em correção de bug, a pasta é `.specs/bugs/<slug>/`, o plano é a causa e a correção prevista em `causa.md`, e o teste do bug (ainda vermelho) é a **falha esperada** da linha de base, não falha preexistente.
 - Em refatoração, a pasta é `.specs/refatoracoes/<slug>/` e a rede vem **antes** do plano: o que se caracteriza é o alvo de `refatoracao.md` e **todos** os contratos da seção "Contratos e acoplamento" do `reconhecimento.md`, porque a refatoração promete não mudar nada observável.
 - Em performance, a pasta é `.specs/performance/<slug>/` e o plano é o `tasks.md` da rodada: caracterize o comportamento do caminho que as mudanças vão tocar (saída, ordem, erros, efeitos), porque otimizar não muda resultado. A linha de base de **desempenho** já está em `medicoes.md`; aqui é a da suíte.
+- Em redesign, a pasta é `.specs/redesign/<slug>/` e o plano é `migracao.md` com `tasks.md`: caracterize, pela interface, o comportamento a manter de cada tela do escopo (`inventario-telas.md`), com cada teste rodando **com a flag desligada e ligada** e elementos achados por papel, rótulo e texto (nunca por classe CSS), porque a regra de negócio não pode mudar e a marcação vai mudar.
 - **Branch isolada já criada** para a mudança (ou crie agora, com `using-git-worktrees` se o usuário preferir worktree). Os testes de caracterização entram nessa branch.
 
 ## 1. Linha de base

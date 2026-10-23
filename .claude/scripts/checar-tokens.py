@@ -6,10 +6,13 @@ Garante que a implementação use só as variáveis do guia de estilo aprovado
 contextos demais (bordas de 1px, ícones) e gerariam ruído.
 
 Uso:
-  python .claude/scripts/checar-tokens.py <pasta do código> [--permitir arquivo1,arquivo2]
+  python .claude/scripts/checar-tokens.py <pasta ou arquivo> [<pasta ou arquivo> ...] [--permitir arquivo1,arquivo2]
 
-Sai com código 1 se encontrar valores soltos, listando arquivo:linha.
-Arquivos chamados tokens.css são sempre permitidos.
+Aceita várias pastas e arquivos: no redesign, só o código da interface nova é checado
+enquanto a antiga convive com ela (ex.: a pasta dos componentes novos e as telas novas).
+
+Sai com código 1 se encontrar valores soltos, listando arquivo:linha, e com 2 se algum
+caminho não existir. Arquivos chamados tokens.css são sempre permitidos.
 """
 
 import argparse
@@ -47,21 +50,28 @@ def linhas_suspeitas(arquivo):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("pasta", help="pasta do código de interface (ex.: src, web/src)")
+    parser.add_argument("caminhos", nargs="+", help="pastas ou arquivos do código de interface (ex.: src, web/src/ui-nova)")
     parser.add_argument("--permitir", default="", help="nomes de arquivo permitidos, separados por vírgula")
     args = parser.parse_args()
 
-    raiz = Path(args.pasta)
-    if not raiz.is_dir():
-        print(f"Pasta não encontrada: {raiz}")
+    ausentes = [c for c in args.caminhos if not Path(c).exists()]
+    if ausentes:
+        print("Caminho não encontrado: " + ", ".join(ausentes))
         return 2
     permitidos = {"tokens.css", *filter(None, (n.strip() for n in args.permitir.split(",")))}
 
-    achados = []
-    for arquivo in sorted(raiz.rglob("*")):
-        if not arquivo.is_file() or arquivo.suffix not in EXTENSOES or arquivo.name in permitidos:
+    arquivos = {}
+    for caminho in map(Path, args.caminhos):
+        if caminho.is_file():
+            arquivos[caminho.resolve()] = caminho
             continue
-        if any(parte in IGNORAR_PASTAS for parte in arquivo.relative_to(raiz).parts):
+        for arquivo in caminho.rglob("*"):
+            if arquivo.is_file() and not any(parte in IGNORAR_PASTAS for parte in arquivo.relative_to(caminho).parts):
+                arquivos[arquivo.resolve()] = arquivo
+
+    achados = []
+    for arquivo in sorted(arquivos.values(), key=lambda a: a.as_posix()):
+        if arquivo.suffix not in EXTENSOES or arquivo.name in permitidos:
             continue
         for numero, tipo, trecho in linhas_suspeitas(arquivo):
             achados.append(f"{arquivo.as_posix()}:{numero}  [{tipo}]  {trecho}")

@@ -40,7 +40,7 @@ Este projeto usa **fluxos de trabalho** em `.claude/skills/`. O ponto de entrada
 
 ## Testes (inegociável)
 
-Vale para todos os fluxos. Só ficam de fora spikes e projetos de aprendizado, por serem descartáveis. O código de spike fica isolado (`.specs/spikes/<slug>/codigo/`, fora do git, ou branch `spike/<slug>`), nunca é integrado, e a promoção reescreve com testes por outro fluxo.
+Vale para todos os fluxos. Só ficam de fora spikes e projetos de aprendizado, por serem descartáveis. O código de spike fica isolado (`.specs/spikes/<slug>/codigo/`, fora do git, ou branch `spike/<slug>`), nunca é integrado, e a promoção reescreve com testes por outro fluxo. Automação feita **só por configuração** num serviço pronto (sem código) prova o comportamento com casos de teste executados de verdade e registrados com evidência, mais a execução assistida (skill `automacao`); qualquer código embutido no serviço tem teste automatizado.
 
 - **Toda mudança de comportamento tem teste automatizado** que falharia sem ela. Correção de bug começa pelo teste que reproduz o bug.
 - **Testes nascem do critério de aceite**, nunca do código que já foi escrito.

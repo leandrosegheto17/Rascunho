@@ -30,7 +30,7 @@ A fonte da verdade são os critérios de aceite de `revisao.md`; o código revis
 
 ## Em refatoração ou performance (`.specs/refatoracoes/<slug>/`, `.specs/performance/<slug>/`)
 
-A fonte da verdade é o **comportamento inalterado** (contratos, `protecao.md`; em performance, salvo o aprovado em `opcoes.md`) e a meta, **medida de novo por você** com o mesmo comando e condições. Siga o pedido da skill (`refatoracao/references/verificacao.md` ou `performance/references/verificacao.md`): testes intactos, suíte, contratos, sensor sobre o código alterado, métrica e desempenho. Carga nunca contra produção ou terceiros. Grave `validation-etapa-<N>.md` ou `validation-rodada-<N>.md` na pasta; o passo 7 não se aplica.
+A fonte da verdade é o **comportamento inalterado** (contratos, `protecao.md`; em performance, salvo o aprovado em `opcoes.md`) e a meta, **medida de novo por você** com o mesmo comando e condições. Siga o pedido da skill (`refatoracao/references/verificacao.md` ou `performance/references/verificacao.md`): testes intactos, suíte, contratos, sensor sobre o código alterado, métrica e desempenho. Carga nunca contra produção ou terceiros. Grave `validation-etapa-<N>.md` ou `validation-rodada-<N>.md` na pasta; o passo 7 não se aplica. **Em redesign** (`.specs/redesign/<slug>/`), o mesmo, com a flag nas duas posições e o mockup aprovado como fonte da aparência: siga `redesign/references/verificacao.md` (regras iguais, antiga intacta, tokens, comparação visual subindo o app localmente, acessibilidade automática).
 
 ## Em documentação (`.specs/documentacao/<slug>/`)
 

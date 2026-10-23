@@ -9,8 +9,8 @@ from apoio import SCRIPTS
 SCRIPT = SCRIPTS / "checar-tokens.py"
 
 
-def rodar(pasta):
-    r = subprocess.run([sys.executable, str(SCRIPT), str(pasta)], capture_output=True, text=True, encoding="utf-8")
+def rodar(*caminhos):
+    r = subprocess.run([sys.executable, str(SCRIPT), *map(str, caminhos)], capture_output=True, text=True, encoding="utf-8")
     return r.returncode, r.stdout
 
 
@@ -52,6 +52,27 @@ class TestChecarTokens(unittest.TestCase):
     def test_pasta_inexistente(self):
         codigo, _ = rodar(Path(self._tmp.name) / "nao-existe")
         self.assertEqual(codigo, 2)
+
+    def test_varios_caminhos_checa_so_os_indicados(self):
+        # redesign: a interface antiga (com valores soltos) convive com a nova; só a nova é checada
+        (self.src / "antiga").mkdir()
+        (self.src / "antiga" / "velha.css").write_text(".a { color: #ff0000; }", encoding="utf-8")
+        (self.src / "nova").mkdir()
+        (self.src / "nova" / "botao.css").write_text(".b { color: var(--cor); }", encoding="utf-8")
+        self.escrever("TelaNova.tsx", "const s = { color: 'var(--cor)' };")
+        codigo, saida = rodar(self.src / "nova", self.src / "TelaNova.tsx")
+        self.assertEqual(codigo, 0, saida)
+        self.escrever("TelaNova.tsx", "const s = { color: '#abc' };")
+        codigo, saida = rodar(self.src / "nova", self.src / "TelaNova.tsx", self.src / "nova" / "botao.css")
+        self.assertEqual(codigo, 1)
+        self.assertIn("1 valor(es)", saida)
+        self.assertIn("TelaNova.tsx:1", saida)
+        self.assertNotIn("velha.css", saida)
+
+    def test_um_caminho_inexistente_entre_varios(self):
+        codigo, saida = rodar(self.src, Path(self._tmp.name) / "nao-existe")
+        self.assertEqual(codigo, 2)
+        self.assertIn("nao-existe", saida)
 
 
 if __name__ == "__main__":

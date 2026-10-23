@@ -1,6 +1,6 @@
 ---
 name: mockup-visual
-description: Mockup visual enxuto de um projeto com interface — 2 ou 3 direções visuais de uma tela-chave para escolher, depois um guia de estilo (tokens.css, componentes base, padrões de vazio/carregando/erro) e 2 a 3 telas-chave em PC e celular, publicados numa galeria para aprovação; na validação, coloca prints do app ao lado do mockup. Use na fase 7 do projeto novo, depois do desenho (design.md), e na fase 10 para a comparação. Não desenha todas as telas e não implementa o código do produto. Pule em projetos sem interface.
+description: Mockup visual enxuto de um projeto com interface — 2 ou 3 direções visuais de uma tela-chave para escolher, depois um guia de estilo (tokens.css, componentes base, padrões de vazio/carregando/erro) e 2 a 3 telas-chave em PC e celular, publicados numa galeria para aprovação; na validação, coloca prints do app ao lado do mockup. Use na fase 7 do projeto novo, depois do desenho (design.md), e na fase 10 para a comparação; no redesign (skill redesign, fluxo 7), em modo redesign, que desenha todas as telas do escopo com seus estados. Fora do redesign, não desenha todas as telas. Não implementa o código do produto. Pule em projetos sem interface.
 model: opus
 effort: high
 ---
@@ -45,6 +45,15 @@ Chamada pelo orquestrador na validação, com o app rodando localmente:
 2. Acrescente à galeria uma seção "Mockup × app", com cada tela lado a lado, e republique.
 3. Rode `python .claude/scripts/checar-tokens.py <pasta do código>` e informe o resultado.
 4. Liste as diferenças que você nota. **Quem decide se está aceitável é o usuário.** Diferença aceita vira registro; diferença rejeitada vira tarefa de correção.
+
+## Modo redesign (fluxo 7)
+
+Chamada pela skill `redesign`, que diz a etapa e a pasta. Tudo o que está acima vale, com as diferenças de [references/redesign.md](references/redesign.md):
+
+- **Pasta:** `.specs/redesign/<slug>/mockup/` no lugar de `.specs/mockup/` (mesma estrutura interna). O `.specs/mockup/` existente continua sendo a referência da interface atual até o fim do redesign.
+- **Etapa 1** parte das capturas atuais e dos problemas priorizados (`pesquisa.md`); a galeria mostra a tela de hoje ao lado das direções.
+- **Etapa 2 em duas aprovações:** 2a, guia de estilo (fase 5 do redesign); 2b, **todas as telas do escopo**, com os estados vazio, carregando, erro e sucesso, navegáveis entre si, e o mapa `telas.json` para a comparação automática (fase 6).
+- **Etapa 3** usa `.claude/scripts/comparar-visual.mjs` quando o projeto tem Playwright; sem ele, os prints lado a lado de sempre.
 
 ## Publicação
 
