@@ -49,7 +49,7 @@ Se o usuário descreveu o que quer em texto livre (ex.: "o login quebrou"), esco
 | # | Fluxo | Atalhos | Situação | Skill ou peça que já ajuda |
 |---|---|---|---|---|
 | 1 | Projeto novo para vender | `novo`, `projeto`, `produto`, `ideia` | **Pronto** | skill `projeto-novo` |
-| 2 | Aplicação para uso próprio | `pessoal`, `uso-proprio` | Em preparação | `descoberta`, `tlc-spec-driven` |
+| 2 | Aplicação para uso próprio | `pessoal`, `uso-proprio` | **Pronto** | skill `uso-proprio` |
 | 3 | Feature em projeto feito com IA | `feature` | Em preparação | `leitor-codigo`, `tlc-spec-driven` |
 | 4 | Feature em projeto legado | `legado` | Em preparação | `leitor-codigo`, `tlc-spec-driven` |
 | 5 | Performance e escala | `performance`, `lento` | Em preparação | `leitor-codigo` |

@@ -43,8 +43,8 @@ A conversa usa o modelo da sessão (padrão: Sonnet). O trabalho pesado roda em 
 
 | Fases | Modelo da sessão |
 |---|---|
-| 1 a 7 (ideia até desenho) | **Opus**: avise o usuário para usar `/model opus` ao entrar nelas |
-| 8 a 12 (preparação em diante) | **Sonnet**: avise para voltar com `/model sonnet` |
+| Planejamento (projeto novo: 1 a 7; uso próprio: 1 a 4) | **Opus**: avise o usuário para usar `/model opus` ao entrar nelas |
+| Da preparação em diante | **Sonnet**: avise para voltar com `/model sonnet` |
 
 | Agente | Modelo | Uso |
 |---|---|---|

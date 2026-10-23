@@ -181,6 +181,27 @@ Teste encerrado por escolha do usuário. A sessão de teste chegou a gerar a spe
 6. Empacotar como plugin quando estável (rules precisam virar skill ou hook).
 7. Opcionais recusados por ora: pesquisador abrir fontes primárias; hook que barra pergunta só em texto.
 
+---
+
+## Passo 8: menu do `/fluxo`
+
+**Status:** aprovado e testado em 2026-10-23. `/fluxo` abre direto um menu em dois cliques (4 categorias, depois o fluxo; categorias com mais de 4 fluxos têm "Mais opções"), e aceita atalho por nome ou número (`/fluxo bug`, `/fluxo 12`). Motivo: com 21 fluxos, ninguém decora os nomes.
+
+## Passo 9: fluxo 2, aplicação para uso próprio
+
+**Status:** construído em 2026-10-23.
+
+Decisões do usuário: **só ele usa** (sem login complexo); **Opus no planejamento** (fases 1 a 4) e Sonnet depois, como no fluxo 1; fases 1 a 3 num **único artefato com uma aprovação**; implantação **local com Docker ou nuvem gratuita, decidida por projeto**.
+
+| Fases | Peça | Origem |
+|---|---|---|
+| 1 a 3 | skill `necessidade` → `.specs/produto/necessidade.md` (pesquisa de alternativas prontas pelo `pesquisador`; veredito construir / adaptar algo pronto / desistir) | nova |
+| 4 a 7 | `tlc-spec-driven` + agentes; backup, restauração testada e (se na internet) autenticação e HTTPS viram critérios de aceite; `auditor-seguranca` só com exposição pela internet | reaproveitada |
+| 8 | skill `implantacao` → `.specs/implantacao.md` (docker compose ou nuvem gratuita com limites conferidos na hora; publicar na nuvem exige confirmação) | nova; serve também para a fase 11 do fluxo 1 |
+| 9 | checklist de revisão periódica em `uso-proprio/references/fases.md` | nova |
+
+Orquestrador: skill `uso-proprio`. `/fluxo` marca o fluxo 2 como pronto. **Pendente:** teste real com uma ferramenta pessoal.
+
 Mudança em relação ao passo 1: as skills `brainstorming`, `writing-plans`, `executing-plans` e `subagent-driven-development` do superpowers **não** entram no fluxo 1, porque duplicariam `descoberta` e `tlc-spec-driven`. Do superpowers ficam `systematic-debugging`, `using-git-worktrees`, `verification-before-completion` e `finishing-a-development-branch`.
 
 ### Situação das dependências
