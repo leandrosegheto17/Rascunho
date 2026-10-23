@@ -33,7 +33,11 @@ Para retomar uma construção interrompida, o `tlc-spec-driven` reconcilia `.spe
 
 ## 2. Situar o usuário
 
-Uma linha: "**Fase N de 12, <nome>.** Anterior: <fase>, aprovada." Se a fase pede outro modelo, avise:
+Uma linha: "**Fase N de 12, <nome>.** Anterior: <fase>, aprovada."
+
+**Validações pendentes** (tabela em `decisao.md`): se houver alguma `pendente`, acrescente uma linha: "Validações pendentes: N (V1 entrevistas, V3 advogado...)". Antes de entrar na fase 9, confira as marcadas como condição para **construção**; antes da fase 11, as marcadas para **lançamento**. Com alguma condição em aberto, **não entre na fase**: mostre quais faltam e pergunte (via `AskUserQuestion`) se o usuário quer registrar o resultado de alguma, mudar a condição ou parar. Quando o usuário trouxer o resultado de uma validação, atualize a linha da tabela (situação, data, resultado). Se `decisao.md` com "seguir" listar pendências só em texto, sem a tabela, ofereça montá-la.
+
+Se a fase pede outro modelo, avise:
 
 - fases 1 a 7: "Esta fase rende melhor em Opus: use `/model opus`."
 - fases 8 a 12: "Esta fase pode seguir em Sonnet: use `/model sonnet`."

@@ -153,6 +153,14 @@ Toda pergunta ao usuário usa `AskUserQuestion`, inclusive aprovações e pergun
 
 Reforços aprovados (1, 2 e 3): a regra vale também dentro do `tlc-spec-driven` e de outras skills instaladas; pergunta aberta leva a opção "Ainda não sei" (vira `[A ESCLARECER]`) mais uma sugestão, e a resposta livre vai em "Other"; subagentes nunca perguntam: devolvem "Perguntas para o usuário" e a sessão principal pergunta. O hook de verificação (barrar pergunta só em texto) foi **recusado** por ora; fica como opção se a regra falhar na prática.
 
+## Passo 7: primeiro teste real (fases 1 a 5 e decisão)
+
+**Status:** concluído em 2026-10-23 com a ideia "registro compartilhado de cuidados entre familiares".
+
+- **Resultado:** 14 minutos, 7 artefatos (462 linhas). Experiência do usuário: "fluiu bem". Veredito das notas: esclarecer (evidência e viabilidade comercial fracas); o usuário escolheu seguir mesmo assim, e a sessão registrou bem a escolha e as consequências. Conta do ponto de equilíbrio conferida.
+- **Achados:** (1) pesquisa baseada em resumos de busca, sem abrir as páginas, com um link cortado; (2) "seguir contra o parecer" não estava previsto na skill `decisao` e foi improvisado; (3) validações pendentes ficavam só em texto, sem mecanismo para não serem esquecidas.
+- **Ajustes aprovados:** 2 e 3. `decisao` agora prevê a decisão do usuário contra o parecer e cria a tabela "Validações pendentes", cada uma condição para construção, lançamento ou nenhuma. `projeto-novo` lembra as pendências a cada fase e bloqueia as fases 9 e 11 enquanto houver condição em aberto. O ajuste 1 (pesquisador abrir as fontes primárias) foi **recusado** por ora.
+
 Mudança em relação ao passo 1: as skills `brainstorming`, `writing-plans`, `executing-plans` e `subagent-driven-development` do superpowers **não** entram no fluxo 1, porque duplicariam `descoberta` e `tlc-spec-driven`. Do superpowers ficam `systematic-debugging`, `using-git-worktrees`, `verification-before-completion` e `finishing-a-development-branch`.
 
 ### Situação das dependências

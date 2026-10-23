@@ -44,6 +44,23 @@ Todo `desconhecido` precisa ser reconhecido no texto, não escondido.
 
 Nunca force um "seguir" com evidência fraca.
 
+**O usuário pode decidir contra o parecer.** Apresente o veredito das notas e pergunte (via `AskUserQuestion`) com as opções: aceitar o parecer, seguir mesmo assim, matar. Se ele escolher diferente do parecer:
+
+- registre **Veredito: <escolha> (por decisão do usuário, contra o parecer de "<parecer>")**;
+- mantenha a seção do parecer original, com o que faltava;
+- liste as **consequências aceitas** (o que vira risco em vez de pré-requisito);
+- transforme o que faltava em **validações pendentes** (próxima seção).
+
+## 2b. Validações pendentes
+
+Tudo o que ficou sem evidência e ainda precisa ser confirmado (entrevistas, teste de mercado, parecer jurídico, spike) vira uma linha da tabela "Validações pendentes". Para cada uma, pergunte ao usuário (via `AskUserQuestion`, várias de uma vez) se ela é **condição** para alguma fase:
+
+- **lançamento**: a fase 11 fica bloqueada até a validação ser concluída;
+- **construção**: a fase 9 só começa depois dela;
+- **nenhuma**: corre em paralelo, só como lembrete.
+
+Com veredito "seguir" pela regra (sem pendências), a tabela pode ficar de fora.
+
 ## 3. Entrada do MVP (só com "seguir")
 
 Resuma o que a fase 6 (especificação do MVP) deve receber: problema em uma linha, solução escolhida, o que entra e o que fica de fora, métricas de sucesso, restrições e riscos técnicos, e perguntas que seguem em aberto.
@@ -54,7 +71,7 @@ Resuma o que a fase 6 (especificação do MVP) deve receber: problema em uma lin
 # Decisão: <título curto>
 
 - **Data**: <AAAA-MM-DD>
-- **Veredito**: seguir | esclarecer | matar
+- **Veredito**: seguir | esclarecer | matar [ (por decisão do usuário, contra o parecer de "<parecer>") ]
 - **Artefatos lidos**: ideia.md? | pesquisa.md? | problema.md | solucao.md? | viabilidade-tecnica.md? | plano-comercial.md?
 
 ## Notas
@@ -72,6 +89,19 @@ Resuma o que a fase 6 (especificação do MVP) deve receber: problema em uma lin
 ## Veredito e motivo
 
 <a decisão e por quê, em um parágrafo curto, citando as notas>
+
+## Decisão do usuário (só se diferente do parecer)
+
+<o parecer, as opções apresentadas, a escolha e a data>
+
+Consequências aceitas:
+- <o que passa de pré-requisito a risco>
+
+## Validações pendentes
+
+| # | Validação | Condição para | Situação |
+|---|---|---|---|
+| V1 | <ex.: entrevistar 5 a 10 famílias> | lançamento / construção / nenhuma | pendente / feita (<data, resultado>) |
 
 ## Se esclarecer
 

@@ -25,6 +25,7 @@ Princípio: **reduzir incerteza o mais barato possível antes de gastar com cons
 - Decisão `esclarecer` → a fase indicada em `decisao.md`.
 - Verificador FAIL → correções voltam à fase 9 (até 3 rodadas; depois, escala ao usuário).
 - Achado crítico ou alto de segurança → tarefa de correção na fase 9.
+- Validação pendente marcada como condição (tabela em `decisao.md`) → bloqueia a entrada na fase 9 (construção) ou 11 (lançamento) até ser concluída, ter a condição mudada pelo usuário ou o projeto parar.
 - Diferença visual rejeitada na comparação → tarefa de correção na fase 9. Mudança de aparência desejada → começa no mockup (fase 7), depois vira tarefa.
 
 ## Princípios
