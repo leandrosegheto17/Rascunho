@@ -37,6 +37,17 @@ Este projeto usa **fluxos de trabalho** em `.claude/skills/`. O ponto de entrada
 - Parar é um resultado válido e fica registrado.
 - Ação externa ou difícil de desfazer (push, deploy, banco de produção, apagar dados, publicar) exige confirmação específica para aquela ação, mesmo com a fase aprovada.
 
+## Testes (inegociável)
+
+Vale para todos os fluxos. Só ficam de fora spikes e projetos de aprendizado, por serem descartáveis.
+
+- **Toda mudança de comportamento tem teste automatizado** que falharia sem ela. Correção de bug começa pelo teste que reproduz o bug.
+- **Testes nascem do critério de aceite**, nunca do código que já foi escrito.
+- **Nunca apague, pule, comente ou enfraqueça um teste** para fazê-lo passar. Mudar um teste existente exige motivo registrado e aprovação do usuário.
+- **Projeto sem testes:** a primeira tarefa é criar a infraestrutura mínima (framework do ecossistema e um teste que roda).
+- **Checagem final antes de integrar ou implantar:** rode a **suíte inteira de verdade** e mostre o resultado (passaram / falharam / ignorados). Só segue com tudo verde, ou com as mesmas falhas preexistentes registradas na linha de base (`protecao.md`), nunca com falha nova. "Os testes devem passar" sem rodar não conta.
+- **CI:** todo projeto construído ou alterado pelos fluxos roda a suíte no CI; se não houver CI, criar faz parte da preparação.
+
 ## Modelos
 
 A conversa usa o modelo da sessão (padrão: Sonnet). O trabalho pesado roda em subagentes com modelo fixo.

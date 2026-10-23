@@ -50,7 +50,7 @@ Se o usuário descreveu o que quer em texto livre (ex.: "o login quebrou"), esco
 |---|---|---|---|---|
 | 1 | Projeto novo para vender | `novo`, `projeto`, `produto`, `ideia` | **Pronto** | skill `projeto-novo` |
 | 2 | Aplicação para uso próprio | `pessoal`, `uso-proprio` | **Pronto** | skill `uso-proprio` |
-| 3 | Feature em projeto feito com IA | `feature` | Em preparação | `leitor-codigo`, `tlc-spec-driven` |
+| 3 | Feature em projeto feito com IA | `feature` | **Pronto** | skill `feature` |
 | 4 | Feature em projeto legado | `legado` | Em preparação | `leitor-codigo`, `tlc-spec-driven` |
 | 5 | Performance e escala | `performance`, `lento` | Em preparação | `leitor-codigo` |
 | 6 | Integração com terceiros | `integracao`, `api` | Em preparação | `pesquisador`, `tlc-spec-driven` |

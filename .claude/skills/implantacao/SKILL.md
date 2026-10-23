@@ -12,6 +12,7 @@ Responde: **como colocar no ar com um comando, sem perder dados e com volta fác
 ## Pré-requisitos
 
 - `.specs/produto/necessidade.md` (onde roda, exposição, backup) e a validação aprovada (`validation.md` com PASS, restauração do backup testada).
+- **Checagem final de testes:** rode a suíte inteira da versão que será implantada e mostre o resultado. Com falha, não implante.
 - Se `.specs/implantacao.md` existir, esta é uma reimplantação: leia-o, mostre a versão no ar e siga do passo 3.
 
 ## 1. Escolher o destino
@@ -44,7 +45,7 @@ Grave `.specs/implantacao.md`:
 ```markdown
 # Implantação: <aplicação>
 
-- **Data**: <AAAA-MM-DD> · **Versão**: <commit ou tag>
+- **Data**: <AAAA-MM-DD> · **Versão**: <commit ou tag> · **Suíte**: <N passaram, 0 falharam>
 - **Destino**: local com Docker | <serviço gratuito>
 - **Endereço**: <url ou http://localhost:porta>
 - **Implantar**: `<comando>`

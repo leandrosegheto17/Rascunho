@@ -202,6 +202,30 @@ Decisões do usuário: **só ele usa** (sem login complexo); **Opus no planejame
 
 Orquestrador: skill `uso-proprio`. `/fluxo` marca o fluxo 2 como pronto. **Pendente:** teste real com uma ferramenta pessoal.
 
+## Passo 10: fluxo 3, feature em projeto existente feito com IA
+
+**Status:** construído em 2026-10-23.
+
+Decisões do usuário: **Opus no pedido e no plano** (fases 1 e 3), reconhecimento no `leitor-codigo` (Haiku), resto em Sonnet; verificação com o `verificador` **e o `/code-review`** no diff; forma de integrar **perguntada a cada feature** (merge local, PR ou manter a branch).
+
+| Fases | Peça | Origem |
+|---|---|---|
+| 1 Pedido | `tlc-spec-driven` (Specify) | reaproveitada |
+| 2 Reconhecimento | skills `inventario` (projeto, uma vez, atualizado por diff) e `reconhecimento` (feature: onde entra, tabela reaproveitar / estender / criar, convenções, testes, riscos, escalonamento por arquitetura) | novas |
+| 3 Plano | `tlc-spec-driven` (Design e Tasks), seguindo a tabela de reaproveitamento | reaproveitada |
+| 4 Rede de proteção | skill `rede-de-protecao` (linha de base, falhas preexistentes, testes de caracterização em commit separado) | nova; serve aos fluxos de legado, refatoração e bug |
+| 5 Implementação | `tlc-spec-driven` (Execute) em branch `feature/<nome>` | reaproveitada |
+| 6 Verificação | `verificador` + `code-review`; `auditor-seguranca` se tocar login, permissões, pagamento ou dados pessoais | reaproveitada |
+| 7 Integração | checagem final de testes, atualização do contexto do projeto, `finishing-a-development-branch`, `integracao.md` | reaproveitada |
+
+**Pedido do usuário durante a construção:** em projeto feito por outra pessoa, sempre avaliar o que já existe para reaproveitar. Resolvido com o inventário do projeto e o passo obrigatório de reaproveitamento no reconhecimento (peça nova exige justificativa; biblioteca nova só se nenhuma instalada resolver).
+
+## Passo 11: testes inegociáveis
+
+**Status:** pedido do usuário em 2026-10-23 ("sempre temos que garantir os testes").
+
+Seção "Testes (inegociável)" no `CLAUDE.md`, válida para todos os fluxos (exceto spike e aprendizado): toda mudança de comportamento com teste que falharia sem ela; testes nascem do critério de aceite; nunca apagar, pular ou enfraquecer teste (mudar teste existente exige motivo e aprovação); projeto sem testes começa criando a infraestrutura; **checagem final da suíte inteira, executada de verdade e com resultado mostrado, antes de integrar ou implantar**; CI obrigatório. A checagem final foi ligada em `feature` (fase 7), `implantacao` e `projeto-novo` (fase 10).
+
 Mudança em relação ao passo 1: as skills `brainstorming`, `writing-plans`, `executing-plans` e `subagent-driven-development` do superpowers **não** entram no fluxo 1, porque duplicariam `descoberta` e `tlc-spec-driven`. Do superpowers ficam `systematic-debugging`, `using-git-worktrees`, `verification-before-completion` e `finishing-a-development-branch`.
 
 ### Situação das dependências
