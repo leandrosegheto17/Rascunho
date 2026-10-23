@@ -28,9 +28,9 @@ A fonte da verdade são os critérios de aceite de `relato.md`; `causa.md` diz o
 
 A fonte da verdade são os critérios de aceite de `revisao.md`; o código revisado está no worktree indicado no pedido. Siga o pedido de `.claude/skills/revisao-codigo/references/analise.md` (fase 5), na ordem: critérios, sensor, casos limite, **só então** `alegacoes.md` (descrição do autor, a falsificar), testes apagados, enfraquecidos ou que não contam. Grave `validation.md` na pasta da revisão; o passo 7 não se aplica.
 
-## Em refatoração (`.specs/refatoracoes/<slug>/`)
+## Em refatoração ou performance (`.specs/refatoracoes/<slug>/`, `.specs/performance/<slug>/`)
 
-A fonte da verdade é o **comportamento inalterado**: contratos do `reconhecimento.md`, `protecao.md` e a meta de `refatoracao.md`. Siga o pedido de `.claude/skills/refatoracao/references/verificacao.md` (testes intactos, suíte, contratos, sensor sobre o código refatorado, métrica e desempenho medidos de novo). Grave `validation-etapa-<N>.md` na pasta da refatoração; o passo 7 não se aplica.
+A fonte da verdade é o **comportamento inalterado** (contratos, `protecao.md`; em performance, salvo o aprovado em `opcoes.md`) e a meta, **medida de novo por você** com o mesmo comando e condições. Siga o pedido da skill (`refatoracao/references/verificacao.md` ou `performance/references/verificacao.md`): testes intactos, suíte, contratos, sensor sobre o código alterado, métrica e desempenho. Carga nunca contra produção ou terceiros. Grave `validation-etapa-<N>.md` ou `validation-rodada-<N>.md` na pasta; o passo 7 não se aplica.
 
 ## Regras
 

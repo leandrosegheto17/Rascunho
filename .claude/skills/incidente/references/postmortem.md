@@ -20,6 +20,7 @@ Regras:
 - Cada ação com **responsável e prazo**, e realista (cabe no prazo). Ação de código segue o fluxo certo (skill `bug`, `feature` ou `legado`), com testes.
 - **Runbook**: se o incidente mostrou que faltava um roteiro, crie ou atualize `.specs/runbook.md` (modelo abaixo) e date a última verificação.
 - Mesma causa em 2 incidentes ou mais: ação de processo ou de arquitetura (refatoração, skill `refatoracao`).
+- Lentidão já contida que pode voltar (pico de carga, consulta que piora com o volume): ação de prevenção pela skill `performance`, gravando `.specs/performance/<slug>/performance.md` com **Chamado por** `incidente <id>`, **Usar em** `prevencao.md` e o **Sintoma** com os números do incidente.
 
 ### Modelo de `prevencao.md`
 

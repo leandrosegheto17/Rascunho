@@ -59,6 +59,7 @@ A **primeira linha que se aplica** define a fase (campos de `causa.md` conforme 
 ### Saídas da triagem e de emergência
 
 - **Não é bug** (o sistema faz o que foi definido): é pedido de feature. Grave `fechamento.md` com o motivo e ofereça o fluxo 3 (`feature`) ou 4 (`legado`).
+- **Só lentidão** (resultado certo, mas lento, sem erro): é o fluxo 5. Grave `.specs/performance/<slug>/performance.md` (formato da skill `performance`) com **Chamado por** `bug <slug>`, **Usar em** `fechamento.md` e o **Sintoma** do relato, acione a skill `performance` e, quando ela responder, feche como `devolvido a performance`.
 - **Duplicado**: aponte para o bug original em `fechamento.md` e encerre.
 - **Grave em produção** (P0, ou P1 afetando usuários agora): o caminho certo é o fluxo 9. Pergunte via `AskUserQuestion`: **passar para a skill `incidente` (Recomendado)**, que contém e restaura primeiro, usa este `relato.md` na triagem e volta a esta pasta na correção definitiva; **seguir aqui com caminho de hotfix**, só se o dano já estiver contido e faltar apenas corrigir; ou parar.
 - **Não reproduz**: não corrija no escuro. Pergunte via `AskUserQuestion`: **pedir mais dados** ao relator (o que faltou, com sugestão), **instrumentar** (log ou diagnóstico temporário para colher evidência) ou **encerrar como não reproduzido** em `fechamento.md`.

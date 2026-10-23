@@ -460,6 +460,43 @@ Decisões por analogia:
 
 Orquestrador: skill `refatoracao`. `/fluxo` marca o 13 como pronto. **Pendente:** teste real (ex.: uma função grande com regra duplicada num projeto de exemplo, percorrendo as 9 fases no modo pequeno) e, num segundo teste, uma etapa do modo grande com ramificar por abstração.
 
+## Passo 20: fluxo 5, performance e escala
+
+**Status:** construído em 2026-10-23 por subagente, seguindo `ROTEIRO-CONSTRUCAO.md`; decisões tomadas por analogia com `refatoracao`, `spike` e `bug`, pendentes de revisão do usuário.
+
+Decisões por analogia:
+
+- **Artefatos em `.specs/performance/<slug>/`**: `performance.md` (fase 1 e estado: **Meta aprovada**, **Rodada**, **Causa confirmada**, **Plano aprovado**, **Rede de proteção**, **Meta atingida**, **Resultado**, como o `refatoracao.md`; também o contrato de entrada), `medicoes.md` (linha de base, cada mudança medida, produção depois), `carga/` (roteiro de medição versionado, sem segredo, base da guarda no CI), `diagnostico.md` (uma seção por rodada), `evidencias/` (saídas brutas; fora do git se tiverem dado de produção), `opcoes.md`, `tasks.md` (tlc), `reconhecimento.md`, `protecao.md`, `validation-rodada-<N>.md`, `seguranca.md` (se houver), `guarda.md`, `integracao.md`. Em andamento = **Resultado** `pendente`. Revisão curta em `.specs/revisoes/performance-<slug>-rodada-<N>/`.
+- **Rodadas** no lugar das etapas da refatoração: o desenho manda "meta não atingida → volta ao diagnóstico". As fases 3 a 7 se repetem; os campos de rodada voltam a `pendente`; três rodadas sem a meta escalam ao usuário (saída arquitetural, meta parcial ou rever a meta), como as 3 correções falhas do `bug`.
+- **Meta sem número não passa** (como na refatoração): métrica em percentil, alvo, cenário reproduzível, ambiente e prazo, mais **guardas** (o que não pode piorar: erro, memória, custo). Alvos de referência do wshobson só como ponto de partida.
+- **Ferramenta já instalada ou script mínimo** na linguagem do projeto; instalar é decisão do usuário (como as métricas da refatoração). Tabela de ferramentas por necessidade, não por stack fixa.
+- **Segurança da carga:** carga, `EXPLAIN ANALYZE` e perfil em produção, ou carga que passa por terceiro, exigem confirmação específica (pode ser negação de serviço, custo ou bloqueio); padrão local ou staging com dublês, como o teste ativo da auditoria.
+- **Ganho confirmado = faixas sem sobreposição** entre as repetições antes e depois, guardas sem piora. Não confirmado é revertido com `git revert` (fica no histórico, que também é aprendizado). Quem mudou não mede o próprio ganho: a sessão mede na fase 6 (como no `spike`, em que quem experimenta não dá o veredito) e o `verificador` repete na fase 7.
+- **Uma tarefa por vez** no Execute do tlc, sem lotes paralelos (duas mudanças juntas invalidam a medição).
+- **Otimizar não muda resultado:** opção que muda algo observável (cache com dado velho, paginação, resposta antes do fim) é decisão do usuário na fase 4 e ganha critério de aceite e teste. Rede de proteção pelas skills `reconhecimento` e `rede-de-protecao` depois do plano (como na `feature`), porque o trecho tocado só se conhece com a opção escolhida.
+- **Opção incerta → skill `spike`; trocar componente ou infraestrutura → skill `escolha-tecnologia`**, ambas com **Chamado por** `performance <slug>` e **Usar em** `opcoes.md`. Escalar por último.
+- **Guarda (fase 8) automatizada no CI**, preferindo proxy determinístico (contagem de consultas, tamanho do pacote, memória) a tempo de resposta, que oscila em CI; carga curta e Lighthouse CI em job próprio, contra a aplicação subida no job. **A guarda precisa falhar sem a otimização**, provado em cópia isolada com os commits `perf:` revertidos: é o teste que "falharia sem a mudança" da regra de testes. SLO, alerta por taxa de queima e painel quando houver produção (do `slo-implementation`). Integração na mesma fase (checagem final, forma de integrar, `liberacao` com produção), para a guarda entrar junto com o ganho.
+- **Web à parte** (`web.md`, lido só quando o alvo é página): LCP, INP (no lugar do FID) e CLS no p75, Lighthouse e LHCI com `upload` local (o armazenamento público temporário é ação externa); `budget.json` do Lighthouse tratado como descontinuado (`PREMISSA`, conferir na versão).
+- **Modelo:** Opus em 1, 3 e 4 (meta, diagnóstico, escolha); Sonnet em 2 e 5 a 9.
+- **Entrada por outros fluxos:** `refatoracao` (meta de velocidade; antes dizia "em preparação"), `incidente` (prevenção de lentidão contida) e `bug` (defeito que é só lentidão) gravam `performance.md` com **Chamado por**, **Usar em** e **Sintoma**; a fase 1 vira uma confirmação.
+- **Registro:** oportunidades restantes em `.specs/projeto/dividas.md` (tipo `desempenho`), reaproveitando o modelo da refatoração; **limite atual** medido (carga em degraus até o p95 disparar) quando a meta é de capacidade.
+- **Ajustes em peças existentes:** `verificador` (seção de refatoração vira "refatoração ou performance", sem crescer), `rede-de-protecao` e `reconhecimento` (uma linha cada, para a pasta de performance), `refatoracao` (saída "meta de velocidade" aciona a skill), `bug` (saída "só lentidão"), `incidente/references/postmortem.md` (prevenção de lentidão), `/fluxo` (5 pronto).
+- `chrome-devtools` só como ideia (servidor MCP de DevTools quando já configurado): nada a instalar.
+
+| Fases | Peça | Origem |
+|---|---|---|
+| 1 Meta | `performance/references/meta.md` (sintoma, lentidão ou escala, métricas típicas com alvos de referência, cenário, ambiente, guardas, prazo; modelo de `performance.md` = contrato de entrada) | nova; alvos do wshobson `performance-optimization` (MIT) |
+| 2 Linha de base | `references/medicao.md` (segurança da carga, ferramenta instalada ou script mínimo, taxa de chegada, aquecimento, repetições, percentis, ruído, ganho confirmado; modelo de `medicoes.md`); `references/web.md` | nova; wshobson `performance-optimization` (MIT), tlc `perf-lighthouse` e `core-web-vitals` (MIT) |
+| 3 Diagnóstico | `leitor-codigo` + `references/diagnostico.md` (caminho quente, roteiro de perfil por recurso, degraus de carga, fração do tempo e ganho máximo, causa confirmada, saída arquitetural) | reaproveitada; roteiro do wshobson (MIT) |
+| 4 Opções | `references/opcoes.md` (categorias, ganho, esforço, risco, mudança de comportamento, reversível); skills `spike` e `escolha-tecnologia`; `tlc-spec-driven` (Tasks) | nova; categorias do wshobson (MIT) |
+| 5 Rede de proteção | `inventario`, `reconhecimento`, `rede-de-protecao` na pasta do trabalho | reaproveitadas, ajuste de 1 linha |
+| 6 Otimização | `tlc-spec-driven` (Execute), uma tarefa por vez, com `implementador`/`implementador-dominio`; medir, manter ou reverter | reaproveitada |
+| 7 Verificação | `verificador` (modo performance) com `references/verificacao.md`; `revisao-codigo` curta; `auditor-seguranca` condicional | reaproveitadas; agente com seção compartilhada |
+| 8 Guarda e integração | `references/guarda.md` (checagem no CI provada contra a versão sem a otimização, SLO e alerta, `guarda.md`, integração, `liberacao`) | nova; wshobson `slo-implementation` (MIT), `perf-lighthouse` (MIT) |
+| 9 Registro | `references/registro.md` (gargalo, correção, números, limite atual, contexto, `dividas.md`) | nova |
+
+Orquestrador: skill `performance`. `/fluxo` marca o 5 como pronto. **Pendente:** teste real (ex.: uma API de exemplo com consulta N+1 e sem índice, base com 100 mil registros, percorrendo as 9 fases com autocannon ou k6 locais) e, num segundo teste, uma página web com Lighthouse CI.
+
 ---
 
 ## Estado ao fim da rodada (2026-10-23)

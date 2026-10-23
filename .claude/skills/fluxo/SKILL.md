@@ -52,7 +52,7 @@ Se o usuário descreveu o que quer em texto livre (ex.: "o login quebrou"), esco
 | 2 | Aplicação para uso próprio | `pessoal`, `uso-proprio` | **Pronto** | skill `uso-proprio` |
 | 3 | Feature em projeto feito com IA | `feature` | **Pronto** | skill `feature` |
 | 4 | Feature em projeto legado | `legado` | **Pronto** | skill `legado` |
-| 5 | Performance e escala | `performance`, `lento` | Em preparação | `leitor-codigo` |
+| 5 | Performance e escala | `performance`, `lento` | **Pronto** | skill `performance` |
 | 6 | Integração com terceiros | `integracao`, `api` | Em preparação | `pesquisador`, `tlc-spec-driven` |
 | 7 | Redesign de interface | `redesign`, `visual` | Em preparação | `mockup-visual` |
 | 8 | Aprendizado | `estudo`, `aprender` | Em preparação | — |

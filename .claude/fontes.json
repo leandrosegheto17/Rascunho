@@ -296,6 +296,30 @@
       "arquivos_origem": ["skills/bmad-build/review-prompts/verification-gap.md"],
       "usado_em": ".claude/skills/refatoracao/"
     },
+    {
+      "nome": "performance (wshobson performance-optimization e slo-implementation)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/wshobson/agents",
+      "commit": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+      "arquivos_origem": [
+        "plugins/application-performance/commands/performance-optimization.md",
+        "plugins/observability-monitoring/skills/slo-implementation/SKILL.md",
+        "plugins/observability-monitoring/skills/slo-implementation/references/details.md"
+      ],
+      "usado_em": ".claude/skills/performance/"
+    },
+    {
+      "nome": "performance (tlc perf-lighthouse e core-web-vitals)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/tech-leads-club/agent-skills",
+      "commit": "bc4f025632b0443ed3450aaec6fe96aec5b9a0c5",
+      "arquivos_origem": [
+        "packages/skills-catalog/skills/(performance)/perf-lighthouse/SKILL.md",
+        "packages/skills-catalog/skills/(performance)/core-web-vitals/SKILL.md",
+        "packages/skills-catalog/skills/(performance)/core-web-vitals/references/LCP.md"
+      ],
+      "usado_em": ".claude/skills/performance/"
+    },
     { "nome": "clone .tlc", "tipo": "referencia", "pasta": ".tlc", "origem": "https://github.com/tech-leads-club/agent-skills" },
     { "nome": "clone .superpowers", "tipo": "referencia", "pasta": ".superpowers", "origem": "https://github.com/obra/superpowers" },
     { "nome": "clone .speckit", "tipo": "referencia", "pasta": ".speckit", "origem": "https://github.com/github/spec-kit" },
