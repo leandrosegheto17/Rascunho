@@ -27,7 +27,8 @@ Liste `.specs/produto/` e `.specs/features/`. A **primeira linha que se aplica**
 | `tasks.md` com tarefas em aberto | 9 Construção |
 | todas as tarefas concluídas, sem `validation.md` com PASS | 10 Validação |
 | `validation.md` com PASS, sem `seguranca.md` | 10 Validação: auditoria de segurança |
-| `seguranca.md` sem achado crítico ou alto em aberto | 11 Lançamento |
+| `seguranca.md` sem achado crítico ou alto em aberto, sem `.specs/liberacao.md` | 11 Lançamento |
+| `.specs/liberacao.md` com a primeira liberação concluída | 12 Operação e aprendizado |
 
 Para retomar uma construção interrompida, o `tlc-spec-driven` reconcilia `.specs/STATE.md` com o git; deixe que ele faça isso.
 
@@ -55,7 +56,8 @@ Se a fase pede outro modelo, avise:
 | 8 | `tlc-spec-driven`, fase **Tasks** | Peça que as **primeiras tarefas** sejam: repositório e estrutura, ambiente local reproduzível, esqueleto que roda ponta a ponta e CI com os testes. Com interface, inclua: copiar `.specs/mockup/tokens.css` sem alterar, criar os componentes do guia antes das telas, e rodar `python .claude/scripts/checar-tokens.py <pasta da interface>` no CI. |
 | 9 | `tlc-spec-driven`, fase **Execute** | Trabalhadores: `implementador` (lote mecânico) ou `implementador-dominio` (lote de domínio). Isole com `using-git-worktrees`. |
 | 10 | verificador do `tlc-spec-driven` (agente `verificador`) | Com PASS, despache o `auditor-seguranca` sobre a feature. Com interface, rode a etapa 3 do `mockup-visual` (prints do app ao lado do mockup + checagem de tokens) e peça o aceite visual ao usuário. Achado crítico ou alto de segurança, ou diferença visual rejeitada, vira tarefa de correção e volta à fase 9. Antes de fechar, a checagem final de testes do `CLAUDE.md` (suíte inteira, resultado mostrado). Ao final, `finishing-a-development-branch`. |
-| 11, 12 | **ainda sem peça** | Diga que estas fases ainda não foram construídas e ofereça conduzi-las manualmente seguindo `references/fases.md`. |
+| 11 | skill `liberacao` | Confere antes as validações pendentes marcadas como condição para lançamento. |
+| 12 | **ainda sem peça** | Diga que esta fase ainda não foi construída e ofereça conduzi-la manualmente seguindo `references/fases.md` (métricas do MVP, feedback, decisão de persistir, pivotar ou encerrar). |
 
 ## 4. Fechar a fase
 

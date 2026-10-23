@@ -230,6 +230,24 @@ Seção "Testes (inegociável)" no `CLAUDE.md`, válida para todos os fluxos (ex
 
 **Testes do próprio Rascunho (escolha do usuário: criar, não dispensar):** 26 testes `unittest` em `.claude/scripts/testes/` para `checar-tokens`, `verificar-atualizacoes` e `trava-testes`; `.specs/projeto/testes.json` aponta para eles. Primeira checagem final pela trava: verde.
 
+## Passo 12: fluxo 4, feature em legado
+
+**Status:** construído em 2026-10-23.
+
+Decisões do usuário: **Opus em pedido, arqueologia e plano** (fases 1, 2-3 e 5); staging **perguntado a cada projeto**; a skill de liberação é **uma peça só**, usada também na fase 11 do projeto novo.
+
+| Fases | Peça | Origem |
+|---|---|---|
+| 1 Pedido | `tlc-spec-driven` (Specify) | reaproveitada |
+| 2-3 Arqueologia | `inventario` + `reconhecimento` + skill **`arqueologia`** (ambiente roda?, histórico do git, comportamento observado, conhecimento de pessoas, costuras e ponto único de integração, raio de impacto, staging e flag, saída de emergência) | nova por cima das existentes |
+| 4 Rede de proteção | `rede-de-protecao`, caracterizando todo o raio de impacto | reaproveitada |
+| 5 Plano | `tlc-spec-driven`, código novo ao lado do antigo | reaproveitada |
+| 6-7 | Execute, `verificador`, `code-review`, `auditor-seguranca` condicional, fluxos vizinhos testados | reaproveitadas |
+| 8 Liberação | checagem final, integração, skill **`liberacao`** (plano com flag ou gradual, staging, pausa antes de produção, monitoramento, critério de parada, reversão testada; `.specs/liberacao.md`) | nova; também é a fase 11 do fluxo 1 |
+| 9 Registro | contexto do projeto com armadilhas e costuras, inventário e `integracao.md` | ampliado do fluxo 3 |
+
+Orquestrador: skill `legado`. Fluxo 1 passou a ter a fase 11; resta a 12.
+
 Mudança em relação ao passo 1: as skills `brainstorming`, `writing-plans`, `executing-plans` e `subagent-driven-development` do superpowers **não** entram no fluxo 1, porque duplicariam `descoberta` e `tlc-spec-driven`. Do superpowers ficam `systematic-debugging`, `using-git-worktrees`, `verification-before-completion` e `finishing-a-development-branch`.
 
 ### Situação das dependências

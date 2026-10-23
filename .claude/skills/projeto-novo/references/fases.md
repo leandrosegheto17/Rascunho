@@ -15,7 +15,7 @@ Princípio: **reduzir incerteza o mais barato possível antes de gastar com cons
 | 8 | Preparação | Como vamos trabalhar? | `tasks.md`; repositório, ambiente, esqueleto, CI (com checagem de tokens, se houver interface) | Tarefas aprovadas e aceitas pelo `validate_tasks.py`; esqueleto rodando | Sonnet |
 | 9 | Construção | Cada fatia entrega valor? | código, testes, um commit por tarefa | Todas as tarefas concluídas com o gate passando | Sonnet (trabalhadores por lote) |
 | 10 | Validação | Está correto, seguro, utilizável e com a aparência aprovada? | `validation.md` (PASS), `seguranca.md`; com interface, "Mockup × app" na galeria | PASS do verificador, nenhum achado crítico ou alto em aberto e, com interface, aceite visual do usuário | Sonnet |
-| 11 | Lançamento | Como colocar no ar com segurança? | (a definir) | Em staging, liberação gradual, reversão testada | Sonnet |
+| 11 | Lançamento | Como colocar no ar com segurança? | entrada em `.specs/liberacao.md` (skill `liberacao`) | Suíte verde, validações de lançamento concluídas, liberação gradual, reversão testada | Sonnet |
 | 12 | Operação e aprendizado | A hipótese se confirmou? | (a definir) | Métricas acompanhadas; decisão de persistir, pivotar ou encerrar | Sonnet |
 
 ## Laços comuns
