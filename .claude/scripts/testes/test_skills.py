@@ -1,0 +1,92 @@
+"""Checagem estrutural das skills de .claude/skills.
+
+Não é script: protege a forma das peças enquanto os fluxos crescem (frontmatter,
+tamanho, links para references/ e menu do /fluxo apontando para skill existente).
+"""
+
+import json
+import re
+import unittest
+from pathlib import Path
+
+CLAUDE = Path(__file__).resolve().parents[2]
+SKILLS = CLAUDE / "skills"
+LIMITE_LINHAS = 150
+
+LINK = re.compile(r"\]\(([^)\s]+)\)")
+
+
+def skills_de_pacote():
+    """Pastas instaladas por pacote: não são nossas, não seguem o limite de linhas."""
+    fontes = json.loads((CLAUDE / "fontes.json").read_text(encoding="utf-8"))["fontes"]
+    return {
+        Path(f["usado_em"]).name
+        for f in fontes
+        if f.get("tipo") == "pacote" and f.get("usado_em", "").startswith(".claude/skills/")
+    }
+
+
+def frontmatter(texto):
+    partes = texto.split("---", 2)
+    if not texto.startswith("---") or len(partes) < 3:
+        return {}
+    campos = {}
+    for linha in partes[1].splitlines():
+        if ":" in linha and not linha.startswith(" "):
+            chave, valor = linha.split(":", 1)
+            campos[chave.strip()] = valor.strip()
+    return campos
+
+
+def links_locais(arquivo):
+    for alvo in LINK.findall(arquivo.read_text(encoding="utf-8")):
+        if alvo.startswith(("http://", "https://", "#", "mailto:")):
+            continue
+        yield alvo.split("#", 1)[0]
+
+
+class TestSkills(unittest.TestCase):
+    def setUp(self):
+        self.pacotes = skills_de_pacote()
+        self.pastas = sorted(p for p in SKILLS.iterdir() if p.is_dir())
+
+    def test_toda_pasta_tem_skill_md_com_nome_e_descricao(self):
+        for pasta in self.pastas:
+            with self.subTest(skill=pasta.name):
+                arquivo = pasta / "SKILL.md"
+                self.assertTrue(arquivo.exists(), "falta SKILL.md")
+                campos = frontmatter(arquivo.read_text(encoding="utf-8"))
+                self.assertEqual(campos.get("name"), pasta.name)
+                self.assertTrue(campos.get("description"), "description vazia")
+
+    def test_skills_nossas_ate_150_linhas(self):
+        for pasta in self.pastas:
+            if pasta.name in self.pacotes:
+                continue
+            with self.subTest(skill=pasta.name):
+                linhas = len((pasta / "SKILL.md").read_text(encoding="utf-8").splitlines())
+                self.assertLessEqual(linhas, LIMITE_LINHAS)
+
+    def test_links_locais_existem(self):
+        for pasta in self.pastas:
+            if pasta.name in self.pacotes:
+                continue
+            for arquivo in [pasta / "SKILL.md", *sorted((pasta / "references").glob("*.md"))]:
+                for alvo in links_locais(arquivo):
+                    with self.subTest(arquivo=str(arquivo.relative_to(SKILLS)), link=alvo):
+                        self.assertTrue((arquivo.parent / alvo).exists(), "link quebrado")
+
+    def test_fluxo_pronto_aponta_para_skill_existente(self):
+        menu = (SKILLS / "fluxo" / "SKILL.md").read_text(encoding="utf-8")
+        prontos = [linha for linha in menu.splitlines() if linha.startswith("|") and "**Pronto**" in linha]
+        self.assertTrue(prontos, "nenhum fluxo pronto no menu")
+        for linha in prontos:
+            with self.subTest(linha=linha[:40]):
+                nomes = re.findall(r"skill `([a-z0-9-]+)`", linha)
+                self.assertTrue(nomes, "fluxo pronto sem skill indicada")
+                for nome in nomes:
+                    self.assertTrue((SKILLS / nome / "SKILL.md").exists(), f"skill {nome} não existe")
+
+
+if __name__ == "__main__":
+    unittest.main()
