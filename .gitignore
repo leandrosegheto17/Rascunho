@@ -1,11 +1,2 @@
-.tlc/
-.superpowers/
-.anthropic-skills/
-.speckit/
-.bmad/
-.openspec/
-.wshobson/
-.anthropic-plugins/
-.awesome/
 .claude/.cache/
 __pycache__/

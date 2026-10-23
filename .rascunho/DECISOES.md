@@ -165,7 +165,7 @@ Reforços aprovados (1, 2 e 3): a regra vale também dentro do `tlc-spec-driven`
 
 ## Conclusão desta rodada (2026-10-23)
 
-Teste encerrado por escolha do usuário. A sessão de teste chegou a gerar a spec do MVP (fase 6, `tlc-spec-driven`): `spec.md` com 9 histórias e 61 critérios EARS, títulos de seção em inglês (exigidos pelo validador) e conteúdo em português; `validate_spec.py` passou sem erros nem avisos. Artefatos arquivados em `.rascunho/teste-1-cuidados/`. Branch `novo-fluxo-claude` juntada na `main` local (sem push).
+Teste encerrado por escolha do usuário. A sessão de teste chegou a gerar a spec do MVP (fase 6, `tlc-spec-driven`): `spec.md` com 9 histórias e 61 critérios EARS, títulos de seção em inglês (exigidos pelo validador) e conteúdo em português; `validate_spec.py` passou sem erros nem avisos. Artefatos arquivados em `.rascunho/teste-1-cuidados/` (removidos na limpeza de 2026-10-23; recuperáveis pelo histórico do git, commit anterior a essa limpeza). Branch `novo-fluxo-claude` juntada na `main` local (sem push).
 
 **Pronto e testado:** fases 1 a 5 e decisão do fluxo 1 (skills `fluxo`, `projeto-novo`, `descoberta`, `viabilidade-tecnica`, `plano-comercial`, `decisao`), agentes (`leitor-codigo` testado isoladamente; `pesquisador` usado no teste), rules por `paths`, perguntas com opções, verificação de atualizações (script, skill e hook simulado).
 
@@ -822,6 +822,20 @@ Decisões por analogia:
 | 9 Aprendizado | `suporte/references/base-conhecimento.md` (tags, contagem, base, sugestão interna) + `sugestao` + `demandas` | nova; limiar de 3 do legado `bug-documentation`; formato pergunta e resposta do `internal-comms` |
 
 Orquestrador: skill `suporte`. `/fluxo` marca o 32 como pronto; nenhuma skill diz mais "em preparação" sobre outro fluxo. **Pendente:** teste real (ex.: num projeto de exemplo com `inventario.md`, três casos — "não acho onde muda a senha" (dúvida de uso, vira `BC-001`; dois casos depois com a mesma tag `clareza` geram a sugestão interna no terceiro); "fui cobrado duas vezes" (cobrança, acesso de leitura registrado, escalonamento com pacote de passagem e retorno); "o relatório sai em branco desde ontem" (bug reproduzido, relato com triagem à skill `bug`, contorno à pessoa, devolução após a liberação e confirmação) —, conferindo que nenhum nome, contato ou dado da conta entra no git e que nenhuma mensagem sai sem confirmação). O "Estado ao fim da rodada" abaixo ainda descreve a primeira rodada (4 de 21) e precisa ser atualizado pela sessão principal.
+
+---
+
+## Passo 30: limpeza do projeto
+
+**Status:** feito em 2026-10-23, a pedido do usuário ("remover tudo que não está sendo utilizado; manter `.claude_legado`").
+
+| Removido | Motivo |
+|---|---|
+| 9 clones de referência (`.tlc`, `.superpowers`, `.speckit`, `.bmad`, `.openspec`, `.wshobson`, `.anthropic-skills`, `.anthropic-plugins`, `.awesome`), ~165 MB fora do git | Nenhum fluxo os lê; serviram para o levantamento e a adaptação. O código adaptado é conferido no GitHub (`adaptado` no `fontes.json`) e cada `ATRIBUICAO.md` guarda origem e commit. Saíram as 9 entradas `referencia` do `fontes.json`, as linhas do `.gitignore` e a menção no `CLAUDE.md`. O tipo `referencia` continua suportado pelo `verificar-atualizacoes.py`, se um clone voltar. |
+| `.rascunho/teste-1-cuidados/` | Arquivo do teste 1, só citado como histórico; fica no histórico do git. |
+| `__pycache__` de `.claude/scripts` | Gerado. |
+
+Mantidos: `.claude`, `.claude_legado`, `.agents` (lock do `tlc-spec-driven`), `.specs` (`testes.json`) e, em `.rascunho`, `DECISOES.md`, `DESENHO-FLUXO-1.md`, `FLUXO-*.md` (citados pelas skills), `ROTEIRO-CONSTRUCAO.md` e `REAPROVEITAMENTO.md` (citado em atribuições). Os caminhos de clone citados no `REAPROVEITAMENTO.md` e nas atribuições ficam como registro histórico.
 
 ---
 

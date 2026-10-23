@@ -548,15 +548,6 @@
       "commit": "15a6ad1",
       "arquivos_origem": [".claude_legado/skills/bug-documentation/SKILL.md"],
       "usado_em": ".claude/skills/suporte/"
-    },
-    { "nome": "clone .tlc", "tipo": "referencia", "pasta": ".tlc", "origem": "https://github.com/tech-leads-club/agent-skills" },
-    { "nome": "clone .superpowers", "tipo": "referencia", "pasta": ".superpowers", "origem": "https://github.com/obra/superpowers" },
-    { "nome": "clone .speckit", "tipo": "referencia", "pasta": ".speckit", "origem": "https://github.com/github/spec-kit" },
-    { "nome": "clone .anthropic-skills", "tipo": "referencia", "pasta": ".anthropic-skills", "origem": "https://github.com/anthropics/skills" },
-    { "nome": "clone .anthropic-plugins", "tipo": "referencia", "pasta": ".anthropic-plugins", "origem": "https://github.com/anthropics/claude-plugins-official" },
-    { "nome": "clone .bmad", "tipo": "referencia", "pasta": ".bmad", "origem": "https://github.com/bmad-code-org/BMAD-METHOD" },
-    { "nome": "clone .openspec", "tipo": "referencia", "pasta": ".openspec", "origem": "https://github.com/Fission-AI/OpenSpec" },
-    { "nome": "clone .wshobson", "tipo": "referencia", "pasta": ".wshobson", "origem": "https://github.com/wshobson/agents" },
-    { "nome": "clone .awesome", "tipo": "referencia", "pasta": ".awesome", "origem": "https://github.com/hesreallyhim/awesome-claude-code" }
+    }
   ]
 }
