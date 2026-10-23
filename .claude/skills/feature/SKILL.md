@@ -18,6 +18,8 @@ Liste `.specs/features/`. Features **em andamento** são as que não têm `integ
 
 **Chamada por outro fluxo:** `spec.md` com **Chamado por** `integração <slug>` (skill `integracao-terceiros`) segue estas fases com os acréscimos de [composicao.md](../integracao-terceiros/references/composicao.md) (critérios de falha, reaproveitar resiliência, auditoria restrita no lugar do `auditor-seguranca` avulso). Com **Chamado por** `automação <slug>` (skill `automacao`), os acréscimos são os de [composicao.md](../automacao/references/composicao.md) (critérios `AUT-NN`, casos iguais ao manual, entrada inerte). Ao gravar `integracao.md`, volte ao chamador.
 
+**Vinda de uma demanda** (sugestão, solicitação ou suporte): o Specify parte de `.specs/demandas/DEM-NNN-<slug>/encaminhamento.md` (problema, critérios de aceite, fora de escopo) e o `spec.md` leva no topo **Origem**: `demanda DEM-NNN`. Ao gravar `integracao.md`, avise que a demanda pode ir ao fechamento com o autor (skill `demandas`, conferir ligações).
+
 ## 2. Descobrir a fase da feature
 
 A **primeira linha que se aplica** define a fase:

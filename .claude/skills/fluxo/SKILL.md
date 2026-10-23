@@ -57,8 +57,8 @@ Se o usuário descreveu o que quer em texto livre (ex.: "o login quebrou"), esco
 | 7 | Redesign de interface | `redesign`, `visual` | **Pronto** | skill `redesign` |
 | 8 | Aprendizado | `estudo`, `aprender`, `aprendizado` | **Pronto** | skill `aprendizado` |
 | 9 | Investigação de incidentes | `incidente`, `caiu` | **Pronto** | skill `incidente` |
-| 10 | Sugestão de melhoria de terceiros | `sugestao` | Em preparação | — |
-| 11 | Solicitação de feature sob demanda | `pedido`, `solicitacao` | Em preparação | `tlc-spec-driven` |
+| 10 | Sugestão de melhoria de terceiros | `sugestao` | **Pronto** | skill `sugestao` |
+| 11 | Solicitação de feature sob demanda | `pedido`, `solicitacao` | Em preparação | `tlc-spec-driven`; skill `demandas` (registro e encaminhamento) |
 | 12 | Correção de bug | `bug`, `erro` | **Pronto** | skill `bug` |
 | 13 | Refatoração e dívida técnica | `refatorar`, `divida` | **Pronto** | skill `refatoracao` |
 | 14 | Documentar projeto existente | `documentar`, `docs` | **Pronto** | skill `documentar` |
@@ -68,7 +68,7 @@ Se o usuário descreveu o que quer em texto livre (ex.: "o login quebrou"), esco
 | 25 | Escolha de tecnologia | `tecnologia`, `stack` | **Pronto** | skill `escolha-tecnologia` |
 | 27 | Avaliação de projeto de terceiros | `avaliar`, `terceiros` | **Pronto** | skill `avaliar-terceiros` |
 | 30 | Automação de processo | `automacao`, `automatizar` | **Pronto** | skill `automacao` |
-| 32 | Suporte ao cliente | `suporte` | Em preparação | — |
+| 32 | Suporte ao cliente | `suporte` | Em preparação | skill `demandas` (registro, duplicados, aviso ao autor, encaminhamento ao `bug`) |
 
 Ao construir um fluxo novo, atualize a coluna "Situação" e a skill aqui.
 

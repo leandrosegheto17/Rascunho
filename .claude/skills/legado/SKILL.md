@@ -15,6 +15,8 @@ Liste `.specs/features/`. Em andamento são as que não têm `integracao.md`. Ne
 
 **Chamada por outro fluxo:** `spec.md` com **Chamado por** `integração <slug>` (skill `integracao-terceiros`) segue estas fases com os acréscimos de [composicao.md](../integracao-terceiros/references/composicao.md); na fase 8, leve à `liberacao` os itens de liberação do chamador. Com **Chamado por** `automação <slug>` (skill `automacao`), siga os acréscimos de [composicao.md](../automacao/references/composicao.md) e pare depois da integração da branch, sem a `liberacao`: ligar é a fase 8 do chamador. Ao gravar `integracao.md`, volte ao chamador.
 
+**Vinda de uma demanda** (sugestão, solicitação ou suporte): o Specify parte de `.specs/demandas/DEM-NNN-<slug>/encaminhamento.md` e o `spec.md` leva no topo **Origem**: `demanda DEM-NNN`. Ao gravar `integracao.md`, avise que a demanda pode ir ao fechamento com o autor (skill `demandas`, conferir ligações).
+
 ## 2. Descobrir a fase
 
 | Situação em `.specs/features/<feature>/` | Fase atual |

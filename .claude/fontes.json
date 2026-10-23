@@ -466,6 +466,28 @@
       ],
       "usado_em": ".claude/skills/aprendizado/"
     },
+    {
+      "nome": "sugestao (wshobson before-you-build)",
+      "tipo": "adaptado",
+      "origem": "https://github.com/wshobson/agents",
+      "commit": "0874a27b17a22e2b7c2e2bcd725768e0803cad06",
+      "arquivos_origem": [
+        "plugins/before-you-build/skills/before-you-build/SKILL.md",
+        "plugins/before-you-build/skills/before-you-build/references/risk-checklist.md"
+      ],
+      "usado_em": ".claude/skills/sugestao/"
+    },
+    {
+      "nome": "sugestao (legado: product-roadmap-prioritization, commercial-impact-triage)",
+      "tipo": "adaptado",
+      "origem": ".claude_legado",
+      "commit": "15a6ad1",
+      "arquivos_origem": [
+        ".claude_legado/skills/product-roadmap-prioritization/SKILL.md",
+        ".claude_legado/skills/commercial-impact-triage/SKILL.md"
+      ],
+      "usado_em": ".claude/skills/sugestao/"
+    },
     { "nome": "clone .tlc", "tipo": "referencia", "pasta": ".tlc", "origem": "https://github.com/tech-leads-club/agent-skills" },
     { "nome": "clone .superpowers", "tipo": "referencia", "pasta": ".superpowers", "origem": "https://github.com/obra/superpowers" },
     { "nome": "clone .speckit", "tipo": "referencia", "pasta": ".speckit", "origem": "https://github.com/github/spec-kit" },

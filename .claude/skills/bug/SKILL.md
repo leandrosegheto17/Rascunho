@@ -21,6 +21,8 @@ Liste `.specs/bugs/`. Em andamento são os que não têm `fechamento.md`.
 
 Incidente (fase 6), auditoria de segurança (fase 8) e suporte (fase 5) gravam `.specs/bugs/<slug>/relato.md` já com a triagem, no formato de [references/relato.md](references/relato.md), preenchendo **Chamado por** e **Devolver após**, e acionam esta skill. A tabela abaixo cai direto na fase 3. Ao concluir a fase indicada em **Devolver após**, responda ao fluxo chamador com o caminho da pasta e o resultado, e pare. Com `verificação` ou `liberação`, grave antes um `fechamento.md` curto marcando o que fica "a cargo de <chamador>" (liberação, aviso).
 
+**Vindo de uma demanda** (skill `demandas`, **Chamado por** `demanda DEM-NNN`, **Devolver após** `fechamento`): o relato chega **sem a triagem**, e a skill começa na fase 1-2 para completá-la. Na fase 9, o aviso ao relator é feito pelo fluxo dono da demanda (skill `demandas`); "não é bug" ou "duplicado" devolvem a demanda ao fluxo dono com o motivo.
+
 ## 2. Descobrir a fase
 
 A **primeira linha que se aplica** define a fase (campos de `causa.md` conforme [references/causa.md](references/causa.md)):
