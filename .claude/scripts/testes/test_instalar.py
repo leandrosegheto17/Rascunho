@@ -176,6 +176,107 @@ class TestAvisos(unittest.TestCase):
         self.assertFalse(any("superpowers" in a for a in avisos))
 
 
+def git_saida(pasta, *args):
+    return subprocess.run(["git", *args], cwd=pasta, capture_output=True, text=True, check=True).stdout
+
+
+class TestLocal(Base):
+    """Instalação num repositório de terceiros (corporativo) que nunca vai para o git dele."""
+
+    def setUp(self):
+        super().setUp()
+        escrever(self.origem / "settings.json", json.dumps({
+            "model": "sonnet",
+            "permissions": {"allow": ["Bash(python .claude/scripts/trava.py:*)"]},
+            "hooks": {"PreToolUse": [{"matcher": "Bash", "hooks": [{"type": "command", "command": "python trava.py"}]}]},
+        }))
+        self.destino.mkdir()
+        repo_git(self.destino)
+        escrever(self.destino / ".claude" / "settings.json", '{"permissions": {"allow": ["Bash(npm test:*)"]}}')
+        escrever(self.destino / ".claude" / "CLAUDE.md", "regras do time")
+        escrever(self.destino / "CLAUDE.md", "contexto do time")
+        escrever(self.destino / ".gitignore", "node_modules/\n")
+        subprocess.run(["git", "add", "-A"], cwd=self.destino, check=True)
+        subprocess.run(["git", "commit", "-q", "-m", "projeto do time"], cwd=self.destino, check=True)
+
+    def test_git_status_fica_limpo(self):
+        self.instalar(local=True)
+        self.assertEqual(git_saida(self.destino, "status", "--porcelain", "--untracked-files=all"), "")
+
+    def test_nao_toca_arquivos_do_time(self):
+        self.instalar(local=True)
+        self.assertEqual((self.destino / ".claude" / "CLAUDE.md").read_text(encoding="utf-8"), "regras do time")
+        self.assertEqual((self.destino / ".claude" / "settings.json").read_text(encoding="utf-8"),
+                         '{"permissions": {"allow": ["Bash(npm test:*)"]}}')
+        self.assertEqual((self.destino / ".gitignore").read_text(encoding="utf-8"), "node_modules/\n")
+
+    def test_copia_skills_e_scripts(self):
+        self.instalar(local=True)
+        self.assertTrue((self.destino / ".claude" / "skills" / "fluxo" / "SKILL.md").exists())
+        self.assertTrue((self.destino / ".claude" / "scripts" / "trava.py").exists())
+
+    def test_regras_vao_para_claude_local_preservando_o_que_existe(self):
+        escrever(self.destino / "CLAUDE.local.md", "minhas notas")
+        self.instalar(local=True)
+        texto = (self.destino / "CLAUDE.local.md").read_text(encoding="utf-8")
+        self.assertIn("minhas notas", texto)
+        self.assertIn("regras v1", texto)
+        self.assertIn(inst.INICIO_BLOCO, texto)
+
+    def test_settings_local_soma_ganchos_e_permissoes(self):
+        escrever(self.destino / ".claude" / "settings.local.json", '{"permissions": {"allow": ["Bash(ls:*)"]}}')
+        self.instalar(local=True)
+        local = json.loads((self.destino / ".claude" / "settings.local.json").read_text(encoding="utf-8"))
+        self.assertIn("Bash(ls:*)", local["permissions"]["allow"])
+        self.assertIn("Bash(python .claude/scripts/trava.py:*)", local["permissions"]["allow"])
+        self.assertEqual(local["hooks"]["PreToolUse"][0]["hooks"][0]["command"], "python trava.py")
+
+    def test_recusa_conflito_de_nome_sem_escrever_nada(self):
+        escrever(self.destino / ".claude" / "skills" / "fluxo" / "SKILL.md", "skill do time")
+        with self.assertRaises(inst.Recusa) as erro:
+            self.instalar(local=True)
+        self.assertIn("skills/fluxo/SKILL.md", str(erro.exception))
+        self.assertEqual((self.destino / ".claude" / "skills" / "fluxo" / "SKILL.md").read_text(encoding="utf-8"), "skill do time")
+        self.assertFalse((self.destino / ".claude" / "scripts" / "trava.py").exists())
+
+    def test_recusa_pasta_sem_git(self):
+        with self.assertRaises(inst.Recusa):
+            inst.instalar(self.origem, self.dir / "sem-git", local=True)
+
+    def test_atualizar_local_e_idempotente(self):
+        escrever(self.destino / ".claude" / "settings.local.json", '{"permissions": {"allow": ["Bash(ls:*)"]}}')
+        self.instalar(local=True)
+        escrever(self.origem / "CLAUDE.md", "regras v2")
+        escrever(self.origem / "skills" / "fluxo" / "SKILL.md", "menu v2")
+        self.instalar(atualizar=True)
+        texto = (self.destino / "CLAUDE.local.md").read_text(encoding="utf-8")
+        self.assertIn("regras v2", texto)
+        self.assertNotIn("regras v1", texto)
+        self.assertEqual(texto.count(inst.INICIO_BLOCO), 1)
+        local = json.loads((self.destino / ".claude" / "settings.local.json").read_text(encoding="utf-8"))
+        self.assertEqual(len(local["hooks"]["PreToolUse"]), 1)
+        self.assertEqual(local["permissions"]["allow"].count("Bash(python .claude/scripts/trava.py:*)"), 1)
+        self.assertIn("Bash(ls:*)", local["permissions"]["allow"])
+        self.assertEqual((self.destino / ".claude" / "skills" / "fluxo" / "SKILL.md").read_text(encoding="utf-8"), "menu v2")
+        self.assertEqual(git_saida(self.destino, "status", "--porcelain", "--untracked-files=all"), "")
+
+    def test_atualizar_troca_permissao_e_gancho_que_mudaram(self):
+        self.instalar(local=True)
+        escrever(self.origem / "settings.json", json.dumps({
+            "permissions": {"allow": ["Bash(python .claude/scripts/trava2.py:*)"]},
+            "hooks": {"PreToolUse": [{"matcher": "Bash", "hooks": [{"type": "command", "command": "python trava2.py"}]}]},
+        }))
+        self.instalar(atualizar=True)
+        local = json.loads((self.destino / ".claude" / "settings.local.json").read_text(encoding="utf-8"))
+        self.assertEqual(local["permissions"]["allow"], ["Bash(python .claude/scripts/trava2.py:*)"])
+        self.assertEqual([g["hooks"][0]["command"] for g in local["hooks"]["PreToolUse"]], ["python trava2.py"])
+
+    def test_specs_criada_depois_continua_fora_do_git(self):
+        self.instalar(local=True)
+        escrever(self.destino / ".specs" / "features" / "x" / "spec.md", "spec")
+        self.assertEqual(git_saida(self.destino, "status", "--porcelain", "--untracked-files=all"), "")
+
+
 class TestLinhaDeComando(Base):
     def test_cli_instala_e_sai_com_zero(self):
         r = subprocess.run([sys.executable, str(SCRIPT), str(self.destino), "--origem", str(self.origem)],

@@ -886,6 +886,18 @@ Não é hook: até onde se sabe, o hook não recebe o modelo da sessão de forma
 
 ---
 
+## Passo 35: instalação local (repositório corporativo)
+
+**Status:** feito em 2026-10-24. Pergunta do usuário: usar os fluxos num projeto corporativo sem nunca subir para o git de lá, num repositório que já tem a própria `.claude`. Escolha: modo local no instalador.
+
+Conferido na documentação do Claude Code (2026-10-24): ganchos e `permissions.allow` do `settings.local.json` se somam aos do `settings.json` do projeto; `CLAUDE.local.md` na raiz é carregado junto do `CLAUDE.md`; o Claude Code só ignora o `settings.local.json` sozinho quando é ele que o cria. Não coberto pela documentação: skills ignoradas pelo git carregarem normalmente (esperado, pois a leitura é da pasta; confirmar no primeiro uso).
+
+`instalar.py <repo> --local`: exige repositório git; recusa a instalação inteira em conflito de nome, sem escrever nada; não copia os nossos `CLAUDE.md` e `settings.json`: as regras vão para um bloco marcado no `CLAUDE.local.md` (com regras próprias do modo local: não versionar, não mexer no `.gitignore`, evitar `git clean -X`, contexto do projeto anotado no `CLAUDE.local.md` e não no `CLAUDE.md` do time), e ganchos e permissões são somados ao `settings.local.json` (o que foi somado fica no manifesto e sai na atualização seguinte); cada arquivo instalado, a `.specs/`, o `CLAUDE.local.md` e o `settings.local.json` entram num bloco do `.git/info/exclude`. `--atualizar` segue o modo do manifesto. 10 testes novos (inclui `git status` limpo depois de instalar, atualizar e criar `.specs`), com 4 defeitos injetados pegos; teste de fumaça num repositório que imita o corporativo.
+
+Cuidados para o usuário: `git clean -fdX` apaga os fluxos e os artefatos; conferir a política de uso de IA da empresa.
+
+---
+
 ## Estado ao fim da rodada (2026-10-23)
 
 **Fluxos prontos (21 de 21):** os 4 da rodada anterior e, nesta rodada (passos 13 a 29, construídos em sequência por um agente por fluxo, revisados e commitados um a um): 12 Bug, 9 Incidente, 17 Spike, 25 Escolha de tecnologia, 16 Auditoria de segurança, 24 Revisão de código, 13 Refatoração, 5 Performance, 14 Documentar, 27 Avaliar terceiros, 6 Integração, 30 Automação, 7 Redesign, 8 Aprendizado, 10 Sugestão (com a peça comum `demandas`), 11 Solicitação, 32 Suporte. Material de terceiros escolhido em `.rascunho/REAPROVEITAMENTO.md` e adaptado com registro em `fontes.json`; roteiro de construção em `.rascunho/ROTEIRO-CONSTRUCAO.md`.
