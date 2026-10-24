@@ -89,6 +89,24 @@ class TestSkills(unittest.TestCase):
         self.assertIn("Modo módulo", (mockup / "SKILL.md").read_text(encoding="utf-8"))
         self.assertTrue((mockup / "references" / "modulo.md").exists())
 
+    def test_fase_nao_depende_da_memoria_da_conversa(self):
+        """Trocar de sessão nos marcos exige que toda aprovação fique gravada em arquivo."""
+        for pasta in self.pastas:
+            if pasta.name in self.pacotes:
+                continue
+            for arquivo in [pasta / "SKILL.md", *sorted((pasta / "references").glob("*.md"))]:
+                with self.subTest(arquivo=str(arquivo.relative_to(SKILLS))):
+                    self.assertNotIn("aprovação nesta sessão", arquivo.read_text(encoding="utf-8"))
+        self.assertIn("**Plano aprovado em**", (SKILLS / "reconhecimento" / "SKILL.md").read_text(encoding="utf-8"))
+
+    def test_marcos_de_troca_de_sessao(self):
+        claude_md = (CLAUDE / "CLAUDE.md").read_text(encoding="utf-8")
+        self.assertIn("## Marcos de troca de sessão", claude_md)
+        self.assertTrue((SKILLS / "fluxo" / "references" / "marcos.md").exists())
+        menu = (SKILLS / "fluxo" / "SKILL.md").read_text(encoding="utf-8")
+        self.assertIn("## Retomada", menu)
+        self.assertIn("references/marcos.md", menu)
+
     def test_fluxo_pronto_aponta_para_skill_existente(self):
         menu = (SKILLS / "fluxo" / "SKILL.md").read_text(encoding="utf-8")
         prontos = [linha for linha in menu.splitlines() if linha.startswith("|") and "**Pronto**" in linha]

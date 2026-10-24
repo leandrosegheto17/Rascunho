@@ -8,6 +8,10 @@ argument-hint: "[atalho ou número do fluxo, ex.: bug, 12, feature]"
 
 Argumento recebido: `$ARGUMENTS`
 
+## 0. Retomada
+
+Antes de tudo, sem texto antes, procure a seção `## Retomada` em `.specs/STATE.md` (gravada num marco de troca de sessão; procedimento em [references/marcos.md](references/marcos.md)). Se existir e o item ainda estiver em andamento (a skill do fluxo diz pelos arquivos), e o argumento não pedir outro fluxo, a primeira pergunta (via `AskUserQuestion`) é: **Retomar <fluxo> <item> na fase <N> (Recomendado)** ou **Outro trabalho** (segue para os passos 1 e 2). Ao retomar, acione a skill do fluxo, diga em uma linha o que estava combinado na conversa (campo da retomada) e o modelo indicado para a fase.
+
 ## 1. Com argumento: atalho
 
 Se o argumento for um **número** ou uma **palavra** da tabela de fluxos (seção 4), vá direto ao passo 3 com esse fluxo. Se casar com mais de um fluxo, pergunte qual (via `AskUserQuestion`, uma opção por fluxo). Se não casar com nenhum, siga para o menu.

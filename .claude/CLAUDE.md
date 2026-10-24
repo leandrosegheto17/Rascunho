@@ -37,7 +37,12 @@ Este projeto usa **fluxos de trabalho** em `.claude/skills/`. O ponto de entrada
 
 - Cada fase termina com um resumo curto e a pergunta de aprovação (via `AskUserQuestion`) com as opções **seguir / ajustar / parar**. Nada avança para a fase seguinte sem aprovação explícita.
 - Parar é um resultado válido e fica registrado.
+- Nos marcos de troca de sessão (seção abaixo), a pergunta ganha a opção **seguir numa sessão nova**.
 - Ação externa ou difícil de desfazer (push, deploy, banco de produção, apagar dados, publicar) exige confirmação específica para aquela ação, mesmo com a fase aprovada.
+
+## Marcos de troca de sessão
+
+A sessão principal acumula conversa e relatórios; trabalho longo a deixa cara e perto do limite. Ao fechar uma fase aprovada que seja um **marco** (a próxima fase pede outro modelo; antes da construção; a cada 2 ou 3 lotes da construção; antes da verificação e da integração ou liberação; ou a conversa já passou por 3 fases), ofereça **seguir numa sessão nova (Recomendado)**: grave a seção `## Retomada` de `.specs/STATE.md` e oriente `/clear` e `/fluxo`, que retoma pelos arquivos. Procedimento em `.claude/skills/fluxo/references/marcos.md`. Nenhuma fase pode depender da memória da conversa: toda aprovação fica gravada em arquivo.
 
 ## Testes (inegociável)
 

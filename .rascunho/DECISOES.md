@@ -863,6 +863,19 @@ Teste estrutural novo em `test_skills.py` (feature, legado e uso-proprio citam a
 
 ---
 
+## Passo 33: marcos de troca de sessão
+
+**Status:** feito em 2026-10-24. Motivo: num projeto real (POC de cuidado com medicação), a sessão principal chegou a 397,8 mil tokens de contexto durante a construção, com um lote por agente de 16 a 28 minutos. Escolha do usuário: instituir marcos e trocar de sessão.
+
+- **Regra no `CLAUDE.md`** (vale para todos os fluxos, sem editar as 21 skills): nos marcos (próxima fase pede outro modelo; antes da construção; a cada 2 ou 3 lotes; antes da verificação e da integração ou liberação; conversa com 3 fases ou mais), a pergunta de fim de fase oferece **seguir numa sessão nova (Recomendado)**.
+- **Procedimento** em `.claude/skills/fluxo/references/marcos.md`: conferir que as decisões estão em artefato, gravar `## Retomada` no `.specs/STATE.md` (fluxo, item, fase aprovada e data, próxima fase e modelo, lote da construção, o que foi combinado e não está em artefato) e orientar `/clear` e `/fluxo`.
+- **`/fluxo`** lê `## Retomada` antes do menu e oferece retomar; se a retomada e os arquivos discordarem, valem os arquivos.
+- **Memória da conversa eliminada:** `feature` e `legado` davam o plano por aprovado com "aprovação nesta sessão"; agora o `reconhecimento.md` tem **Plano aprovado em**. Teste estrutural impede a volta dessa dependência.
+
+A sessão não mede o próprio contexto nem abre outra sessão: ela recomenda; o `/clear` é do usuário.
+
+---
+
 ## Estado ao fim da rodada (2026-10-23)
 
 **Fluxos prontos (21 de 21):** os 4 da rodada anterior e, nesta rodada (passos 13 a 29, construídos em sequência por um agente por fluxo, revisados e commitados um a um): 12 Bug, 9 Incidente, 17 Spike, 25 Escolha de tecnologia, 16 Auditoria de segurança, 24 Revisão de código, 13 Refatoração, 5 Performance, 14 Documentar, 27 Avaliar terceiros, 6 Integração, 30 Automação, 7 Redesign, 8 Aprendizado, 10 Sugestão (com a peça comum `demandas`), 11 Solicitação, 32 Suporte. Material de terceiros escolhido em `.rascunho/REAPROVEITAMENTO.md` e adaptado com registro em `fontes.json`; roteiro de construção em `.rascunho/ROTEIRO-CONSTRUCAO.md`.

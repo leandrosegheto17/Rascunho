@@ -58,6 +58,7 @@ Com o mapa, classifique:
 - **Arquitetura**: cabe | exige mudança (<qual>)
 - **Telas**: nenhuma | cria <quais> | muda <quais>
 - **Mockup**: não se aplica | pendente (o orquestrador troca para `aprovado` ou `dispensado — <motivo>`)
+- **Plano aprovado em**: pendente (feature e legado: o orquestrador grava a data ao aprovar o plano)
 
 ## Onde entra
 

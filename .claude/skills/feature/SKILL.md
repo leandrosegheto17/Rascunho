@@ -29,7 +29,7 @@ A **primeira linha que se aplica** define a fase:
 | sem `spec.md` | 1 Pedido |
 | `spec.md`, sem `reconhecimento.md` | 2 Reconhecimento |
 | `reconhecimento.md` com **Mockup** `pendente` | 2b Mockup |
-| `reconhecimento.md`, sem `protecao.md`, e sem plano aprovado (`tasks.md`, `design.md` ou aprovação nesta sessão) | 3 Plano |
+| `reconhecimento.md`, sem `protecao.md`, e **Plano aprovado em** `pendente` no `reconhecimento.md` | 3 Plano |
 | plano aprovado, sem `protecao.md` | 4 Rede de proteção |
 | `protecao.md`, com tarefas em aberto ou sem `validation.md` | 5 Implementação |
 | todas as tarefas concluídas, sem `validation.md` com PASS | 6 Verificação |
@@ -49,7 +49,7 @@ Uma linha: "**Feature <nome>, fase N de 7, <fase>.**" Avise a troca de modelo:
 | 1 Pedido | `tlc-spec-driven`, fase **Specify** | Critérios de aceite testáveis e o que fica de fora. Deixe o tlc dimensionar (Small, Medium, Large). |
 | 2 Reconhecimento | skill `inventario` (cria ou atualiza `.specs/projeto/inventario.md`), depois skill `reconhecimento` | O reconhecimento decide, para cada necessidade, reaproveitar / estender / criar. Se ele escalar (mudança grande de arquitetura), siga a decisão do usuário. |
 | 2b Mockup | pergunte via `AskUserQuestion`: **fazer o mockup das telas (Recomendado)** ou **dispensar** (motivo). Fazer: skill `mockup-visual` em **modo módulo**, pasta `.specs/features/<feature>/mockup/` | Só quando o reconhecimento diz que a feature cria ou muda telas. Aprovado: **Mockup** `aprovado` no `reconhecimento.md`; dispensado: `dispensado — <motivo>`. |
-| 3 Plano | `tlc-spec-driven`, fases **Design** e **Tasks** (ele pula o que não precisa) | Passe o `reconhecimento.md` (e o mockup aprovado: as telas seguem ele): o plano segue a tabela de reaproveitamento, o modelo a seguir e as convenções. Peça nova fora da tabela precisa de justificativa. Toda tarefa tem teste. |
+| 3 Plano | `tlc-spec-driven`, fases **Design** e **Tasks** (ele pula o que não precisa) | Passe o `reconhecimento.md` (e o mockup aprovado: as telas seguem ele): o plano segue a tabela de reaproveitamento, o modelo a seguir e as convenções. Peça nova fora da tabela precisa de justificativa. Toda tarefa tem teste. Aprovado, grave a data em **Plano aprovado em** no `reconhecimento.md`. |
 | 4 Rede de proteção | crie a branch `feature/<nome>` (ou worktree, com `using-git-worktrees`); depois a skill `rede-de-protecao` | |
 | 5 Implementação | `tlc-spec-driven`, fase **Execute**, na branch | Lotes com `implementador` ou `implementador-dominio`. A suíte inteira roda no fim de cada lote: nenhuma falha nova além das preexistentes de `protecao.md`. |
 | 6 Verificação | verificador do `tlc-spec-driven` (agente `verificador`); com PASS, a skill `revisao-codigo` em modo curto (grave `.specs/revisoes/<feature>/revisao.md` com `spec.md` como pedido, **Fases** 4, 7 e 8, **Devolver após** `análise`), que aciona o `code-review` no diff da branch | Se a feature toca login, permissões, pagamento ou dados pessoais, despache também o `auditor-seguranca`. Com **Mockup** `aprovado`, compare as telas do módulo (etapa 3 da `mockup-visual`). Achado bloqueante vira tarefa e volta à fase 5. |

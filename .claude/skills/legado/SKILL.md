@@ -25,7 +25,7 @@ Liste `.specs/features/`. Em andamento são as que não têm `integracao.md`. Ne
 | `spec.md`, sem `arqueologia.md` | 2 e 3 Arqueologia, fronteira e risco |
 | `arqueologia.md`, com **Mockup** `pendente` no `reconhecimento.md` | 3b Mockup |
 | `arqueologia.md`, sem `protecao.md` | 4 Rede de proteção |
-| `protecao.md`, sem plano aprovado (`tasks.md`, `design.md` ou aprovação nesta sessão) | 5 Plano |
+| `protecao.md`, e **Plano aprovado em** `pendente` no `reconhecimento.md` | 5 Plano |
 | plano aprovado, tarefas em aberto | 6 Implementação |
 | tarefas concluídas, sem `validation.md` com PASS | 7 Verificação |
 | `validation.md` com PASS, sem `integracao.md` | 7 (revisão e segurança), 8 Liberação e 9 Registro |
@@ -45,7 +45,7 @@ Liste `.specs/features/`. Em andamento são as que não têm `integracao.md`. Ne
 | 2-3 Arqueologia | skills `inventario`, `reconhecimento` e `arqueologia`, nesta ordem | A arqueologia pode escalar (impacto alto): siga a decisão do usuário. |
 | 3b Mockup | pergunte via `AskUserQuestion`: **fazer o mockup das telas (Recomendado)** ou **dispensar** (motivo). Fazer: skill `mockup-visual` em **modo módulo**, pasta `.specs/features/<feature>/mockup/` | Só quando o reconhecimento diz que a feature cria ou muda telas; sem guia no projeto, o guia mínimo reproduz a aparência atual do legado. Registre `aprovado` ou `dispensado — <motivo>` no `reconhecimento.md`. |
 | 4 Rede de proteção | crie a branch `feature/<nome>`; skill `rede-de-protecao` | Se o ambiente não roda (`arqueologia.md`), fazê-lo rodar vem antes. Caracterize **todo** comportamento do raio de impacto, não só o trecho alterado. |
-| 5 Plano | `tlc-spec-driven`, **Design** e **Tasks** | Código novo **ao lado** do antigo, pelo ponto único de integração de `arqueologia.md`; mudança mínima no código antigo; feature flag quando possível; plano de volta. Refatoração não entra. |
+| 5 Plano | `tlc-spec-driven`, **Design** e **Tasks** | Código novo **ao lado** do antigo, pelo ponto único de integração de `arqueologia.md`; mudança mínima no código antigo; feature flag quando possível; plano de volta. Refatoração não entra. Aprovado, grave a data em **Plano aprovado em** no `reconhecimento.md`. |
 | 6 Implementação | `tlc-spec-driven`, **Execute**, na branch | Suíte inteira ao fim de cada lote: nenhuma falha nova, e os testes de caracterização continuam passando. |
 | 7 Verificação | agente `verificador`; com PASS, `revisao-codigo` em modo curto (fases 4, 7 e 8; aciona o `code-review`) no diff; `auditor-seguranca` se tocar login, permissões, pagamento ou dados pessoais | Teste manual dos fluxos vizinhos listados no raio de impacto. Com **Mockup** `aprovado`, compare as telas do módulo (etapa 3 da `mockup-visual`). |
 | 8 Liberação | checagem final (`trava-testes.py --rodar`), integração da branch (merge local ou PR, perguntado via `AskUserQuestion`, com `finishing-a-development-branch`), depois skill `liberacao` | Usa staging e flag conforme `arqueologia.md`. |
