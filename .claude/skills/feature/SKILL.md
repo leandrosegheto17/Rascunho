@@ -1,6 +1,6 @@
 ---
 name: feature
-description: Orquestra o fluxo de feature em projeto existente feito com IA — pedido (spec), reconhecimento do código, plano, rede de proteção, mockup das telas novas (mockup-visual em modo módulo), implementação em branch isolada, verificação (verificador + revisao-codigo em modo curto) e integração — descobrindo a fase pelos artefatos em .specs/features/<feature>/ e pedindo aprovação a cada fase. Use quando o usuário quiser adicionar uma funcionalidade a um projeto que já existe, ou via /fluxo. Não use para projeto do zero (projeto-novo, uso-proprio) nem para código legado sem testes (fluxo de legado).
+description: Orquestra o fluxo de feature em projeto existente feito com IA — pedido (spec), reconhecimento do código, mockup das telas novas (mockup-visual em modo módulo), plano, rede de proteção, implementação em branch isolada, verificação (verificador + revisao-codigo em modo curto) e integração — descobrindo a fase pelos artefatos em .specs/features/<feature>/ e pedindo aprovação a cada fase. Use quando o usuário quiser adicionar uma funcionalidade a um projeto que já existe, ou via /fluxo. Não use para projeto do zero (projeto-novo, uso-proprio) nem para código legado sem testes (fluxo de legado).
 ---
 
 # Feature em projeto existente (fluxo 3)
