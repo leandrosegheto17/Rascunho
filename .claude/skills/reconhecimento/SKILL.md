@@ -43,6 +43,7 @@ Com o mapa, classifique:
 - **Encaixe:** a feature segue um padrão que já existe (bom), estende um padrão (atenção), ou exige um padrão novo (alto).
 - **Arquitetura:** a feature cabe na estrutura atual, ou exige mudar camadas, modelo de dados central ou contratos usados por outras partes?
 - **Raio de impacto:** quantas partes do sistema dependem do que será alterado.
+- **Telas:** a mudança cria ou muda telas? Liste quais. Se sim, **Mockup** fica `pendente` (o orquestrador oferece o mockup antes do plano); se não, `não se aplica`.
 
 **Escalonamento:** se a feature exige mudança grande de arquitetura, **pare** e pergunte via `AskUserQuestion`: refatorar antes (skill `refatoracao`), reduzir o escopo da feature, ou seguir mesmo assim com o risco registrado.
 
@@ -55,6 +56,8 @@ Com o mapa, classifique:
 - **Contexto do projeto**: <arquivo encontrado | nenhum (criar na integração)>
 - **Encaixe**: segue padrão | estende padrão | padrão novo
 - **Arquitetura**: cabe | exige mudança (<qual>)
+- **Telas**: nenhuma | cria <quais> | muda <quais>
+- **Mockup**: não se aplica | pendente (o orquestrador troca para `aprovado` ou `dispensado — <motivo>`)
 
 ## Onde entra
 

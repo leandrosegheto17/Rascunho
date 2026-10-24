@@ -1,6 +1,6 @@
 ---
 name: mockup-visual
-description: Mockup visual enxuto de um projeto com interface — 2 ou 3 direções visuais de uma tela-chave para escolher, depois um guia de estilo (tokens.css, componentes base, padrões de vazio/carregando/erro) e 2 a 3 telas-chave em PC e celular, publicados numa galeria para aprovação; na validação, coloca prints do app ao lado do mockup. Use na fase 7 do projeto novo, depois do desenho (design.md), e na fase 10 para a comparação; no redesign (skill redesign, fluxo 7), em modo redesign, que desenha todas as telas do escopo com seus estados. Fora do redesign, não desenha todas as telas. Não implementa o código do produto. Pule em projetos sem interface.
+description: Mockup visual enxuto de um projeto com interface — 2 ou 3 direções visuais de uma tela-chave para escolher, depois um guia de estilo (tokens.css, componentes base, padrões de vazio/carregando/erro) e 2 a 3 telas-chave em PC e celular, publicados numa galeria para aprovação; na validação, coloca prints do app ao lado do mockup. Use na fase 7 do projeto novo, depois do desenho (design.md), e na fase 10 para a comparação; na fase 4 do uso próprio, quando a ferramenta tem tela; em modo módulo nas skills feature e legado, quando a feature cria ou muda telas (só as telas do módulo, partindo do guia do projeto); no redesign (skill redesign, fluxo 7), em modo redesign, que desenha todas as telas do escopo com seus estados. Fora do redesign e do modo módulo, não desenha todas as telas. Não implementa o código do produto. Pule em projetos sem interface.
 model: opus
 effort: high
 ---
@@ -13,7 +13,7 @@ Rende melhor em **Opus** nas direções e no guia. Se a sessão estiver em outro
 
 ## Pré-requisitos
 
-- `.specs/features/<mvp>/spec.md` (requisitos) e `design.md` (telas e fluxos, se o desenho os listou).
+- `.specs/features/<mvp>/spec.md` (requisitos) e `design.md` (telas e fluxos, se o desenho os listou). No uso próprio, o `spec.md` da ferramenta; no modo módulo, o `spec.md` e o `reconhecimento.md` da feature.
 - Projeto sem interface (API, CLI, automação): diga que a fase não se aplica e pare.
 - Use a skill `frontend-design` como apoio de qualidade visual (sem estética genérica).
 
@@ -54,6 +54,15 @@ Chamada pela skill `redesign`, que diz a etapa e a pasta. Tudo o que está acima
 - **Etapa 1** parte das capturas atuais e dos problemas priorizados (`pesquisa.md`); a galeria mostra a tela de hoje ao lado das direções.
 - **Etapa 2 em duas aprovações:** 2a, guia de estilo (fase 5 do redesign); 2b, **todas as telas do escopo**, com os estados vazio, carregando, erro e sucesso, navegáveis entre si, e o mapa `telas.json` para a comparação automática (fase 6).
 - **Etapa 3** usa `.claude/scripts/comparar-visual.mjs` quando o projeto tem Playwright; sem ele, os prints lado a lado de sempre.
+
+## Modo módulo (feature, legado)
+
+Chamada pelas skills `feature` e `legado` quando o `reconhecimento.md` diz que a feature cria ou muda telas. Detalhes em [references/modulo.md](references/modulo.md):
+
+- **Pasta:** `.specs/features/<feature>/mockup/`.
+- **Sem direções** quando o projeto já tem `.specs/mockup/tokens.css`: as telas usam o guia do projeto, e token novo é proposto à parte. Sem guia, um guia mínimo que reproduz a aparência atual.
+- **Todas as telas do módulo**, com os estados vazio, carregando, erro e sucesso, numa aprovação só.
+- Comparação na verificação da feature e **promoção** para `.specs/mockup/` na integração.
 
 ## Publicação
 

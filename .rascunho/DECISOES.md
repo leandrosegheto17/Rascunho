@@ -847,6 +847,22 @@ Mantidos: `.claude`, `.claude_legado`, `.agents` (lock do `tlc-spec-driven`), `.
 
 ---
 
+## Passo 32: mockup oferecido sempre que houver tela
+
+**Status:** feito em 2026-10-24. Falta sentida pelo usuário ao criar um módulo de uso pessoal: não havia mockup para ver a tela. Só o fluxo 1 fazia mockup como fase; o fluxo 2 dizia "só se o usuário pedir" (ninguém oferecia) e os fluxos 3 e 4 não tinham. Escolha do usuário: **oferecer sempre que houver tela**, com "fazer o mockup" recomendado.
+
+| Onde | Mudança |
+|---|---|
+| `reconhecimento` | Campos **Telas** e **Mockup** (`não se aplica`, `pendente`, `aprovado`, `dispensado — motivo`). |
+| `feature` | Fase 2b Mockup (antes do plano) quando **Mockup** `pendente`; plano segue o mockup; comparação na verificação; promoção na integração. |
+| `legado` | Fase 3b Mockup (antes da rede de proteção), mesma lógica; promoção no registro. |
+| `uso-proprio` | Fase 4 pergunta depois do Specify; decisão em `necessidade.md` (**Mockup**); comparação na fase 7. |
+| `mockup-visual` | **Modo módulo** (`references/modulo.md`): pasta `.specs/features/<feature>/mockup/`, sem direções quando o projeto já tem guia (token novo proposto à parte), guia mínimo que reproduz a aparência atual quando não tem, todas as telas do módulo com estados numa aprovação, promoção para `.specs/mockup/` na integração. |
+
+Teste estrutural novo em `test_skills.py` (feature, legado e uso-proprio citam a `mockup-visual`; reconhecimento tem **Mockup**; modo módulo existe), escrito antes da mudança e visto falhando.
+
+---
+
 ## Estado ao fim da rodada (2026-10-23)
 
 **Fluxos prontos (21 de 21):** os 4 da rodada anterior e, nesta rodada (passos 13 a 29, construídos em sequência por um agente por fluxo, revisados e commitados um a um): 12 Bug, 9 Incidente, 17 Spike, 25 Escolha de tecnologia, 16 Auditoria de segurança, 24 Revisão de código, 13 Refatoração, 5 Performance, 14 Documentar, 27 Avaliar terceiros, 6 Integração, 30 Automação, 7 Redesign, 8 Aprendizado, 10 Sugestão (com a peça comum `demandas`), 11 Solicitação, 32 Suporte. Material de terceiros escolhido em `.rascunho/REAPROVEITAMENTO.md` e adaptado com registro em `fontes.json`; roteiro de construção em `.rascunho/ROTEIRO-CONSTRUCAO.md`.

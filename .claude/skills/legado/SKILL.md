@@ -23,6 +23,7 @@ Liste `.specs/features/`. Em andamento são as que não têm `integracao.md`. Ne
 |---|---|
 | sem `spec.md` | 1 Pedido |
 | `spec.md`, sem `arqueologia.md` | 2 e 3 Arqueologia, fronteira e risco |
+| `arqueologia.md`, com **Mockup** `pendente` no `reconhecimento.md` | 3b Mockup |
 | `arqueologia.md`, sem `protecao.md` | 4 Rede de proteção |
 | `protecao.md`, sem plano aprovado (`tasks.md`, `design.md` ou aprovação nesta sessão) | 5 Plano |
 | plano aprovado, tarefas em aberto | 6 Implementação |
@@ -33,7 +34,7 @@ Liste `.specs/features/`. Em andamento são as que não têm `integracao.md`. Ne
 
 "**Feature <nome> (legado), fase N de 9, <fase>.**" Avise a troca de modelo:
 
-- fases 1, 2-3 e 5: "Esta fase rende melhor em Opus: use `/model opus`."
+- fases 1, 2-3, 3b e 5: "Esta fase rende melhor em Opus: use `/model opus`."
 - demais: "Esta fase pode seguir em Sonnet: use `/model sonnet`."
 
 ## 4. Acionar a peça da fase
@@ -42,17 +43,18 @@ Liste `.specs/features/`. Em andamento são as que não têm `integracao.md`. Ne
 |---|---|---|
 | 1 Pedido | `tlc-spec-driven`, fase **Specify** | |
 | 2-3 Arqueologia | skills `inventario`, `reconhecimento` e `arqueologia`, nesta ordem | A arqueologia pode escalar (impacto alto): siga a decisão do usuário. |
+| 3b Mockup | pergunte via `AskUserQuestion`: **fazer o mockup das telas (Recomendado)** ou **dispensar** (motivo). Fazer: skill `mockup-visual` em **modo módulo**, pasta `.specs/features/<feature>/mockup/` | Só quando o reconhecimento diz que a feature cria ou muda telas; sem guia no projeto, o guia mínimo reproduz a aparência atual do legado. Registre `aprovado` ou `dispensado — <motivo>` no `reconhecimento.md`. |
 | 4 Rede de proteção | crie a branch `feature/<nome>`; skill `rede-de-protecao` | Se o ambiente não roda (`arqueologia.md`), fazê-lo rodar vem antes. Caracterize **todo** comportamento do raio de impacto, não só o trecho alterado. |
 | 5 Plano | `tlc-spec-driven`, **Design** e **Tasks** | Código novo **ao lado** do antigo, pelo ponto único de integração de `arqueologia.md`; mudança mínima no código antigo; feature flag quando possível; plano de volta. Refatoração não entra. |
 | 6 Implementação | `tlc-spec-driven`, **Execute**, na branch | Suíte inteira ao fim de cada lote: nenhuma falha nova, e os testes de caracterização continuam passando. |
-| 7 Verificação | agente `verificador`; com PASS, `revisao-codigo` em modo curto (fases 4, 7 e 8; aciona o `code-review`) no diff; `auditor-seguranca` se tocar login, permissões, pagamento ou dados pessoais | Teste manual dos fluxos vizinhos listados no raio de impacto. |
+| 7 Verificação | agente `verificador`; com PASS, `revisao-codigo` em modo curto (fases 4, 7 e 8; aciona o `code-review`) no diff; `auditor-seguranca` se tocar login, permissões, pagamento ou dados pessoais | Teste manual dos fluxos vizinhos listados no raio de impacto. Com **Mockup** `aprovado`, compare as telas do módulo (etapa 3 da `mockup-visual`). |
 | 8 Liberação | checagem final (`trava-testes.py --rodar`), integração da branch (merge local ou PR, perguntado via `AskUserQuestion`, com `finishing-a-development-branch`), depois skill `liberacao` | Usa staging e flag conforme `arqueologia.md`. |
 | 9 Registro | veja abaixo | |
 
 ### Registro (fase 9)
 
 1. Atualize o **contexto do projeto** (`CLAUDE.md` ou equivalente; crie um mínimo se não existir), nas seções do modelo de [contexto-ia.md](../documentar/references/contexto-ia.md), com: como rodar o ambiente, as costuras usadas e as **armadilhas** descobertas na arqueologia; e corrija o que a feature tornou falso em `docs/` ou no README.
-2. Atualize o `inventario.md` com as peças novas.
+2. Atualize o `inventario.md` com as peças novas. Mockup aprovado: promova as telas para `.specs/mockup/` (seção "Promoção" de [modulo.md](../mockup-visual/references/modulo.md)).
 3. Grave `.specs/features/<feature>/integracao.md`: data, forma de integração, commit, resultado da suíte, liberação (link para a entrada em `.specs/liberacao.md`), contexto e inventário atualizados.
 
 ## 5. Fechar a fase

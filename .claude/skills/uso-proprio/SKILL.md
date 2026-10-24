@@ -18,6 +18,7 @@ A **primeira linha que se aplica** define a fase:
 | sem `.specs/produto/necessidade.md` | 1 a 3 Necessidade, escopo e restrições |
 | `necessidade.md` com veredito `adaptar algo pronto` ou `desistir` | Encerrado: mostre o veredito e, se for adaptar, ofereça ajudar a configurar a solução pronta |
 | `necessidade.md` com `construir`, sem `.specs/features/*/spec.md` | 4 Desenho enxuto |
+| `spec.md`, e `necessidade.md` sem **Mockup** | 4 Desenho enxuto (mockup) |
 | `spec.md`, sem `validation.md` com PASS | 5 e 6 Preparação e construção (o `tlc-spec-driven` retoma pelo `STATE.md` e pelo git) |
 | `validation.md` com PASS, exposição pela internet e sem `seguranca.md` | 7 Validação: auditoria de segurança |
 | `validation.md` com PASS (e `seguranca.md` sem crítico ou alto, se exigido), sem `.specs/implantacao.md` | 8 Implantação |
@@ -35,9 +36,9 @@ Uma linha: "**Fase N de 9, <nome>.** Anterior: <fase>, aprovada." Se a fase pede
 | Fase | Acione | Observações |
 |---|---|---|
 | 1 a 3 | skill `necessidade` | Uma conversa, um arquivo, uma aprovação. |
-| 4 | `tlc-spec-driven`, fase **Specify** (e Design só se ele julgar necessário) | Entrada: `necessidade.md`. Projeto pessoal costuma ser Small ou Medium: deixe o tlc dimensionar. Os requisitos de **backup, restauração testada** e, se exposto pela internet, **autenticação e HTTPS** entram como critérios de aceite. Mockup (`mockup-visual`) só se o usuário pedir. |
+| 4 | `tlc-spec-driven`, fase **Specify** (e Design só se ele julgar necessário) | Entrada: `necessidade.md`. Projeto pessoal costuma ser Small ou Medium: deixe o tlc dimensionar. Os requisitos de **backup, restauração testada** e, se exposto pela internet, **autenticação e HTTPS** entram como critérios de aceite. Depois do Specify, se a ferramenta tem tela, pergunte via `AskUserQuestion`: **fazer o mockup (Recomendado)** ou **dispensar**. Fazer: skill `mockup-visual` (direções, guia e 2 a 3 telas-chave em `.specs/mockup/`). Registre em `necessidade.md` a linha **Mockup**: `aprovado`, `dispensado — <motivo>` ou `não se aplica` (sem tela). |
 | 5 e 6 | `tlc-spec-driven`, fases **Tasks** (se ele não as pular) e **Execute** | Primeiras tarefas: ambiente reproduzível (Docker), esqueleto que roda ponta a ponta, **script de backup e de restauração**. Projeto pequeno roda sem subagentes; se houver lotes, use `implementador` ou `implementador-dominio`. |
-| 7 | verificador do `tlc-spec-driven` (agente `verificador`) | Confere todos os critérios, inclusive a **restauração do backup a partir de uma cópia limpa**. Se a aplicação ficar exposta pela internet, despache depois o `auditor-seguranca`. |
+| 7 | verificador do `tlc-spec-driven` (agente `verificador`) | Confere todos os critérios, inclusive a **restauração do backup a partir de uma cópia limpa**. Se a aplicação ficar exposta pela internet, despache depois o `auditor-seguranca`. Com **Mockup** `aprovado`, compare as telas (etapa 3 da `mockup-visual`). |
 | 8 | skill `implantacao` | Destino conforme `necessidade.md`. Publicar na nuvem exige confirmação específica. |
 | 9 | checklist de manutenção de `references/fases.md` | Ofereça a revisão periódica e a decisão manter / evoluir / aposentar. Evolução vira uma feature (fluxo 3) ou volta à fase 4. |
 

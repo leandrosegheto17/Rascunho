@@ -76,6 +76,19 @@ class TestSkills(unittest.TestCase):
                     with self.subTest(arquivo=str(arquivo.relative_to(SKILLS)), link=alvo):
                         self.assertTrue((arquivo.parent / alvo).exists(), "link quebrado")
 
+    def test_fluxos_que_criam_telas_oferecem_mockup(self):
+        """Feature, legado e uso próprio oferecem a mockup-visual quando há tela; o reconhecimento registra a decisão."""
+        for nome in ("feature", "legado", "uso-proprio"):
+            with self.subTest(skill=nome):
+                texto = (SKILLS / nome / "SKILL.md").read_text(encoding="utf-8")
+                self.assertIn("mockup-visual", texto)
+                self.assertNotIn("só se o usuário pedir", texto)
+        reconhecimento = (SKILLS / "reconhecimento" / "SKILL.md").read_text(encoding="utf-8")
+        self.assertIn("**Mockup**", reconhecimento)
+        mockup = SKILLS / "mockup-visual"
+        self.assertIn("Modo módulo", (mockup / "SKILL.md").read_text(encoding="utf-8"))
+        self.assertTrue((mockup / "references" / "modulo.md").exists())
+
     def test_fluxo_pronto_aponta_para_skill_existente(self):
         menu = (SKILLS / "fluxo" / "SKILL.md").read_text(encoding="utf-8")
         prontos = [linha for linha in menu.splitlines() if linha.startswith("|") and "**Pronto**" in linha]
