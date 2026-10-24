@@ -65,6 +65,8 @@ A conversa usa o modelo da sessão (padrão: Sonnet). O trabalho pesado roda em 
 | Planejamento (projeto novo: 1 a 7; uso próprio: 1 a 4) | **Opus**: avise o usuário para usar `/model opus` ao entrar nelas |
 | Da preparação em diante | **Sonnet**: avise para voltar com `/model sonnet` |
 
+- **Trava de modelo**: ao entrar numa fase (ou retomá-la pelo `/fluxo`), compare o modelo em que você está rodando (nome do modelo nas suas instruções de sistema) com o que a fase pede, conforme a tabela acima e a skill do fluxo. Se forem diferentes, **antes de qualquer trabalho da fase** (nenhuma leitura ampla, agente ou artefato), pergunte via `AskUserQuestion`: "Esta fase pede <Opus | Sonnet>, e a sessão está em <modelo atual>. Seguir assim?", com **Vou trocar para <modelo indicado> (Recomendado)** (pare e diga: digite `/model <modelo>` e depois "continuar") e **Seguir com <modelo atual>**. Fase que pede Opus rodando em Sonnet perde qualidade; fase que pede Sonnet rodando em Opus só custa mais: diga o motivo na descrição da opção. Escolha de seguir assim vale para a fase inteira e fica registrada em `.specs/STATE.md`, seção `## Modelo` (data, fluxo, item, fase, indicado, usado). Fases sem modelo indicado não checam. Subagentes têm modelo fixo e não checam.
+
 | Agente | Modelo | Uso |
 |---|---|---|
 | `pesquisador` | Sonnet | Pesquisa web, concorrentes, preços, documentação técnica |

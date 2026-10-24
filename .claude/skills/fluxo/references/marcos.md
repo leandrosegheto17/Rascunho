@@ -46,4 +46,4 @@ Na pergunta de fim de fase (via `AskUserQuestion`), as opções passam a ser:
 
 ## Ao retomar
 
-O `/fluxo` sem argumento lê `## Retomada` antes do menu (seção "Retomada" do `SKILL.md` dele). Se o item ainda estiver em andamento, a primeira pergunta é retomá-lo. A skill do fluxo descobre a fase pelos arquivos, como sempre; a retomada só confirma o ponto e traz o que estava combinado. Se a retomada e os arquivos discordarem, valem os arquivos: avise a diferença.
+O `/fluxo` sem argumento lê `## Retomada` antes do menu (seção "Retomada" do `SKILL.md` dele). Se o item ainda estiver em andamento, a primeira pergunta é retomá-lo. Antes de qualquer trabalho, vale a trava de modelo do `CLAUDE.md`: se a sessão nova não está no modelo indicado (o usuário esqueceu o `/model`), pergunte. A skill do fluxo descobre a fase pelos arquivos, como sempre; a retomada só confirma o ponto e traz o que estava combinado. Se a retomada e os arquivos discordarem, valem os arquivos: avise a diferença.

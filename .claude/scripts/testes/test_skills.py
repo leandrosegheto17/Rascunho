@@ -107,6 +107,14 @@ class TestSkills(unittest.TestCase):
         self.assertIn("## Retomada", menu)
         self.assertIn("references/marcos.md", menu)
 
+    def test_trava_de_modelo(self):
+        """A sessão compara o próprio modelo com o da fase e pergunta antes de trabalhar."""
+        claude_md = (CLAUDE / "CLAUDE.md").read_text(encoding="utf-8")
+        self.assertIn("**Trava de modelo**", claude_md)
+        self.assertIn("antes de qualquer trabalho da fase", claude_md)
+        self.assertIn("trava de modelo", (SKILLS / "fluxo" / "SKILL.md").read_text(encoding="utf-8"))
+        self.assertIn("trava de modelo", (SKILLS / "fluxo" / "references" / "marcos.md").read_text(encoding="utf-8"))
+
     def test_fluxo_pronto_aponta_para_skill_existente(self):
         menu = (SKILLS / "fluxo" / "SKILL.md").read_text(encoding="utf-8")
         prontos = [linha for linha in menu.splitlines() if linha.startswith("|") and "**Pronto**" in linha]

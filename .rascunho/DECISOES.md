@@ -876,6 +876,16 @@ A sessão não mede o próprio contexto nem abre outra sessão: ela recomenda; o
 
 ---
 
+## Passo 34: trava de modelo
+
+**Status:** feito em 2026-10-24. Pedido do usuário: não seguir no modelo errado quando o aviso de `/model` passa despercebido. Escolha: regra (não hook), nos dois sentidos.
+
+Regra no `CLAUDE.md` (seção Modelos): ao entrar numa fase ou retomá-la, a sessão compara o próprio modelo (nome nas instruções de sistema) com o que a fase pede; diferente, pergunta **antes de qualquer trabalho da fase**: trocar (recomendado; a sessão para até `/model`) ou seguir assim. Opus pedido e Sonnet em uso: perde qualidade; Sonnet pedido e Opus em uso: só custa mais. Seguir assim vale para a fase e fica em `.specs/STATE.md`, seção `## Modelo`. O `/fluxo` e o procedimento de marcos aplicam a trava na retomada. Subagentes têm modelo fixo.
+
+Não é hook: até onde se sabe, o hook não recebe o modelo da sessão de forma confiável, e teria de deduzir a fase pelos arquivos (não conferido na documentação). Teste estrutural garante que a regra continue no `CLAUDE.md`, no `/fluxo` e nos marcos.
+
+---
+
 ## Estado ao fim da rodada (2026-10-23)
 
 **Fluxos prontos (21 de 21):** os 4 da rodada anterior e, nesta rodada (passos 13 a 29, construídos em sequência por um agente por fluxo, revisados e commitados um a um): 12 Bug, 9 Incidente, 17 Spike, 25 Escolha de tecnologia, 16 Auditoria de segurança, 24 Revisão de código, 13 Refatoração, 5 Performance, 14 Documentar, 27 Avaliar terceiros, 6 Integração, 30 Automação, 7 Redesign, 8 Aprendizado, 10 Sugestão (com a peça comum `demandas`), 11 Solicitação, 32 Suporte. Material de terceiros escolhido em `.rascunho/REAPROVEITAMENTO.md` e adaptado com registro em `fontes.json`; roteiro de construção em `.rascunho/ROTEIRO-CONSTRUCAO.md`.
