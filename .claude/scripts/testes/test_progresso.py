@@ -8,6 +8,7 @@ from pathlib import Path
 from apoio import carregar
 
 pr = carregar("progresso.py")
+pr_caminho = Path(__file__).resolve().parents[1] / "progresso.py"
 
 
 def tarefa(numero, caixas, status=None):
@@ -130,6 +131,14 @@ class TestRetomada(unittest.TestCase):
         self.assertIn("4, Plano", r["fase_aprovada"])
         self.assertIn("5, Rede de proteção", r["proxima_fase"])
 
+    def test_item_com_texto_depois_do_caminho(self):
+        estado = "## Retomada\n\n- **Item**: `.specs/features/x/` (`spec.md`, `context.md`, ...)\n"
+        self.assertEqual(pr.ler_retomada(estado)["item"], ".specs/features/x")
+
+    def test_item_sem_crases_com_observacao(self):
+        estado = "## Retomada\n\n- **Item**: .specs/features/x/ (em andamento)\n"
+        self.assertEqual(pr.ler_retomada(estado)["item"], ".specs/features/x")
+
     def test_sem_secao_retomada(self):
         self.assertEqual(pr.ler_retomada("# Estado\n\n## Decisões\n"), {})
 
@@ -187,6 +196,13 @@ class TestRelatorio(unittest.TestCase):
         self.assertIn("Próxima fase: 5, Rede de proteção", texto)
         self.assertNotIn("%", texto)
 
+    def test_fase_longa_e_cortada(self):
+        longa = "etapas 2 e 3 (" + ", ".join(f"`{i:07x}`" for i in range(40)) + ")"
+        escrever(self.raiz, ".specs/STATE.md", "## Retomada\n\n- **Fase aprovada**: " + longa + "\n")
+        linha = [l for l in pr.formatar(pr.relatorio(self.raiz)).splitlines() if l.startswith("Fase aprovada")][0]
+        self.assertLessEqual(len(linha), 140)
+        self.assertTrue(linha.endswith("…"))
+
     def test_sem_tarefas_e_sem_retomada(self):
         texto = pr.formatar(pr.relatorio(self.raiz))
         self.assertIn("Sem tarefas ainda", texto)
@@ -223,6 +239,18 @@ class TestMain(unittest.TestCase):
         self.assertEqual(codigo, 0)
         dados = json.loads(saida)
         self.assertEqual(dados["projeto"], {"total": 2, "feitas": 1})
+
+    def test_saida_em_utf8_mesmo_quando_o_padrao_do_sistema_nao_e(self):
+        """Em pipe no Windows o Python usa cp1252; o chamador lê UTF-8 e o 'í' viraria '�'."""
+        import os
+        import subprocess
+        import sys
+        env = {k: v for k, v in os.environ.items() if k not in ("PYTHONUTF8", "PYTHONIOENCODING")}
+        env["PYTHONIOENCODING"] = "cp1252"
+        r = subprocess.run([sys.executable, str(pr_caminho), "--raiz", str(self.raiz)],
+                           capture_output=True, env=env)
+        self.assertEqual(r.returncode, 0)
+        self.assertIn("concluído", r.stdout.decode("utf-8"))
 
     def test_raiz_inexistente_recusa(self):
         saida = io.StringIO()

@@ -108,11 +108,22 @@ def ler_retomada(texto: str) -> dict:
         if achou:
             valor = achou.group(2)
             if achou.group(1) == "Item":
-                valor = valor.strip("`").rstrip("/")
+                valor = _caminho_do_item(valor)
             else:
                 valor = re.sub(r"\s+—\s+skill `[^`]*`.*$", "", valor)
             campos[chaves[achou.group(1)]] = valor
     return campos
+
+
+def _caminho_do_item(valor: str) -> str:
+    """O campo Item traz o caminho, às vezes seguido de texto (lista de arquivos, observação)."""
+    achou = re.search(r"`([^`]+)`", valor)
+    caminho = achou.group(1) if achou else valor.split()[0]
+    return caminho.rstrip("/")
+
+
+def _curto(texto: str, limite: int = 100) -> str:
+    return texto if len(texto) <= limite else texto[: limite - 1].rstrip() + "…"
 
 
 def _normalizar(item: str) -> str:
@@ -147,11 +158,11 @@ def formatar(rel: dict) -> str:
         linhas = [frase(0, 0)]
         r = rel["retomada"]
         if r:
-            linhas.append(f"Fluxo: {r.get('fluxo', '?')}")
+            linhas.append(f"Fluxo: {_curto(r.get('fluxo', '?'))}")
             if "fase_aprovada" in r:
-                linhas.append(f"Fase aprovada: {r['fase_aprovada']}")
+                linhas.append(f"Fase aprovada: {_curto(r['fase_aprovada'])}")
             if "proxima_fase" in r:
-                linhas.append(f"Próxima fase: {r['proxima_fase']}")
+                linhas.append(f"Próxima fase: {_curto(r['proxima_fase'])}")
         else:
             linhas.append("(nenhum tasks.md em .specs/ e nenhuma Retomada gravada)")
         return "\n".join(linhas)
@@ -168,6 +179,9 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--item", help="pasta do item atual (ex.: .specs/features/importar-extrato)")
     ap.add_argument("--json", action="store_true", help="saída em JSON")
     args = ap.parse_args(argv)
+    for fluxo in (sys.stdout, sys.stderr):  # em pipe no Windows o padrão é cp1252; quem lê espera UTF-8
+        if hasattr(fluxo, "reconfigure"):
+            fluxo.reconfigure(encoding="utf-8")
     raiz = Path(args.raiz)
     if not raiz.is_dir():
         print(f"Raiz não encontrada: {raiz}", file=sys.stderr)

@@ -23,23 +23,22 @@ Para outro item que não o da Retomada: `--item .specs/features/<pasta>`.
 
 ## 2. Mostrar
 
-Repita as linhas do script, sem enfeite. Exemplo:
+**Responda só com as linhas que o script imprimiu, copiadas como estão**: sem tabela, sem título, sem recalcular, sem analisar o projeto por conta própria. Mesmo formato em todo projeto:
 
 ```
 Item atual (.specs/features/importar-extrato): Faltam 3 de 4 tarefas: 25% concluído
 Projeto: Faltam 45 de 180 tarefas: 75% concluído
 ```
 
-- **Sem tarefas ainda** (antes da fase de tarefas): o script mostra o fluxo e a fase da Retomada, se houver. Se não houver Retomada, descubra a fase pelos arquivos do item (a skill do fluxo explica como) e diga em uma linha, ex.: "Fase 4 de 10 do fluxo; ainda sem tarefas". Não invente percentual.
-- **Item sem `tasks.md`**: diga que o item ainda não tem tarefas.
+Só acrescente algo nestes casos, em **uma linha**:
 
-## 3. Ler com cuidado
+- **"Sem tarefas ainda":** o projeto não usa `tasks.md` (ou ainda não chegou à fase de tarefas). Diga isso e pare; não invente percentual a partir de outros arquivos. Se a Retomada não existir, descubra a fase pelos arquivos do item (a skill do fluxo explica como).
+- **Item atual sem tarefas, projeto com tarefas:** diga que o item ainda não tem `tasks.md`.
+- **Linha de Retomada que contradiz os arquivos** (ex.: fase já concluída): avise que a Retomada está desatualizada.
 
-Diga numa linha, quando valer:
+## 3. Se perguntarem como é calculado
 
-- O percentual conta só o que está em `tasks.md`; tarefas de fases ainda não planejadas não entram, então o total cresce e o percentual pode cair quando uma feature nova é planejada.
-- Todas as tarefas pesam igual, qualquer que seja o tamanho.
-- Uma tarefa só conta como concluída com todas as caixas `Done when` marcadas (ou `**Status**` concluído, quando não há caixas); tarefa pronta no código mas sem a marca em `tasks.md` aparece como faltante. Se os números destoarem do que foi feito, confira o `tasks.md`.
+Só então explique: conta títulos `### T<n>:` dos `tasks.md` de `.specs/`; tarefa concluída = todas as caixas `Done when` marcadas (ou `**Status**` concluído, sem caixas); só entram tarefas já planejadas, então o total cresce quando uma feature nova é planejada; todas pesam igual.
 
 ## 4. Onde mais isso aparece
 
