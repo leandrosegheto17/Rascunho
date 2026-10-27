@@ -979,3 +979,12 @@ Uma pasta só, a mesma que o `tlc-spec-driven` já usa, para um fluxo ler o que 
 1. **Projeto ou usuário?** Proposta: montar e testar no Rascunho (`.claude` do projeto) e, quando estável, empacotar como plugin para usar em qualquer projeto.
 2. **Hook do superpowers.** Ele injeta `using-superpowers` em toda sessão, mandando invocar skill antes de qualquer resposta. Pode disputar com o orquestrador. Opções: manter (as skills dele ajudam), ou desativar o plugin neste projeto e chamar as skills dele só quando o fluxo mandar.
 3. **Idioma dos artefatos.** O `tlc-spec-driven` gera em inglês por padrão. Nossas skills geram em português. Dá para instruir no `CLAUDE.md` que os artefatos saiam em português.
+
+### Status de progresso (tarefas concluídas)
+
+- **Pedido:** ter, entre fases e entre sessões, algo como "Faltam 45 de 180 tarefas: 75% concluído".
+- **Decisão:** script `progresso.py` (só lê) + skill `/progresso`. Conta os títulos `### T<n>:` de todos os `tasks.md` em `.specs/`; tarefa concluída = todas as caixas `Done when` marcadas (sem caixas, `**Status**` concluído; caixa aberta vence o status). Duas linhas: item atual (argumento, `## Retomada` ou o único item em aberto) e projeto todo.
+- **Onde aparece:** resumo de fim de fase (regra no `CLAUDE.md`), `/progresso` sob demanda, campo **Progresso** da `## Retomada` e repetição pelo `/fluxo` ao retomar. Antes de haver tarefas, mostra só a fase do fluxo, sem percentual.
+- **Por quê:** o `tlc-spec-driven` não fixa o formato da marca de concluída; as caixas `Done when` são o que ele já exige marcar no mesmo commit da tarefa. Não se edita o pacote.
+- **Limites aceitos:** só conta o que já está em `tasks.md` (o total cresce quando se planeja feature nova); todas as tarefas pesam igual.
+- **Conta correta:** concluídas ÷ total. O exemplo do pedido ("faltam 45 de 180: 25%") invertia o percentual; 45 faltantes de 180 são 75% concluído.
