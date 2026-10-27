@@ -27,13 +27,9 @@ Uma feature está bem fatiada quando, ao terminar:
 
 ## Tamanho
 
-| Tamanho | Tarefas (estimativa) | Observação |
-|---|---|---|
-| P | até 20 | Cabe em 1 ou 2 lotes de construção |
-| M | até 50 | Referência: a `fundacao` do Gestão da Pelada teve 49 |
-| G | até 80 | Limite do `progresso.py`; acima disso ele avisa |
+**Não se limita a quantidade de tarefas de uma feature.** O que se limita é o tamanho de cada **tarefa**: a menor possível, com meta de até 2 horas de trabalho humano, cada uma com a linha **Estimativa** (regra de Tarefas do `CLAUDE.md`).
 
-A estimativa nasce do número de requisitos e componentes: cerca de 2 a 4 tarefas por requisito de comportamento, mais as tarefas de infraestrutura da feature. É uma conta de cabeça para decidir a quebra, não um compromisso: o número real sai do `tasks.md`.
+A feature tem tamanho **relativo** (P, M, G), pelo esforço total: a soma das estimativas das tarefas quando já existirem, ou uma conta de cabeça antes disso. Ela deve ser grande o bastante para entregar valor e pequena o bastante para ser **validada e liberada como uma unidade**. Sinais de que precisa dividir: não cabe em uma frase de valor, ou o primeiro resultado utilizável só aparece depois de muitas semanas.
 
 ## Quando **não** dividir
 

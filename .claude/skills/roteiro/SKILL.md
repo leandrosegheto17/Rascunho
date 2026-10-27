@@ -32,7 +32,7 @@ Esta fase pede **Opus**: aplique a trava de modelo do `CLAUDE.md` antes de qualq
 
 ## 1. Decidir se precisa de roteiro
 
-Leia a spec do MVP (`.specs/features/<mvp>/spec.md`), ou o pedido da feature. **Pule a skill** e vá direto ao tlc quando o escopo cabe em **uma feature**: um fluxo de valor só, até cerca de 25 requisitos e estimativa abaixo de 80 tarefas (limite do `progresso.py`). Diga em uma linha por que pulou.
+Leia a spec do MVP (`.specs/features/<mvp>/spec.md`), ou o pedido da feature. **Pule a skill** e vá direto ao tlc quando o escopo cabe em **uma feature**: um fluxo de valor só, que dá para validar e liberar como uma unidade, por maior que seja a quantidade de tarefas. Diga em uma linha por que pulou.
 
 Em dúvida, pergunte via `AskUserQuestion`: "Este escopo cabe em uma feature ou vira um roteiro?"
 
@@ -42,7 +42,7 @@ Critérios, exemplos e anti-padrões em [references/criterios.md](references/cri
 
 - Cada feature é uma **fatia vertical**: do dado à tela, com valor que o usuário percebe e critério de aceite testável. Nada de "primeiro todo o banco, depois toda a API".
 - **Ordem** por dependência e por risco: o que destrava os outros e o que tem a maior incerteza vêm antes.
-- **Tamanho:** P (até 20 tarefas), M (até 50), G (até 80). Feature G que ainda parece grande: divida.
+- **Tamanho:** P, M ou G, relativo, pelo esforço total estimado (a soma das **Estimativa** das tarefas, quando já houver). Não há limite de tarefas por feature; o limite é o tamanho de cada tarefa (regra de Tarefas do `CLAUDE.md`).
 - **Rastreabilidade:** cada requisito da spec do MVP cai em exatamente uma feature (coluna **Requisitos**).
 - A primeira feature costuma ser a **fundação** (esqueleto ponta a ponta, CI, ambiente), só se o projeto ainda não tem isso.
 
@@ -66,6 +66,6 @@ Ao integrar ou liberar uma feature (regra de progresso do `CLAUDE.md`):
 - mudança de ordem, divisão ou feature nova é **decisão nova**: registre um `AD-NNN` e ajuste o `roadmap.md`, com aprovação.
 - escolha a próxima feature e marque `Em andamento`. Marco de troca de sessão: depois de fechar uma feature, vale oferecer sessão nova (`fluxo/references/marcos.md`).
 
-## 6. Feature que cresceu
+## 6. Tarefa grande demais
 
-Se o `tasks.md` de uma feature passar de 80 tarefas (o `progresso.py` avisa), pare antes de seguir: proponha dividir a feature em duas no roteiro, preservando as tarefas já feitas na primeira.
+Quando o `progresso.py` avisar tarefa acima de 2h (ou sem **Estimativa**), a correção é dividir a **tarefa** no `tasks.md`, não a feature. Só proponha dividir a feature no roteiro se ela deixou de ser um fluxo de valor único que se valida e libera junto.

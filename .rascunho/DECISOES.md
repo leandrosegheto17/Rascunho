@@ -1002,5 +1002,15 @@ Uma pasta só, a mesma que o `tlc-spec-driven` já usa, para um fluxo ler o que 
 - **Decisão:** skill `roteiro`, fase **6b** (fluxo 1) e **3b** (fluxo 2), que quebra o escopo em features fatiadas na vertical e grava `.specs/projeto/roadmap.md` mais um `AD-NNN` no `STATE.md`. Pula sozinha quando o escopo cabe em uma feature. Nos fluxos 3 e 4 entra antes do Specify se o pedido for grande demais. Só a próxima feature recebe spec, design e tarefas.
 - **Numeração:** "6b" e "3b" em vez de renumerar as fases, para não mexer em `Retomada`, tabelas, hooks e artefatos já gravados nos projetos.
 - **Vocabulário (`CLAUDE.md`):** roteiro, feature, fase do fluxo, Phase (termo do tlc, mantido) e tarefa. "Etapa" não é termo novo: projetos que a usam mantêm o rótulo na coluna do roadmap.
-- **Limite:** 80 tarefas por feature. É aviso do `progresso.py` (não bloqueio) e fica fora dos validadores do pacote `tlc-spec-driven`, que não se edita. Referências: fundação do Pelada 49, conta-e-acesso 93, Evolução Segura 170.
+- **Limite:** 80 tarefas por feature. É aviso do `progresso.py` (não bloqueio) e fica fora dos validadores do pacote `tlc-spec-driven`, que não se edita. Referências: fundação do Pelada 49, conta-e-acesso 44, Evolução Segura 170.
 - **Fora desta decisão:** o `/progresso` ler os `tasks.md` da branch ou do worktree em que a construção está (hoje lê só a pasta em que roda).
+
+### Tamanho da tarefa em vez de limite de quantidade (substitui o limite de 80 tarefas)
+
+- **Decisão do usuário:** não limitar quantas tarefas uma feature tem; limitar o **tamanho de cada tarefa**, buscando sempre a menor possível, com meta de **até 2 horas de trabalho humano**.
+- **Aplicação:** seção `## Tarefas` do `CLAUDE.md` (vale para todo `tasks.md` e prevalece sobre o tamanho sugerido pelo tlc). Toda tarefa leva `**Estimativa**: <N>h` (ou `<N> min`) logo depois de **What**; acima de 2h, divide-se a tarefa. As skills `feature`, `legado`, `projeto-novo` e `uso-proprio` repetem a regra na linha em que o `tasks.md` é criado.
+- **Verificação:** o `progresso.py` avisa tarefa acima de 2h (`LIMITE_HORAS`) e, só em `tasks.md` que já usa o campo, tarefa sem estimativa. `tasks.md` antigo, sem nenhuma estimativa, fica quieto. O aviso não bloqueia. O validador do pacote tlc segue intacto e aceita o campo extra.
+- **Efeito no roteiro:** a skill `roteiro` deixa de dimensionar feature por contagem de tarefas. P, M e G viram tamanho relativo (soma das estimativas); o critério para dividir uma feature é ela não se validar e liberar como uma unidade.
+- **Testes substituídos:** os testes do aviso por contagem (`TestAvisoDeFeatureGrande`) foram escritos na mesma sessão e trocados pelos de estimativa (`TestEstimativa`) por decisão do usuário; nenhum teste foi enfraquecido para passar.
+- **Medida antes da decisão** (validador do tlc nos três projetos): 0 erros; Phases com mediana de 3 a 9 tarefas; nenhuma tarefa de código sem teste. O número de tarefas (49, 44 e 170) não era o problema; o tamanho de cada tarefa ainda não era medido em nenhum deles.
+- O limite de 80 do registro anterior ("Roteiro acima da feature") fica sem efeito.

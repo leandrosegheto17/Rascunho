@@ -45,7 +45,15 @@ Os mesmos termos em todo projeto, para que o progresso e o planejamento sejam co
 | **Phase** | Agrupamento de tarefas dentro de um `tasks.md` (termo do `tlc-spec-driven`) |
 | **Tarefa** | `T<n>` do `tasks.md`: atômica, com teste |
 
-Só a próxima feature do roteiro recebe spec, design e tarefas; as outras ficam como linhas do roteiro. Feature com mais de 80 tarefas: o `progresso.py` avisa e a skill `roteiro` propõe dividir. Projeto que já usa outro nome (ex.: "etapa") pode mantê-lo no rótulo da coluna do roadmap.
+Só a próxima feature do roteiro recebe spec, design e tarefas; as outras ficam como linhas do roteiro. Projeto que já usa outro nome (ex.: "etapa") pode mantê-lo no rótulo da coluna do roadmap.
+
+## Tarefas
+
+Vale para todo `tasks.md`, de qualquer fluxo, e tem precedência sobre o tamanho de tarefa sugerido pelo `tlc-spec-driven`:
+
+- **Não há limite de quantidade de tarefas.** O limite é o **tamanho de cada uma**: a menor tarefa possível, com meta de **até 2 horas de trabalho humano** (o tempo que uma pessoa levaria, qualquer que seja quem executa). Continua sendo uma entrega verificável, com teste.
+- Toda tarefa leva a linha **`**Estimativa**: <N>h`** (ou `<N> min`), logo depois de **What**. Estimativa acima de 2h: divida a tarefa, não aumente o prazo. Em dúvida entre uma tarefa e duas, faça duas.
+- O `progresso.py` avisa tarefa acima de 2h e, em `tasks.md` que já usa o campo, tarefa sem estimativa. O aviso não bloqueia: dividir é decisão de quem planeja.
 
 ## Aprovação
 
