@@ -4,8 +4,14 @@
 Só lê. Soma as tarefas de todos os `tasks.md` em `.specs/` (features, refatorações, performance,
 redesign etc.) e mostra, por exemplo:
 
+    Plano: Faltam 6 de 18 etapas: 67% concluído
+    Em andamento: 12 Front: telas do app
     Item atual (.specs/features/importar-extrato): Faltam 3 de 4 tarefas: 25% concluído
     Projeto: Faltam 45 de 180 tarefas: 75% concluído
+
+As duas últimas linhas vêm dos `tasks.md`. As duas primeiras vêm de `.specs/projeto/roadmap.md`,
+quando existir: uma tabela com uma linha por etapa ou feature e uma coluna `Situação` com
+Concluída, Em andamento ou Não começada. É o que cobre o que ainda não virou tarefa.
 
 Uma tarefa é o título `### T<n>:` do `tasks.md`. Conta como concluída quando todas as caixas
 `- [ ]` dela estão marcadas; sem caixas, quando a linha `**Status**:` diz concluída (Done,
@@ -28,6 +34,7 @@ import re
 import sys
 from pathlib import Path
 
+ROADMAP = ".specs/projeto/roadmap.md"
 PASTAS_FORA = {"node_modules", "evidencias", "codigo", ".git", "__pycache__"}
 TITULO_TAREFA = re.compile(r"^(#{2,4})\s+T\d+\s*:", re.IGNORECASE)
 TITULO = re.compile(r"^(#{1,6})\s")
@@ -84,7 +91,7 @@ def coletar(raiz: Path) -> list[dict]:
     return itens
 
 
-def frase(feitas: int, total: int) -> str:
+def frase(feitas: int, total: int, unidade: str = "tarefas") -> str:
     if total == 0:
         return "Sem tarefas ainda"
     faltam = total - feitas
@@ -92,8 +99,50 @@ def frase(feitas: int, total: int) -> str:
     if faltam:
         pct = min(pct, 99)
         verbo = "Falta 1" if faltam == 1 else f"Faltam {faltam}"
-        return f"{verbo} de {total} tarefas: {pct}% concluído"
-    return f"Todas as {total} tarefas concluídas: 100% concluído"
+        return f"{verbo} de {total} {unidade}: {pct}% concluído"
+    return f"Todas as {total} {unidade} concluídas: 100% concluído"
+
+
+def _celulas(linha: str) -> list[str]:
+    return [c.strip() for c in linha.strip().strip("|").split("|")]
+
+
+def _limpo(celula: str) -> str:
+    return re.sub(r"[*`]", "", celula).strip()
+
+
+def ler_roadmap(texto: str) -> dict | None:
+    """Unidades (etapas, features) de uma tabela com coluna `Situação`: total, feitas, nome e em andamento."""
+    total = feitas = 0
+    nome, em_andamento = None, []
+    situacao = None
+    for linha in texto.splitlines():
+        if not linha.lstrip().startswith("|"):
+            situacao = None
+            continue
+        celulas = _celulas(linha)
+        if situacao is None:
+            cabecalho = [_limpo(c).lower() for c in celulas]
+            situacao = next((i for i, c in enumerate(cabecalho) if c in ("situação", "situacao")), None)
+            if situacao is not None and nome is None:
+                rotulo = next((c for i, c in enumerate(cabecalho)
+                               if i != situacao and c not in ("#", "n", "nº", "no", "id", "")), None)
+                nome = (rotulo + ("" if rotulo.endswith("s") else "s")) if rotulo else "unidades"
+            continue
+        if set(linha.replace("|", "").strip()) <= set("-: "):
+            continue
+        if situacao >= len(celulas):
+            continue
+        estado = _limpo(celulas[situacao]).lower()
+        total += 1
+        if re.search(r"conclu[ií]d[oa]", estado):
+            feitas += 1
+        elif "andamento" in estado:
+            partes = [_limpo(c) for i, c in enumerate(celulas[:2]) if i != situacao and _limpo(c)]
+            em_andamento.append(" ".join(partes))
+    if not total:
+        return None
+    return {"nome": nome or "unidades", "total": total, "feitas": feitas, "em_andamento": em_andamento}
 
 
 def ler_retomada(texto: str) -> dict:
@@ -147,15 +196,27 @@ def relatorio(raiz: Path, item: str | None = None) -> dict:
         if len(abertos) == 1:
             atual = {"nome": abertos[0]["item"], "total": abertos[0]["total"], "feitas": abertos[0]["feitas"]}
 
+    arquivo_roadmap = raiz / ROADMAP
+    plano = ler_roadmap(arquivo_roadmap.read_text(encoding="utf-8", errors="replace")) if arquivo_roadmap.exists() else None
+
     total = sum(i["total"] for i in itens)
     feitas = sum(i["feitas"] for i in itens)
-    return {"item": atual, "projeto": {"total": total, "feitas": feitas}, "retomada": retomada, "itens": itens}
+    return {"plano": plano, "item": atual, "projeto": {"total": total, "feitas": feitas},
+            "retomada": retomada, "itens": itens}
 
 
 def formatar(rel: dict) -> str:
     projeto = rel["projeto"]
+    plano = rel.get("plano")
+    linhas = []
+    if plano:
+        linhas.append(f"Plano: {frase(plano['feitas'], plano['total'], plano['nome'])}")
+        if plano["em_andamento"]:
+            linhas.append("Em andamento: " + "; ".join(_curto(e, 60) for e in plano["em_andamento"]))
     if projeto["total"] == 0:
-        linhas = [frase(0, 0)]
+        if plano:
+            return "\n".join(linhas + [f"Projeto: {frase(0, 0)}"])
+        linhas.append(frase(0, 0))
         r = rel["retomada"]
         if r:
             linhas.append(f"Fluxo: {_curto(r.get('fluxo', '?'))}")
@@ -166,7 +227,6 @@ def formatar(rel: dict) -> str:
         else:
             linhas.append("(nenhum tasks.md em .specs/ e nenhuma Retomada gravada)")
         return "\n".join(linhas)
-    linhas = []
     if rel["item"]:
         linhas.append(f"Item atual ({rel['item']['nome']}): {frase(rel['item']['feitas'], rel['item']['total'])}")
     linhas.append(f"Projeto: {frase(projeto['feitas'], projeto['total'])}")

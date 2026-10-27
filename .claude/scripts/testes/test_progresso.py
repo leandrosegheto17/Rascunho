@@ -216,6 +216,90 @@ class TestRelatorio(unittest.TestCase):
         self.assertEqual(antes, depois)
 
 
+ROADMAP = """# Roadmap
+
+| # | Etapa | Situação |
+|---|---|---|
+| 0 | Documentos | Concluída |
+| 1 | **Esqueleto** | **Concluída** |
+| 2 | Banco | concluida |
+| 3 | API | Em andamento |
+| 4 | Auth | Não começada |
+| 5 | Domínio | Não começada |
+
+Texto solto.
+
+| Outra | Coisa |
+|---|---|
+| a | b |
+"""
+
+
+class TestRoadmap(unittest.TestCase):
+    def test_conta_unidades_concluidas(self):
+        r = pr.ler_roadmap(ROADMAP)
+        self.assertEqual((r["total"], r["feitas"]), (6, 3))
+
+    def test_nome_da_unidade_vem_do_cabecalho(self):
+        self.assertEqual(pr.ler_roadmap(ROADMAP)["nome"], "etapas")
+        feature = ROADMAP.replace("| # | Etapa |", "| # | Feature |")
+        self.assertEqual(pr.ler_roadmap(feature)["nome"], "features")
+
+    def test_lista_o_que_esta_em_andamento(self):
+        self.assertEqual(pr.ler_roadmap(ROADMAP)["em_andamento"], ["3 API"])
+
+    def test_tabela_sem_coluna_situacao_e_ignorada(self):
+        self.assertIsNone(pr.ler_roadmap("| a | b |\n|---|---|\n| 1 | 2 |\n"))
+
+    def test_texto_sem_tabela(self):
+        self.assertIsNone(pr.ler_roadmap("# Roadmap\n\nvazio\n"))
+
+    def test_situacao_desconhecida_conta_como_nao_concluida(self):
+        texto = "| # | Etapa | Situação |\n|---|---|---|\n| 1 | A | ??? |\n| 2 | B | Concluída |\n"
+        r = pr.ler_roadmap(texto)
+        self.assertEqual((r["total"], r["feitas"]), (2, 1))
+
+    def test_frase_usa_a_palavra_da_unidade(self):
+        self.assertEqual(pr.frase(12, 18, "etapas"), "Faltam 6 de 18 etapas: 67% concluído")
+        self.assertEqual(pr.frase(17, 18, "etapas"), "Falta 1 de 18 etapas: 94% concluído")
+        self.assertEqual(pr.frase(18, 18, "etapas"), "Todas as 18 etapas concluídas: 100% concluído")
+
+
+class TestRelatorioComRoadmap(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.raiz = Path(self.tmp.name)
+        self.addCleanup(self.tmp.cleanup)
+
+    def test_plano_aparece_antes_das_tarefas(self):
+        escrever(self.raiz, ".specs/projeto/roadmap.md", ROADMAP)
+        escrever(self.raiz, ".specs/features/a/tasks.md", tasks_md(tarefa(1, [True]), tarefa(2, [False])))
+        texto = pr.formatar(pr.relatorio(self.raiz))
+        linhas = texto.splitlines()
+        self.assertEqual(linhas[0], "Plano: Faltam 3 de 6 etapas: 50% concluído")
+        self.assertEqual(linhas[1], "Em andamento: 3 API")
+        self.assertIn("Projeto: Falta 1 de 2 tarefas: 50% concluído", texto)
+
+    def test_so_roadmap_sem_tarefas_nao_mostra_fase_da_retomada(self):
+        escrever(self.raiz, ".specs/projeto/roadmap.md", ROADMAP)
+        escrever(self.raiz, ".specs/STATE.md", STATE)
+        texto = pr.formatar(pr.relatorio(self.raiz))
+        self.assertIn("Plano: Faltam 3 de 6 etapas: 50% concluído", texto)
+        self.assertIn("Projeto: Sem tarefas ainda", texto)
+        self.assertNotIn("Fase aprovada", texto)
+
+    def test_sem_roadmap_nada_muda(self):
+        escrever(self.raiz, ".specs/features/a/tasks.md", tasks_md(tarefa(1, [True])))
+        rel = pr.relatorio(self.raiz)
+        self.assertIsNone(rel["plano"])
+        self.assertNotIn("Plano", pr.formatar(rel))
+
+    def test_json_traz_o_plano(self):
+        escrever(self.raiz, ".specs/projeto/roadmap.md", ROADMAP)
+        plano = pr.relatorio(self.raiz)["plano"]
+        self.assertEqual((plano["total"], plano["feitas"], plano["nome"]), (6, 3, "etapas"))
+
+
 class TestMain(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()

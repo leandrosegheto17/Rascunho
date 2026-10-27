@@ -988,3 +988,10 @@ Uma pasta só, a mesma que o `tlc-spec-driven` já usa, para um fluxo ler o que 
 - **Por quê:** o `tlc-spec-driven` não fixa o formato da marca de concluída; as caixas `Done when` são o que ele já exige marcar no mesmo commit da tarefa. Não se edita o pacote.
 - **Limites aceitos:** só conta o que já está em `tasks.md` (o total cresce quando se planeja feature nova); todas as tarefas pesam igual.
 - **Conta correta:** concluídas ÷ total. O exemplo do pedido ("faltam 45 de 180: 25%") invertia o percentual; 45 faltantes de 180 são 75% concluído.
+
+### Roadmap por unidade (progresso de projetos que não detalham tudo em tasks.md)
+
+- **Motivo:** o primeiro uso do `/progresso` em três projetos reais mostrou o limite do `tasks.md`: o ControleEmCasa conduz o trabalho por 18 etapas grandes (`.md/PLANO.md`) e mostrou "Sem tarefas ainda"; o Gestão da Pelada mostrou 96% de uma feature entre 8. O `tasks.md` só cobre o já detalhado.
+- **Decisão:** `.specs/projeto/roadmap.md`, tabela com uma linha por etapa ou feature e coluna **Situação** de vocabulário fixo (`Concluída`, `Em andamento`, `Não começada`). O `progresso.py` mostra a linha **Plano** (e **Em andamento**) antes das linhas de tarefas. Quem aprova a unidade troca a Situação no mesmo commit.
+- **Por quê assim:** converter etapas grandes em `tasks.md` daria tarefas sem critério de pronto; um vocabulário fixo evita adivinhar a situação de texto livre. Sem roadmap, nada muda.
+- **Também corrigido no mesmo uso:** campo **Item** da Retomada com texto depois do caminho; saída em UTF-8 em pipe no Windows; resposta da skill em formato único, sem análise própria.
