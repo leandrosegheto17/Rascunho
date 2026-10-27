@@ -41,7 +41,7 @@ Liste `.specs/features/`. Em andamento são as que não têm `integracao.md`. Ne
 
 | Fase | Acione | Observações |
 |---|---|---|
-| 1 Pedido | `tlc-spec-driven`, fase **Specify** | |
+| 1 Pedido | `tlc-spec-driven`, fase **Specify** | Se o pedido for grande demais para uma feature (vários fluxos de valor ou mais de 80 tarefas estimadas), acione antes a skill `roteiro`. |
 | 2-3 Arqueologia | skills `inventario`, `reconhecimento` e `arqueologia`, nesta ordem | A arqueologia pode escalar (impacto alto): siga a decisão do usuário. |
 | 3b Mockup | pergunte via `AskUserQuestion`: **fazer o mockup das telas (Recomendado)** ou **dispensar** (motivo). Fazer: skill `mockup-visual` em **modo módulo**, pasta `.specs/features/<feature>/mockup/` | Só quando o reconhecimento diz que a feature cria ou muda telas; sem guia no projeto, o guia mínimo reproduz a aparência atual do legado. Registre `aprovado` ou `dispensado — <motivo>` no `reconhecimento.md`. |
 | 4 Rede de proteção | crie a branch `feature/<nome>`; skill `rede-de-protecao` | Se o ambiente não roda (`arqueologia.md`), fazê-lo rodar vem antes. Caracterize **todo** comportamento do raio de impacto, não só o trecho alterado. |

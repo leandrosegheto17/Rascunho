@@ -46,7 +46,7 @@ Uma linha: "**Feature <nome>, fase N de 7, <fase>.**" Avise a troca de modelo:
 
 | Fase | Acione | Observações |
 |---|---|---|
-| 1 Pedido | `tlc-spec-driven`, fase **Specify** | Critérios de aceite testáveis e o que fica de fora. Deixe o tlc dimensionar (Small, Medium, Large). |
+| 1 Pedido | `tlc-spec-driven`, fase **Specify** | Critérios de aceite testáveis e o que fica de fora. Deixe o tlc dimensionar (Small, Medium, Large). Se o pedido for grande demais para uma feature (vários fluxos de valor ou mais de 80 tarefas estimadas), acione antes a skill `roteiro`. |
 | 2 Reconhecimento | skill `inventario` (cria ou atualiza `.specs/projeto/inventario.md`), depois skill `reconhecimento` | O reconhecimento decide, para cada necessidade, reaproveitar / estender / criar. Se ele escalar (mudança grande de arquitetura), siga a decisão do usuário. |
 | 2b Mockup | pergunte via `AskUserQuestion`: **fazer o mockup das telas (Recomendado)** ou **dispensar** (motivo). Fazer: skill `mockup-visual` em **modo módulo**, pasta `.specs/features/<feature>/mockup/` | Só quando o reconhecimento diz que a feature cria ou muda telas. Aprovado: **Mockup** `aprovado` no `reconhecimento.md`; dispensado: `dispensado — <motivo>`. |
 | 3 Plano | `tlc-spec-driven`, fases **Design** e **Tasks** (ele pula o que não precisa) | Passe o `reconhecimento.md` (e o mockup aprovado: as telas seguem ele): o plano segue a tabela de reaproveitamento, o modelo a seguir e as convenções. Peça nova fora da tabela precisa de justificativa. Toda tarefa tem teste. Aprovado, grave a data em **Plano aprovado em** no `reconhecimento.md`. |

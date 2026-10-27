@@ -300,6 +300,36 @@ class TestRelatorioComRoadmap(unittest.TestCase):
         self.assertEqual((plano["total"], plano["feitas"], plano["nome"]), (6, 3, "etapas"))
 
 
+class TestAvisoDeFeatureGrande(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.raiz = Path(self.tmp.name)
+        self.addCleanup(self.tmp.cleanup)
+
+    def grande(self, n):
+        return tasks_md(*[tarefa(i, [False]) for i in range(1, n + 1)])
+
+    def test_acima_do_limite_avisa_e_sugere_dividir(self):
+        escrever(self.raiz, ".specs/features/enorme/tasks.md", self.grande(pr.LIMITE_TAREFAS + 1))
+        rel = pr.relatorio(self.raiz)
+        self.assertEqual(rel["avisos"], [{"item": ".specs/features/enorme", "total": pr.LIMITE_TAREFAS + 1}])
+        linha = pr.formatar(rel).splitlines()[-1]
+        self.assertTrue(linha.startswith("Aviso: .specs/features/enorme tem 81 tarefas"), linha)
+        self.assertIn("dividir", linha)
+
+    def test_no_limite_exato_nao_avisa(self):
+        escrever(self.raiz, ".specs/features/justa/tasks.md", self.grande(pr.LIMITE_TAREFAS))
+        rel = pr.relatorio(self.raiz)
+        self.assertEqual(rel["avisos"], [])
+        self.assertNotIn("Aviso", pr.formatar(rel))
+
+    def test_so_o_item_grande_e_apontado(self):
+        escrever(self.raiz, ".specs/features/enorme/tasks.md", self.grande(pr.LIMITE_TAREFAS + 5))
+        escrever(self.raiz, ".specs/features/pequena/tasks.md", self.grande(3))
+        itens = [a["item"] for a in pr.relatorio(self.raiz)["avisos"]]
+        self.assertEqual(itens, [".specs/features/enorme"])
+
+
 class TestMain(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()

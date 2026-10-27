@@ -35,6 +35,7 @@ import sys
 from pathlib import Path
 
 ROADMAP = ".specs/projeto/roadmap.md"
+LIMITE_TAREFAS = 80  # acima disso a feature é grande demais para um tasks.md: avise e sugira dividir
 PASTAS_FORA = {"node_modules", "evidencias", "codigo", ".git", "__pycache__"}
 TITULO_TAREFA = re.compile(r"^(#{2,4})\s+T\d+\s*:", re.IGNORECASE)
 TITULO = re.compile(r"^(#{1,6})\s")
@@ -201,11 +202,19 @@ def relatorio(raiz: Path, item: str | None = None) -> dict:
 
     total = sum(i["total"] for i in itens)
     feitas = sum(i["feitas"] for i in itens)
+    avisos = [{"item": i["item"], "total": i["total"]} for i in itens if i["total"] > LIMITE_TAREFAS]
     return {"plano": plano, "item": atual, "projeto": {"total": total, "feitas": feitas},
-            "retomada": retomada, "itens": itens}
+            "retomada": retomada, "itens": itens, "avisos": avisos}
 
 
 def formatar(rel: dict) -> str:
+    texto = _formatar_linhas(rel)
+    avisos = [f"Aviso: {a['item']} tem {a['total']} tarefas (limite sugerido: {LIMITE_TAREFAS}); "
+              "considere dividir a feature no roteiro (skill roteiro)." for a in rel.get("avisos", [])]
+    return "\n".join([texto, *avisos])
+
+
+def _formatar_linhas(rel: dict) -> str:
     projeto = rel["projeto"]
     plano = rel.get("plano")
     linhas = []

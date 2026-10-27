@@ -995,3 +995,12 @@ Uma pasta só, a mesma que o `tlc-spec-driven` já usa, para um fluxo ler o que 
 - **Decisão:** `.specs/projeto/roadmap.md`, tabela com uma linha por etapa ou feature e coluna **Situação** de vocabulário fixo (`Concluída`, `Em andamento`, `Não começada`). O `progresso.py` mostra a linha **Plano** (e **Em andamento**) antes das linhas de tarefas. Quem aprova a unidade troca a Situação no mesmo commit.
 - **Por quê assim:** converter etapas grandes em `tasks.md` daria tarefas sem critério de pronto; um vocabulário fixo evita adivinhar a situação de texto livre. Sem roadmap, nada muda.
 - **Também corrigido no mesmo uso:** campo **Item** da Retomada com texto depois do caminho; saída em UTF-8 em pipe no Windows; resposta da skill em formato único, sem análise própria.
+
+### Roteiro acima da feature e vocabulário único
+
+- **Motivo:** o `/progresso` em três projetos reais mostrou três quebras diferentes do mesmo tipo de trabalho: 8 features (Gestão da Pelada), 18 etapas em `PLANO.md` fora dos fluxos (Controle em Casa) e uma feature de 170 tarefas em 20 Phases (Evolução Segura). O processo só definia o nível da feature (`tlc-spec-driven`); faltava quem quebra o produto em features, em que ordem e de que tamanho.
+- **Decisão:** skill `roteiro`, fase **6b** (fluxo 1) e **3b** (fluxo 2), que quebra o escopo em features fatiadas na vertical e grava `.specs/projeto/roadmap.md` mais um `AD-NNN` no `STATE.md`. Pula sozinha quando o escopo cabe em uma feature. Nos fluxos 3 e 4 entra antes do Specify se o pedido for grande demais. Só a próxima feature recebe spec, design e tarefas.
+- **Numeração:** "6b" e "3b" em vez de renumerar as fases, para não mexer em `Retomada`, tabelas, hooks e artefatos já gravados nos projetos.
+- **Vocabulário (`CLAUDE.md`):** roteiro, feature, fase do fluxo, Phase (termo do tlc, mantido) e tarefa. "Etapa" não é termo novo: projetos que a usam mantêm o rótulo na coluna do roadmap.
+- **Limite:** 80 tarefas por feature. É aviso do `progresso.py` (não bloqueio) e fica fora dos validadores do pacote `tlc-spec-driven`, que não se edita. Referências: fundação do Pelada 49, conta-e-acesso 93, Evolução Segura 170.
+- **Fora desta decisão:** o `/progresso` ler os `tasks.md` da branch ou do worktree em que a construção está (hoje lê só a pasta em que roda).

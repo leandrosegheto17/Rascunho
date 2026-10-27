@@ -33,6 +33,20 @@ Este projeto usa **fluxos de trabalho** em `.claude/skills/`. O ponto de entrada
 - **Exceção nos exercícios do fluxo 8 (aprendizado):** a pergunta continua na caixa de `AskUserQuestion`, mas as opções são palpites possíveis em ordem qualquer, sem "(Recomendado)" e sem indicar a certa; pedidos de explicação oferecem ações (explicar agora, quero uma dica, ainda não sei).
 - Nunca faça pergunta só em texto corrido esperando resposta digitada.
 
+## Vocabulário
+
+Os mesmos termos em todo projeto, para que o progresso e o planejamento sejam comparáveis:
+
+| Termo | Significa |
+|---|---|
+| **Roteiro** | Lista ordenada das features do produto, em `.specs/projeto/roadmap.md` (skill `roteiro`) |
+| **Feature** | Unidade do roteiro: entrega de valor com spec, design e tarefas próprios em `.specs/features/<slug>/` |
+| **Fase do fluxo** | Passo do processo (1 a 11 no fluxo 1; 1 a 9 no fluxo 2); a fase de roteiro é a 6b (fluxo 1) ou 3b (fluxo 2) |
+| **Phase** | Agrupamento de tarefas dentro de um `tasks.md` (termo do `tlc-spec-driven`) |
+| **Tarefa** | `T<n>` do `tasks.md`: atômica, com teste |
+
+Só a próxima feature do roteiro recebe spec, design e tarefas; as outras ficam como linhas do roteiro. Feature com mais de 80 tarefas: o `progresso.py` avisa e a skill `roteiro` propõe dividir. Projeto que já usa outro nome (ex.: "etapa") pode mantê-lo no rótulo da coluna do roadmap.
+
 ## Aprovação
 
 - Cada fase termina com um resumo curto e a pergunta de aprovação (via `AskUserQuestion`) com as opções **seguir / ajustar / parar**. Nada avança para a fase seguinte sem aprovação explícita.

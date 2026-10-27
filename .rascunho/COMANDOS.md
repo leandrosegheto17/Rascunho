@@ -9,6 +9,7 @@ Registro dos comandos disponíveis neste conjunto de fluxos. Fontes: `.claude/sk
 | `/fluxo` | Abre o menu em dois cliques (categoria, depois fluxo); retoma o trabalho gravado em `.specs/STATE.md` | Começar ou retomar qualquer trabalho |
 | `/fluxo <atalho ou número>` | Vai direto ao fluxo (ex.: `/fluxo bug`, `/fluxo 12`) | Quando já se sabe o fluxo |
 | `/progresso` | Mostra tarefas concluídas e faltantes, com percentual, no item atual e no projeto (ex.: "Faltam 45 de 180 tarefas: 75% concluído") | A qualquer momento; também aparece no fim de cada fase e ao retomar a sessão |
+| `/roteiro` | Quebra um escopo grande em features ordenadas e grava `.specs/projeto/roadmap.md` | Fase 6b do fluxo 1 e 3b do fluxo 2; também quando uma feature pedida for grande demais |
 | `/atualizacoes` | Verifica e, com aprovação, aplica atualizações das dependências de `.claude/fontes.json` | Aviso de início de sessão ou antes de um projeto novo |
 | `/model opus` · `/model sonnet` | Troca o modelo da sessão | Planejamento no Opus; da preparação em diante no Sonnet |
 | `/clear` | Limpa a conversa; depois `/fluxo` retoma pelos arquivos | Marcos de troca de sessão |
