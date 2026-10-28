@@ -8,7 +8,7 @@ Registro dos comandos disponíveis neste conjunto de fluxos. Fontes: `.claude/sk
 |---|---|---|
 | `/fluxo` | Abre o menu em dois cliques (categoria, depois fluxo); retoma o trabalho gravado em `.specs/STATE.md` | Começar ou retomar qualquer trabalho |
 | `/fluxo <atalho ou número>` | Vai direto ao fluxo (ex.: `/fluxo bug`, `/fluxo 12`) | Quando já se sabe o fluxo |
-| `/progresso` | Mostra tarefas concluídas e faltantes, com percentual, no item atual e no projeto (ex.: "Faltam 45 de 180 tarefas: 75% concluído") | A qualquer momento; também aparece no fim de cada fase e ao retomar a sessão |
+| `/progresso` | Mostra o andamento do produto até a tarefa (Produto, Feature, Phase, Tarefa atual), a última tarefa, o ritmo e a previsão (ex.: "Faltam 45 de 180 tarefas: 75% concluído") | A qualquer momento; também aparece no fim de cada fase e ao retomar a sessão. Na construção, `--tarefa` e `--lote` dão a linha de fim de tarefa e de fim de lote |
 | `/roteiro` | Quebra um escopo grande em features ordenadas e grava `.specs/projeto/roadmap.md` | Fase 6b do fluxo 1 e 3b do fluxo 2; também quando uma feature pedida for grande demais |
 | `/atualizacoes` | Verifica e, com aprovação, aplica atualizações das dependências de `.claude/fontes.json` | Aviso de início de sessão ou antes de um projeto novo |
 | `/model opus` · `/model sonnet` | Troca o modelo da sessão | Planejamento no Opus; da preparação em diante no Sonnet |
@@ -44,9 +44,11 @@ Registro dos comandos disponíveis neste conjunto de fluxos. Fontes: `.claude/sk
 
 | Comando | O que faz |
 |---|---|
-| `python .claude/scripts/progresso.py [--item PASTA] [--json]` | Conta as tarefas dos `tasks.md` de `.specs/` e mostra o percentual concluído; só lê |
+| `python .claude/scripts/progresso.py [--item PASTA] [--json]` | Conta as tarefas dos `tasks.md` de `.specs/` e mostra o andamento do produto até a tarefa, com ritmo e previsão lidos do `git log`; só lê |
+| `python .claude/scripts/progresso.py --tarefa [T12]` | V2 da tarefa: tempo gasto, tempo estimado, Phase e feature (sem ID, a última concluída) |
+| `python .claude/scripts/progresso.py --lote [N]` | V2 do lote (Phases inteiras somando até 14h de Estimativa): tarefas, tempo gasto e estimado (sem número, o da última concluída) |
 | `python .claude/scripts/trava-testes.py --rodar` | Roda a suíte (comando de `.specs/projeto/testes.json`) e registra o resultado; exigido antes de integrar ou implantar |
-| `python .claude/scripts/instalar.py <pasta>` | Leva a `.claude` para outro projeto |
+| `python .claude/scripts/instalar.py <pasta>` | Leva a `.claude` para outro projeto e grava o hook `commit-msg` (valida só os commits do Claude Code) |
 | `python .claude/scripts/instalar.py <pasta> --atualizar` | Traz a versão nova dos fluxos, preservando o que o projeto mudou (`--simular` mostra antes) |
 | `python .claude/scripts/instalar.py <pasta> --local` | Para repositório de terceiros: não sobrescreve nada, usa `CLAUDE.local.md` e `.claude/settings.local.json`, e registra em `.git/info/exclude` |
 | `python .claude/scripts/verificar-atualizacoes.py` | Lê `fontes.json` e confere as atualizações; usar depois de mexer nele |
