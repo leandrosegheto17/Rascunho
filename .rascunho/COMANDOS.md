@@ -46,7 +46,8 @@ Registro dos comandos disponíveis neste conjunto de fluxos. Fontes: `.claude/sk
 |---|---|
 | `python .claude/scripts/progresso.py [--item PASTA] [--json]` | Conta as tarefas dos `tasks.md` de `.specs/` e mostra o andamento do produto até a tarefa, com ritmo e previsão lidos do `git log`; só lê |
 | `python .claude/scripts/progresso.py --tarefa [T12]` | V2 da tarefa: tempo gasto, tempo estimado, Phase e feature (sem ID, a última concluída) |
-| `python .claude/scripts/progresso.py --lote [N]` | V2 do lote (Phases inteiras somando até 14h de Estimativa): tarefas, tempo gasto e estimado (sem número, o da última concluída) |
+| `python .claude/scripts/progresso.py --lote [N]` | V2 do lote (Phases inteiras somando até 8h de Estimativa): tarefas, tempo gasto e estimado (sem número, o da última concluída) |
+| `python .claude/scripts/medir-lotes.py <pasta do projeto>` | Por subagente: chamadas, contexto final, leitura de cache, duração e maior pausa (marca PAROU e CONTEXTO GRANDE); calibra o teto de horas do lote |
 | `python .claude/scripts/trava-testes.py --rodar` | Roda a suíte (comando de `.specs/projeto/testes.json`) e registra o resultado; exigido antes de integrar ou implantar |
 | `python .claude/scripts/instalar.py <pasta>` | Leva a `.claude` para outro projeto e grava o hook `commit-msg` (valida só os commits do Claude Code) |
 | `python .claude/scripts/instalar.py <pasta> --atualizar` | Traz a versão nova dos fluxos, preservando o que o projeto mudou (`--simular` mostra antes) |

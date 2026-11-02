@@ -31,6 +31,7 @@ Siga o ciclo de `.claude/skills/tlc-spec-driven/references/implement.md` para ca
 - Tarefa falhou ou bloqueou: **pare** e relate, sem commit dela. Não comece a próxima; devolva as linhas V2 das já concluídas.
 - Nada de push, deploy, ou alteração em banco de produção.
 - Não crie subagentes.
+- Teste que falha: leia só as falhas e o resumo (filtre a saída do executor, por ex. `| grep -E "FAIL|×|Error|Tests" | head -60`), nunca a suíte inteira: saída bruta enche o contexto, e cada chamada relê tudo.
 
 ## Perguntas
 

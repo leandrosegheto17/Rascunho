@@ -159,7 +159,7 @@ class TestSkills(unittest.TestCase):
         """Sempre por subagente, um lote por vez; o trabalhador relata o V2 de cada tarefa; a revisão segue o risco."""
         claude_md = (CLAUDE / "CLAUDE.md").read_text(encoding="utf-8")
         for trecho in ("## Execução", "Sempre por subagente, um lote por vez", "Não há execução inline",
-                       "progresso.py --tarefa", "progresso.py --lote", "`**Risco**: alto|baixo`", "**14h**",
+                       "progresso.py --tarefa", "progresso.py --lote", "`**Risco**: alto|baixo`", "**8h**",
                        "substitui o passo 6.4", "uma linha V2 por tarefa"):
             with self.subTest(trecho=trecho):
                 self.assertIn(trecho, claude_md)

@@ -52,7 +52,7 @@ Os V2 de `--tarefa` e `--lote` são **uma linha**, para copiar como saíram:
 
 ```
 T12 concluída: 38 min (estimada 1h) · Phase 3: 2 de 5 tarefas · Feature: 52 de 170 tarefas (31%)
-Lote 3 de 7 concluído: 12 tarefas em 3h10 (estimado 14h) · Feature: 52 de 170 tarefas (31%)
+Lote 3 de 7 concluído: 12 tarefas em 3h10 (estimado 8h) · Feature: 52 de 170 tarefas (31%)
 ```
 
 Linhas começadas por `Aviso:` (tarefa acima de 2h ou sem **Estimativa**) também são do script: copie-as. Só acrescente algo nestes casos, em **uma linha**:
@@ -64,7 +64,7 @@ Linhas começadas por `Aviso:` (tarefa acima de 2h ou sem **Estimativa**) també
 
 ## 3. Se perguntarem como é calculado
 
-Só então explique: o **Produto** conta as linhas da tabela do roadmap com Situação `Concluída`; a **Feature atual** e o **Projeto** contam títulos `### T<n>:` dos `tasks.md` de `.specs/`; tarefa concluída = todas as caixas `Done when` marcadas (ou `**Status**` concluído, sem caixas); só entram tarefas já planejadas, então o total cresce quando uma feature nova é planejada; todas pesam igual na contagem. O **lote** são Phases inteiras seguidas somando até 14h de **Estimativa** (sem estimativa, 1h por tarefa). A **previsão** multiplica as horas estimadas pendentes pelo fator real ÷ estimado das últimas 10 tarefas com tempo medido; sem estimativas, usa o ritmo em tarefas por hora.
+Só então explique: o **Produto** conta as linhas da tabela do roadmap com Situação `Concluída`; a **Feature atual** e o **Projeto** contam títulos `### T<n>:` dos `tasks.md` de `.specs/`; tarefa concluída = todas as caixas `Done when` marcadas (ou `**Status**` concluído, sem caixas); só entram tarefas já planejadas, então o total cresce quando uma feature nova é planejada; todas pesam igual na contagem. O **lote** são Phases inteiras seguidas somando até 8h de **Estimativa** (sem estimativa, 1h por tarefa). A **previsão** multiplica as horas estimadas pendentes pelo fator real ÷ estimado das últimas 10 tarefas com tempo medido; sem estimativas, usa o ritmo em tarefas por hora.
 
 ## 4. Onde mais isso aparece
 
