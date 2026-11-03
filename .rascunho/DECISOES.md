@@ -1057,3 +1057,10 @@ Uma pasta só, a mesma que o `tlc-spec-driven` já usa, para um fluxo ler o que 
 - **Testes:** cinco novos em `test_skills.py` (inclui o `tasks.md` enxuto passando no `validate_tasks.py` real). Nenhum teste existente foi alterado. Suíte: 228 verdes.
 - **Estimativa, não medida:** repetir a feature 5 deve cair de 121 para cerca de 28 a 40 min; o piso depende do ambiente de E2E de pé e de não haver worktree frio. Valida-se com um terceiro braço, em worktree novo e sem os artefatos anteriores, e em outra feature.
 - **Fora desta decisão:** `bug`, `refatoracao`, `performance` e `redesign` só adotam o modo enxuto depois de conferir os artefatos de entrada de cada um; as particularidades de ambiente de E2E de um projeto ficam no contexto do projeto (no Thunders, `CLAUDE.local.md`), não nos fluxos genéricos; levar a mudança para as instalações é com `instalar.py --atualizar` e a confirmação do usuário.
+
+### Tempo: fluxos de construção herdam a Execução e a revisão por risco (direto na `main`)
+
+- **Motivo:** a medição que gerou a decisão anterior (22 min sem as skills contra 2h02 com elas) pede simplificar, principalmente a execução. Os fluxos `bug`, `refatoracao`, `performance`, `redesign` e `integracao-terceiros` ainda mandavam fazer o que o `CLAUDE.md` já não pede mais.
+- **O que mudou (só remove cerimônia ou aponta para o `CLAUDE.md`, sem regra nova):** `bug` deixa de corrigir na sessão e usa um lote de uma tarefa por subagente; `refatoracao`, `performance`, `redesign` e `integracao-terceiros` só acionam a `revisao-codigo` curta com tarefa de `**Risco**: alto`; o sensor dos três primeiros tem teto de 3 mutações; os de construção apontam para a seção Execução do `CLAUDE.md`; o `redesign` ganha a prova de tela (E2E uma vez ao fim do lote, teto 2×5 min).
+- **Fora desta decisão:** modo enxuto em `bug` e `refatoracao`, que seguem pendentes de conferir os artefatos de entrada de cada um (ver decisão anterior).
+- **Testes:** um novo em `test_skills.py`; nenhum existente alterado.
