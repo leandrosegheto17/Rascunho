@@ -36,7 +36,7 @@ O chamador grava `performance.md` com **Chamado por**, **Usar em** e o **Sintoma
 | skill `spike` | 4 | opção incerta: "esta mudança leva o p95 abaixo de N?" com critério e prazo |
 | skill `escolha-tecnologia` | 4 | opção é trocar banco, cache, fila, servidor, biblioteca ou hospedagem |
 | skills `inventario`, `reconhecimento`, `rede-de-protecao` | 5 | onde a mudança entra e caracterização do comportamento tocado |
-| `tlc-spec-driven` (Tasks, Execute) na sessão principal | 4 e 6 | plano em tarefas e execução uma por vez |
+| `tlc-spec-driven` (Tasks, Execute) pelo `executor` | 4 e 6 | plano em tarefas e execução uma por vez |
 | `verificador` (modo performance), skill `revisao-codigo` (curta) | 7 | verificação independente e revisão do diff |
 | `auditor-seguranca` | 7, condicional | cache de dado pessoal ou por usuário, mudança em autenticação ou permissões |
 | skill `liberacao` | 8 | produção com usuários: liberação gradual observando a métrica da meta |

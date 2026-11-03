@@ -156,9 +156,9 @@ class TestSkills(unittest.TestCase):
                 self.assertIn("Estimativa", (SKILLS / nome / "SKILL.md").read_text(encoding="utf-8"))
 
     def test_execucao_na_sessao_com_ciclo_pela_criticidade(self):
-        """Sessão única com teste primeiro; o ciclo segue a criticidade do lote; só o lote de Domínio sai da sessão."""
+        """Executor por marco com teste primeiro; o ciclo segue a criticidade do lote; achados críticos e não críticos têm ciclo próprio."""
         claude_md = (CLAUDE / "CLAUDE.md").read_text(encoding="utf-8")
-        for trecho in ("## Execução", "Sessão única, teste primeiro.", "**Ciclo do lote comum**",
+        for trecho in ("## Execução", "Executor por marco, teste primeiro.", "**Ciclo do lote comum**",
                        "**Ciclo do lote crítico**", "**Pré-voo, uma vez antes do primeiro lote:**",
                        "**Gate completo no marco e ao fim:**", "**Sem mutação no lote.**", "**Commit por grupo de tarefas",
                        "progresso.py --lote", "`**Risco**: alto|baixo`", "**6h**", "**Serviços de apoio de pé.**",
@@ -171,9 +171,21 @@ class TestSkills(unittest.TestCase):
                 self.assertNotIn(velho, claude_md)
         self.assertFalse((CLAUDE / "agents" / "implementador-dominio.md").exists())  # execução sempre em Sonnet, na sessão
         for trecho in ("**Matriz política × comando:**", "**Higiene de teste de banco:**", "casos limite e os estados possíveis",
-                       "**em segundo plano**", "**Verificador do marco**"):
+                       "**Ciclo do marco**", "**Verificador do marco**", "**Fim do projeto:**", "`achados.md`", "`model: opus`",
+                       "um de cada vez"):
             with self.subTest(trecho=trecho):
                 self.assertIn(trecho, claude_md)
+        executor = (CLAUDE / "agents" / "executor.md").read_text(encoding="utf-8")
+        cabecalho = executor.split("---")[1]
+        self.assertIn("model: sonnet", cabecalho)
+        self.assertNotIn("Agent", [l for l in cabecalho.splitlines() if l.startswith("tools:")][0])  # sem subagentes
+        for trecho in ("Modo lotes", "Modo correção", "Perguntas para o usuário", "progresso.py --lote"):
+            with self.subTest(executor=trecho):
+                self.assertIn(trecho, executor)
+        verificador = (CLAUDE / "agents" / "verificador.md").read_text(encoding="utf-8")
+        for trecho in ("revisão de marco", "achados.md", "não crítico", "robusto"):
+            with self.subTest(verificador=trecho):
+                self.assertIn(trecho, verificador)
         implementador = (CLAUDE / "agents" / "implementador.md").read_text(encoding="utf-8")
         self.assertIn("progresso.py --tarefa", implementador)
         self.assertNotIn("Tarefa <ID> concluída", implementador)
@@ -200,7 +212,7 @@ class TestSkills(unittest.TestCase):
         """Domínio e risco mudam o cuidado do lote, não o modelo; o planejamento é sempre Opus."""
         claude_md = (CLAUDE / "CLAUDE.md").read_text(encoding="utf-8")
         for trecho in ("`**Domínio**: sim|não`", "`**Risco**` não escolhe o modelo nem o ciclo",
-                       "Todo lote é implementado pela sessão principal", "**sempre em Sonnet**"):
+                       "Todo lote é implementado pelo agente `executor`", "sempre **Sonnet**"):
             with self.subTest(trecho=trecho):
                 self.assertIn(trecho, claude_md)
         self.assertNotIn("alguma tarefa de `**Risco**: alto`", claude_md)
