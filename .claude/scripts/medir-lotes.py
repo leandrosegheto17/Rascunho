@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Mede o que cada subagente (lote) de um projeto consumiu, lendo os registros do Claude Code.
+"""Mede o que cada subagente (executor, verificador) de um projeto consumiu, lendo os registros do Claude Code.
 
 Para cada agente mostra: chamadas, contexto final (o número do "Agent map"), leitura de
 cache acumulada (o que pesa de verdade no consumo: cada chamada relê o contexto inteiro),

@@ -36,7 +36,7 @@ A skill `performance` é própria, escrita a partir do desenho em `.rascunho/FLU
 
 ## Peças acionadas, não copiadas
 
-Skills `inventario`, `reconhecimento`, `rede-de-protecao`, `tlc-spec-driven`, `spike`, `escolha-tecnologia`, `revisao-codigo`, `liberacao`, `implantacao`, `refatoracao` (modelo de `dividas.md`), `bug`; agentes `leitor-codigo`, `implementador`, `implementador-dominio`, `verificador`, `auditor-seguranca`; superpowers `using-git-worktrees`, `systematic-debugging`, `verification-before-completion` e `finishing-a-development-branch`.
+Skills `inventario`, `reconhecimento`, `rede-de-protecao`, `tlc-spec-driven`, `spike`, `escolha-tecnologia`, `revisao-codigo`, `liberacao`, `implantacao`, `refatoracao` (modelo de `dividas.md`), `bug`; agentes `leitor-codigo`, `implementador`, `executor`, `verificador`, `auditor-seguranca`; superpowers `using-git-worktrees`, `systematic-debugging`, `verification-before-completion` e `finishing-a-development-branch`.
 
 ## Licença MIT (texto original)
 

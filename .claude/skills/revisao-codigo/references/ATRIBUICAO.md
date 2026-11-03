@@ -29,7 +29,7 @@ A skill `revisao-codigo` é própria, escrita a partir do desenho em `.rascunho/
 
 ## Peças acionadas, não copiadas
 
-Skill `code-review` (do Claude Code, não editada), agentes `verificador`, `auditor-seguranca`, `leitor-codigo`, `pesquisador`, `implementador` e `implementador-dominio`, skills `bug`, `incidente`, `run`, `verification-before-completion` e `finishing-a-development-branch` (superpowers, https://github.com/obra/superpowers, MIT).
+Skill `code-review` (do Claude Code, não editada), agentes `verificador`, `auditor-seguranca`, `leitor-codigo`, `pesquisador`, `implementador` e `executor`, skills `bug`, `incidente`, `run`, `verification-before-completion` e `finishing-a-development-branch` (superpowers, https://github.com/obra/superpowers, MIT).
 
 ## Licença MIT (texto original)
 

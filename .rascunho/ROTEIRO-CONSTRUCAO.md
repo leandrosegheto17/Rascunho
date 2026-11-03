@@ -14,7 +14,7 @@ Usado por quem constrói um fluxo novo (sessão principal ou subagente). Os flux
 ## 2. Decidir por analogia (sem perguntar)
 
 - **Reaproveitar antes de criar.** Peça nova só quando nenhuma existente resolve; peça que serve a outros fluxos fica genérica (como `rede-de-protecao`, `liberacao`).
-- **Modelo:** fases de conversa, pedido, diagnóstico, plano e decisão avisam `/model opus`; execução, verificação e registro avisam `/model sonnet`. Trabalho pesado vai para os agentes (`leitor-codigo`, `implementador`, `implementador-dominio`, `verificador`, `auditor-seguranca`, `pesquisador`).
+- **Modelo:** fases de conversa, pedido, diagnóstico, plano e decisão avisam `/model opus`; execução, verificação e registro avisam `/model sonnet`. Trabalho pesado vai para os agentes (`leitor-codigo`, `implementador`, `executor`, `verificador`, `auditor-seguranca`, `pesquisador`).
 - **Aprovação** seguir / ajustar / parar ao fim de cada fase, via `AskUserQuestion`. Ação externa ou difícil de desfazer exige confirmação específica.
 - **Testes inegociáveis** (seção do `CLAUDE.md`): mudança de comportamento com teste; checagem final com `trava-testes.py --rodar` antes de integrar ou implantar. Só spike e aprendizado ficam de fora.
 - **Fase pela presença de artefatos** em `.specs/` (criação preguiçosa), como em `feature` e `legado`.

@@ -37,7 +37,7 @@ A skill `refatoracao` é própria, escrita a partir do desenho em `.rascunho/FLU
 
 ## Peças acionadas, não copiadas
 
-Skills `inventario`, `reconhecimento`, `arqueologia`, `rede-de-protecao`, `tlc-spec-driven`, `revisao-codigo`, `liberacao`, `implantacao`, `bug`; agentes `leitor-codigo`, `implementador`, `implementador-dominio`, `verificador`, `auditor-seguranca`; superpowers `using-git-worktrees`, `systematic-debugging`, `verification-before-completion` e `finishing-a-development-branch`.
+Skills `inventario`, `reconhecimento`, `arqueologia`, `rede-de-protecao`, `tlc-spec-driven`, `revisao-codigo`, `liberacao`, `implantacao`, `bug`; agentes `leitor-codigo`, `implementador`, `executor`, `verificador`, `auditor-seguranca`; superpowers `using-git-worktrees`, `systematic-debugging`, `verification-before-completion` e `finishing-a-development-branch`.
 
 ## Licença MIT (texto original)
 
