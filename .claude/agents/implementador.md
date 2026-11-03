@@ -1,6 +1,6 @@
 ---
 name: implementador
-description: Executa spikes descartáveis e tarefas soltas fora de lote — configuração, ligação entre partes, CRUD sobre um padrão já definido — com teste a partir do critério e commit atômico. Os lotes da construção são da sessão principal (lote comum e crítico) ou do implementador-dominio (lote com tarefa de `**Domínio**: sim`), não deste agente.
+description: Executa spikes descartáveis e tarefas soltas fora de lote — configuração, ligação entre partes, CRUD sobre um padrão já definido — com teste a partir do critério e commit atômico. Os lotes da construção são sempre da sessão principal (Sonnet), não deste agente.
 tools: Read, Edit, Write, Bash, Grep, Glob
 model: sonnet
 effort: low

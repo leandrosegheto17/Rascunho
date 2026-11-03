@@ -38,6 +38,7 @@ Na pergunta de fim de fase (via `AskUserQuestion`), as opções passam a ser:
    - **Fase aprovada**: <N, nome> em <AAAA-MM-DD>
    - **Próxima fase**: <N, nome> — modelo indicado: <opus | sonnet>
    - **Construção** (se no meio): lote <x> de <y> concluído (criticidade do próximo: <crítico | comum>); o tlc retoma pelo `## Handoff`
+   - **Verificador do marco**: <em andamento em segundo plano, relatório em `<caminho>` | concluído: PASS/FAIL em `<caminho>`>; a sessão nova lê o relatório e corrige o que reprovou antes do próximo lote
    - **Serviços no ar** (se há): <container e porta do banco, comando de subida | nenhum>; seguem no ar através da troca e só caem ao fim da implementação
    - **Progresso**: <linhas "Produto: ..." e "Feature atual: ..." (e "Projeto: ...", se houver) de `python .claude/scripts/progresso.py`, ou "sem tarefas ainda">, conferida em <AAAA-MM-DD>
    - **Combinado na conversa e não registrado em artefato**: <itens | nenhum>

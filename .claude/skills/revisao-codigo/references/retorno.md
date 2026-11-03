@@ -18,7 +18,7 @@ Pergunte via `AskUserQuestion`:
 
 - **Entregar localmente (Recomendado):** `retorno.md` na pasta da revisão e o texto pronto para colar, mostrado na conversa.
 - **Comentar no PR:** ação externa. Mostre o **texto exato** e o comando (`gh pr review <n> --comment --body-file .specs/revisoes/<slug>/retorno.md`) e peça confirmação específica para essa publicação. Comentários por linha: skill `code-review` com `--comment`, também com confirmação. Aprovar ou pedir mudanças **pelo GitHub** (`--approve`, `--request-changes`) é outra ação externa, só na fase 10 e com nova confirmação.
-- **Entregar a correção à IA:** o retorno vira entrada do fluxo de origem ou do `implementador`/`implementador-dominio`.
+- **Entregar a correção à IA:** o retorno vira entrada do fluxo de origem ou do `implementador`.
 
 Preencha **Retorno entregue** com a forma e a data (e o link, se publicado).
 

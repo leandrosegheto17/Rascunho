@@ -538,7 +538,7 @@ class TestCriticidade(unittest.TestCase):
         for t in det["tarefas"]:
             t.update(quando=None, segundos=None)
         rel = {"detalhe": det, "item": {"feitas": 0, "total": 2}}
-        self.assertIn("Lote 1 de 1 (crítico, Domínio: Opus) em andamento", pr.linha_lote(rel))
+        self.assertIn("Lote 1 de 1 (crítico, Domínio) em andamento", pr.linha_lote(rel))
         det["usa_criticidade"] = False
         self.assertIn("Lote 1 de 1 em andamento", pr.linha_lote(rel))
 

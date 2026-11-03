@@ -11,11 +11,14 @@ Confere:
   - porta do banco: --porta N (repetível) ou DB_PORTA; com compose e sem nenhuma, 5433. Porta
     ocupada pode ser o banco deste projeto já no ar; o aviso diz isso e sugere a próxima livre
   - workspace pnpm: `pnpm-workspace.yaml` sem `dedupePeers: true` (vitest e pg duplicados)
+  - Node: a versão que roda contra `engines.node` do package.json da raiz (aviso, não bloqueia)
+  - suíte: o comando de `.specs/projeto/testes.json` roda todos os scripts `test:*` da raiz e, no
+    pnpm, todos os pacotes (script `test` do workspace recursivo); o que fica de fora é lacuna
 
 Uso:
   python .claude/scripts/preparar-ambiente.py [--raiz DIR] [--porta N ...]
 
-Sai com 0 quando nada precisa de correção, 1 com problemas e 2 quando a raiz não existe.
+Sai com 0 quando nada precisa de correção (avisos não contam), 1 com problemas e 2 quando a raiz não existe.
 """
 
 from __future__ import annotations
@@ -23,6 +26,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import shutil
 import socket
 import subprocess
@@ -126,6 +130,120 @@ def checar_workspace(raiz: Path) -> tuple[str, str | None] | None:
         "acrescente `dedupePeers: true` ao pnpm-workspace.yaml e rode `pnpm install`")
 
 
+def _versoes_aceitas(faixa: str) -> list | None:
+    """Lê uma faixa simples de `engines.node` (>=24 <25, ^24, 24.x, 24); None se não entende."""
+    partes = faixa.replace("||", " ").split()
+    limites = []
+    for parte in partes:
+        achou = re.fullmatch(r"(>=|>|<=|<|\^|~|=)?v?(\d+)(?:\.(?:\d+|x|\*))*(?:\.x)?", parte)
+        if not achou:
+            return None
+        limites.append((achou.group(1) or "=", int(achou.group(2))))
+    return limites or None
+
+
+def node_aceito(faixa: str, maior: int) -> bool | None:
+    """True/False se a versão maior de Node cabe na faixa; None se a faixa não é entendida."""
+    limites = _versoes_aceitas(faixa)
+    if limites is None:
+        return None
+    for op, n in limites:
+        if op in ("^", "~", "=") and maior != n:
+            return False
+        if op == ">=" and maior < n:
+            return False
+        if op == ">" and maior <= n:
+            return False
+        if op == "<=" and maior > n:
+            return False
+        if op == "<" and maior >= n:
+            return False
+    return True
+
+
+def checar_node(raiz: Path, versao: str | None = None) -> tuple[str, str | None, str] | None:
+    """(texto, correção, gravidade) quando o Node que roda não cabe em `engines.node`; None se nada a dizer."""
+    pacote = raiz / "package.json"
+    if not pacote.is_file():
+        return None
+    try:
+        faixa = json.loads(pacote.read_text(encoding="utf-8")).get("engines", {}).get("node")
+    except (OSError, ValueError, AttributeError):
+        return None
+    if not isinstance(faixa, str):
+        return None
+    if versao is None:
+        ok, saida = _roda(["node", "--version"], raiz)
+        if not ok:
+            return None
+        versao = saida
+    achou = re.match(r"v?(\d+)", versao)
+    if not achou:
+        return None
+    maior = int(achou.group(1))
+    aceito = node_aceito(faixa, maior)
+    if aceito is None:
+        return None
+    if aceito:
+        return f"node: {versao} cabe em engines ({faixa})", None, "ok"
+    return (f"node: {versao} fora de engines ({faixa})",
+            f"use o Node pedido (ex.: nvm, fnm ou o instalador); a suíte pode passar em outra versão sem provar a pedida", "aviso")
+
+
+def _pacotes_com_teste(raiz: Path) -> list[str]:
+    """Pastas de pacote do workspace pnpm (packages: de pnpm-workspace.yaml, só `pasta/*` e `pasta`) com script test."""
+    arquivo = raiz / "pnpm-workspace.yaml"
+    if not arquivo.is_file():
+        return []
+    globs = re.findall(r"^\s*-\s*['\"]?([^'\"\s#]+)['\"]?\s*$", arquivo.read_text(encoding="utf-8", errors="replace"), re.M)
+    achados = []
+    for g in globs:
+        base = g[:-2] if g.endswith("/*") else g
+        pasta = raiz / base
+        candidatas = [d for d in pasta.iterdir() if d.is_dir()] if g.endswith("/*") and pasta.is_dir() else [pasta]
+        for d in candidatas:
+            pj = d / "package.json"
+            if pj.is_file():
+                try:
+                    scripts = json.loads(pj.read_text(encoding="utf-8")).get("scripts", {})
+                except (OSError, ValueError):
+                    continue
+                if "test" in scripts:
+                    achados.append(d.relative_to(raiz).as_posix())
+    return sorted(achados)
+
+
+def checar_suite(raiz: Path) -> tuple[str, str | None] | None:
+    """O comando de testes.json roda todos os `test:*` da raiz e (no pnpm) todos os pacotes com `test`?"""
+    arquivo = raiz / ".specs" / "projeto" / "testes.json"
+    pacote = raiz / "package.json"
+    if not arquivo.is_file() or not pacote.is_file():
+        return None
+    try:
+        comando = json.loads(arquivo.read_text(encoding="utf-8")).get("comando") or ""
+        scripts = json.loads(pacote.read_text(encoding="utf-8")).get("scripts", {})
+    except (OSError, ValueError):
+        return None
+    if not comando:
+        return None
+    achou = re.match(r"^(?:pnpm|npm|yarn)\s+(?:run\s+)?(test)\s*$", comando.strip())
+    if not achou:
+        return f"suíte: comando `{comando}` (não confere cobertura de pacotes)", None
+    corpo = scripts.get("test", "")
+    faltando = [n for n in scripts if n.startswith("test:") and n not in corpo]
+    recursivo = bool(re.search(r"(-r\b|--recursive|--filter|workspaces|-ws\b)", corpo))
+    pacotes = _pacotes_com_teste(raiz)
+    problemas = []
+    if faltando:
+        problemas.append("não roda " + ", ".join(f"`{n}`" for n in faltando))
+    if pacotes and not recursivo:
+        problemas.append("não percorre os pacotes (" + ", ".join(pacotes[:4]) + ")")
+    if not problemas:
+        return f"suíte: `{comando}` cobre os scripts test:* e os pacotes", None
+    return (f"suíte: `{comando}` {'; '.join(problemas)}",
+            "faça o script `test` da raiz rodar tudo (ex.: `pnpm -r test && pnpm test:checagens`) para o testes.json e a trava valerem pela suíte inteira")
+
+
 def portas_pedidas(argumentos: list[int], tem_compose: bool) -> list[int]:
     if argumentos:
         return argumentos
@@ -138,7 +256,7 @@ def portas_pedidas(argumentos: list[int], tem_compose: bool) -> list[int]:
 def conferir(raiz: Path, portas: list[int]) -> list[tuple[str, str | None]]:
     tem_compose = any((raiz / nome).is_file() for nome in ARQUIVOS_COMPOSE)
     resultados = [checar_gerenciador(raiz)]
-    for parcial in (checar_docker(raiz), checar_workspace(raiz)):
+    for parcial in (checar_docker(raiz), checar_workspace(raiz), checar_node(raiz), checar_suite(raiz)):
         if parcial:
             resultados.append(parcial)
     for porta in portas_pedidas(portas, tem_compose):
@@ -158,9 +276,13 @@ def main(argv: list[str] | None = None) -> int:
         print(f"Raiz não encontrada: {raiz}", file=sys.stderr)
         return 2
     problemas = 0
-    for texto, correcao in conferir(raiz, args.porta):
-        if correcao is None:
+    for resultado in conferir(raiz, args.porta):
+        texto, correcao = resultado[0], resultado[1]
+        gravidade = resultado[2] if len(resultado) > 2 else ("ok" if correcao is None else "problema")
+        if gravidade == "ok":
             print(f"OK: {texto}")
+        elif gravidade == "aviso":
+            print(f"AVISO: {texto}\n  sugestão: {correcao}")
         else:
             problemas += 1
             print(f"PROBLEMA: {texto}\n  corrija: {correcao}")

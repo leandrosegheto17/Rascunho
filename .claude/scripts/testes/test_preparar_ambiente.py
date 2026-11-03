@@ -135,6 +135,75 @@ class TestWorkspaceEDocker(unittest.TestCase):
         self.assertIn("Docker Desktop", correcao)
 
 
+class TestNode(unittest.TestCase):
+    def raiz(self, engines):
+        d = tempfile.TemporaryDirectory()
+        self.addCleanup(d.cleanup)
+        (Path(d.name) / "package.json").write_text(json.dumps({"engines": {"node": engines}} if engines else {}), encoding="utf-8")
+        return Path(d.name)
+
+    def test_faixa_aceita_e_recusa(self):
+        self.assertTrue(pa.node_aceito(">=24 <25", 24))
+        self.assertFalse(pa.node_aceito(">=24 <25", 26))
+        self.assertFalse(pa.node_aceito(">=24 <25", 22))
+        self.assertTrue(pa.node_aceito("^24", 24))
+        self.assertTrue(pa.node_aceito("24.x", 24))
+        self.assertIsNone(pa.node_aceito("lts/*", 24))
+
+    def test_versao_fora_de_engines_e_aviso_que_nao_bloqueia(self):
+        texto, sugestao, gravidade = pa.checar_node(self.raiz(">=24 <25"), "v26.13.0")
+        self.assertEqual(gravidade, "aviso")
+        self.assertIn("fora de engines", texto)
+
+    def test_versao_dentro_de_engines_passa(self):
+        self.assertEqual(pa.checar_node(self.raiz(">=24 <25"), "v24.1.0")[2], "ok")
+
+    def test_sem_engines_nao_diz_nada(self):
+        self.assertIsNone(pa.checar_node(self.raiz(None), "v26.0.0"))
+
+
+class TestSuite(unittest.TestCase):
+    def raiz(self, scripts, comando="pnpm test", workspace=None, pacotes=None):
+        d = tempfile.TemporaryDirectory()
+        self.addCleanup(d.cleanup)
+        r = Path(d.name)
+        (r / "package.json").write_text(json.dumps({"scripts": scripts}), encoding="utf-8")
+        (r / ".specs" / "projeto").mkdir(parents=True)
+        (r / ".specs" / "projeto" / "testes.json").write_text(json.dumps({"comando": comando}), encoding="utf-8")
+        if workspace:
+            (r / "pnpm-workspace.yaml").write_text(workspace, encoding="utf-8")
+        for nome, scr in (pacotes or {}).items():
+            (r / nome).mkdir(parents=True)
+            (r / nome / "package.json").write_text(json.dumps({"scripts": scr}), encoding="utf-8")
+        return r
+
+    def test_test_que_deixa_test_checagens_de_fora_e_lacuna(self):
+        r = self.raiz({"test": "pnpm -r test", "test:checagens": "node x"})
+        texto, correcao = pa.checar_suite(r)
+        self.assertIn("test:checagens", texto)
+        self.assertIsNotNone(correcao)
+
+    def test_test_que_roda_tudo_passa(self):
+        r = self.raiz({"test": "pnpm -r test && pnpm test:checagens", "test:checagens": "node x"})
+        self.assertIsNone(pa.checar_suite(r)[1])
+
+    def test_test_nao_recursivo_com_pacotes_e_lacuna(self):
+        r = self.raiz({"test": "vitest"}, workspace="packages:\n  - 'backend/*'\n", pacotes={"backend/api": {"test": "vitest run"}})
+        texto, correcao = pa.checar_suite(r)
+        self.assertIn("não percorre os pacotes", texto)
+        self.assertIn("backend/api", texto)
+
+    def test_comando_diferente_nao_confere(self):
+        r = self.raiz({"test": "x"}, comando="make check")
+        self.assertIsNone(pa.checar_suite(r)[1])
+
+    def test_sem_testes_json_nao_confere(self):
+        d = tempfile.TemporaryDirectory()
+        self.addCleanup(d.cleanup)
+        (Path(d.name) / "package.json").write_text("{}", encoding="utf-8")
+        self.assertIsNone(pa.checar_suite(Path(d.name)))
+
+
 class TestMain(unittest.TestCase):
     def roda(self, *argv):
         saida = io.StringIO()

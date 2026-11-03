@@ -663,7 +663,7 @@ def linha_lote(rel: dict, numero: int | None = None) -> str | None:
     pct = min(99, round(item["feitas"] * 100 / item["total"])) if item["feitas"] < item["total"] else 100
     marca = ""
     if det.get("usa_criticidade"):
-        marca = f" ({lote['criticidade']}{', Domínio: Opus' if lote['dominio'] else ''})"
+        marca = f" ({lote['criticidade']}{', Domínio' if lote['dominio'] else ''})"
     return (f"Lote {lote['numero']} de {len(det['lotes'])}{marca} {corpo} · "
             f"Feature: {item['feitas']} de {item['total']} tarefas ({pct}%)")
 

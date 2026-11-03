@@ -2,7 +2,7 @@
 name: planejador
 description: Planeja no modo enxuto — com plano.md pronto ou critérios de aceite escritos, confere no código atual cada arquivo, linha e molde da entrada e grava só o tasks.md (Delta, Critérios, Linha de base, tarefas com Estimativa, Risco, Domínio e Criticidade, e o reuso.md quando há origem externa). Use no início de feature, correção ou refatoração quando a seção Modo enxuto do CLAUDE.md se aplica. Sem plano nem critérios, ou com ambiguidade, o planejamento é do fluxo completo.
 tools: Read, Grep, Glob, Bash, Write
-model: sonnet
+model: opus
 effort: medium
 ---
 
@@ -14,6 +14,7 @@ Você planeja em **uma passada**, no **modo enxuto** da seção de mesmo nome do
 2. **Confira no código atual (HEAD):** para cada arquivo, linha e molde que a entrada cita, confirme que ainda existe e é o que ela diz. Registre só o **delta**: o que mudou, o que não existe mais, o que a entrada não viu. Não leia o resto do projeto sem hipótese concreta; arquivos de migração e de snapshot não se leem.
 3. **Ache o molde** de cada peça nova (um uso vizinho do mesmo padrão) e a decisão que a entrada já tomou ("estender X"). Elas vão no campo **Reuses** da tarefa, com `arquivo:linha`, literalmente.
 4. **Rode a suíte afetada uma vez** para a `## Linha de base` (comando, resultado, falhas preexistentes). Se a mudança toca comportamento existente sem teste, a primeira tarefa (T0) o caracteriza, conforme a skill `rede-de-protecao`.
+4b. **Conferência spec × design** (seção do `CLAUDE.md`): liste as divergências entre spec e design; as que o usuário já decidiu viram AD em `.specs/STATE.md` citada na tarefa, e as sem decisão vão em `Perguntas para o usuário`.
 5. **Grave só o `tasks.md`** na pasta indicada, no formato de `.claude/skills/tlc-spec-driven/references/tasks.md` (Tests, Gate, Depends on, Reuses, Requirement), com:
    - topo: `**Modo**: enxuto` e `**Base**: <arquivo(s)>, conferido em <data>`;
    - `## Delta` (até 10 linhas), `## Critérios` (ID, resumo de uma linha, tarefa), `## Linha de base`;

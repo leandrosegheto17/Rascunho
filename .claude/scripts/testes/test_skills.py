@@ -169,13 +169,14 @@ class TestSkills(unittest.TestCase):
                       "**Subagentes**"):
             with self.subTest(velho=velho):
                 self.assertNotIn(velho, claude_md)
-        dominio = (CLAUDE / "agents" / "implementador-dominio.md").read_text(encoding="utf-8")
-        for trecho in ("Lote (fases", "progresso.py --lote", "Vermelho", "Teste primeiro", "Fechamento"):
-            with self.subTest(dominio=trecho):
-                self.assertIn(trecho, dominio)
+        self.assertFalse((CLAUDE / "agents" / "implementador-dominio.md").exists())  # execução sempre em Sonnet, na sessão
+        for trecho in ("**Matriz política × comando:**", "**Higiene de teste de banco:**", "casos limite e os estados possíveis",
+                       "**em segundo plano**", "**Verificador do marco**"):
+            with self.subTest(trecho=trecho):
+                self.assertIn(trecho, claude_md)
         implementador = (CLAUDE / "agents" / "implementador.md").read_text(encoding="utf-8")
         self.assertIn("progresso.py --tarefa", implementador)
-        self.assertNotIn("Tarefa <ID> concluída", implementador + dominio)
+        self.assertNotIn("Tarefa <ID> concluída", implementador)
         progresso = (SKILLS / "progresso" / "SKILL.md").read_text(encoding="utf-8")
         for trecho in ("--tarefa", "--lote", "Feature atual", "Phase atual", "Criticidade"):
             with self.subTest(progresso=trecho):
@@ -195,16 +196,17 @@ class TestSkills(unittest.TestCase):
         self.assertIn("Feature atual", marcos)
         self.assertIn("commit-msg", (CLAUDE / "scripts" / "instalar.py").read_text(encoding="utf-8"))
 
-    def test_modelo_do_trabalhador_vem_do_dominio_nao_do_risco(self):
-        """Opus só em lote com tarefa de domínio; o risco muda a revisão, não o modelo."""
+    def test_execucao_sempre_em_sonnet_e_planejamento_em_opus(self):
+        """Domínio e risco mudam o cuidado do lote, não o modelo; o planejamento é sempre Opus."""
         claude_md = (CLAUDE / "CLAUDE.md").read_text(encoding="utf-8")
         for trecho in ("`**Domínio**: sim|não`", "`**Risco**` não escolhe o modelo nem o ciclo",
-                       "Lote sem `**Domínio**: sim` a sessão implementa"):
+                       "Todo lote é implementado pela sessão principal", "**sempre em Sonnet**"):
             with self.subTest(trecho=trecho):
                 self.assertIn(trecho, claude_md)
         self.assertNotIn("alguma tarefa de `**Risco**: alto`", claude_md)
-        dominio = (CLAUDE / "agents" / "implementador-dominio.md").read_text(encoding="utf-8")
-        self.assertIn("`**Domínio**: sim`", dominio.split("---")[1])  # na descrição, que o orquestrador lê
+        self.assertIn("o planejamento é sempre **Opus**", claude_md)
+        self.assertNotIn("implementador-dominio", claude_md)
+        self.assertIn("model: opus", (CLAUDE / "agents" / "planejador.md").read_text(encoding="utf-8").split("---")[1])
 
     def test_plano_pronto_vira_conferencia_do_delta(self):
         """Com plano.md pronto, reconhecimento e arqueologia conferem o plano; a rede de proteção continua."""
@@ -229,7 +231,8 @@ class TestSkills(unittest.TestCase):
         claude_md = (CLAUDE / "CLAUDE.md").read_text(encoding="utf-8")
         for trecho in ("## Modo enxuto", "`planejador`", "**Modo**: enxuto", "`## Delta`", "`## Linha de base`",
                        "Tarefa T0, rede de proteção", "O campo Reuses nomeia a decisão", "**Uma aprovação**",
-                       "a cada 6 lotes", "**Modelo pela entrada**", "sem troca manual de `/model`"):
+                       "a cada 6 lotes", "**Modelo pela entrada:**", "sem troca manual de `/model`",
+                       "## Conferência spec × design"):
             with self.subTest(trecho=trecho):
                 self.assertIn(trecho, claude_md)
         for nome in ("feature", "legado"):
@@ -239,7 +242,7 @@ class TestSkills(unittest.TestCase):
                     self.assertIn(trecho, texto)
         agente = (CLAUDE / "agents" / "planejador.md").read_text(encoding="utf-8")
         cabecalho = agente.split("---")[1]
-        self.assertIn("model: sonnet", cabecalho)
+        self.assertIn("model: opus", cabecalho)
         tools = re.search(r"^tools:\s*(.*)$", cabecalho, re.MULTILINE).group(1)
         self.assertNotIn("Edit", tools)  # só grava o tasks.md; não altera código
         self.assertLessEqual(len(agente.splitlines()), 60)
@@ -290,8 +293,7 @@ class TestSkills(unittest.TestCase):
                        "asserção espacial ou visual", "**Registro do gate:**", "HEAD^{tree}"):
             with self.subTest(trecho=trecho):
                 self.assertIn(trecho, claude_md)
-        for nome, esperado in (("implementador", ("Vizinhança", "Molde:", "Prova de tela", "HEAD^{tree}")),
-                               ("implementador-dominio", ("Vizinhança", "Molde:", "HEAD^{tree}"))):
+        for nome, esperado in (("implementador", ("Vizinhança", "Molde:", "Prova de tela", "HEAD^{tree}")),):
             with self.subTest(agente=nome):
                 texto = (CLAUDE / "agents" / f"{nome}.md").read_text(encoding="utf-8")
                 for trecho in esperado:
