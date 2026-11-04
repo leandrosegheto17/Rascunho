@@ -1,5 +1,7 @@
 # Guia do fluxo de feature em projeto legado, de ponta a ponta
 
+> **Atenção: desatualizado a partir da Execução v5.** Este guia descreve o desenho anterior. Hoje todo fluxo termina no planejamento (`tasks.md` com lotes) e o resto é de `/preparar`, `/executar`, `/validar` e `/finalizar`; veja "Execução v5" em [DECISOES.md](DECISOES.md). As fases de construção em diante abaixo não valem mais.
+
 Este guia mostra o fluxo 4 (skill `legado`) funcionando fase por fase, com um exemplo inventado do começo ao fim. O desenho do fluxo está em [FLUXO-FEATURE-LEGADO.md](FLUXO-FEATURE-LEGADO.md); as regras que a IA segue estão em `.claude/skills/legado/` e no `.claude/CLAUDE.md`. O formato é o mesmo do [GUIA-USO-PROPRIO.md](GUIA-USO-PROPRIO.md).
 
 **Quando usar:** acrescentar uma funcionalidade a um sistema **antigo**, pouco testado, escrito por gente que já saiu, sem IA no histórico. Para um projeto recente feito com IA e com testes, use o fluxo 3 (`feature`). Para limpar ou reorganizar código sem mudar comportamento, use `refatoracao`. Para corrigir defeito, `bug`.

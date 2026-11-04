@@ -1,5 +1,7 @@
 # Guia do fluxo de uso próprio, de ponta a ponta
 
+> **Atenção: desatualizado a partir da Execução v5.** Este guia descreve o desenho anterior. Hoje todo fluxo termina no planejamento (`tasks.md` com lotes) e o resto é de `/preparar`, `/executar`, `/validar` e `/finalizar`; veja "Execução v5" em [DECISOES.md](DECISOES.md). As fases de construção em diante abaixo não valem mais.
+
 Este guia mostra o fluxo 2 funcionando, fase por fase, com um exemplo inventado do começo ao fim. O desenho do fluxo está em [FLUXO-USO-PROPRIO.md](FLUXO-USO-PROPRIO.md); as regras que a IA segue estão em `.claude/skills/uso-proprio/` e no `.claude/CLAUDE.md`.
 
 **Quando usar:** ferramenta pessoal, só você usa, roda no seu computador (Docker) ou numa nuvem gratuita, custo zero. Para produto que será vendido, use o fluxo 1 (`projeto-novo`). Para mexer num projeto que já existe, use o fluxo 3 (`feature`).
