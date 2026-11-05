@@ -42,6 +42,11 @@ Uso:
   python .claude/scripts/progresso.py [--raiz DIR] [--item PASTA] [--json]
   python .claude/scripts/progresso.py --tarefa [T12]   # V2 da tarefa (padrão: a última concluída)
   python .claude/scripts/progresso.py --lote [N]       # V2 do lote (padrão: o da última concluída)
+  python .claude/scripts/progresso.py --lote --rascunho  # o primeiro lote ainda não rascunhado (/rascunho)
+
+Rascunhada: tarefa com `**Status**: rascunhada` (teste e código escritos pelo /rascunho, nada executado).
+Continua em aberto na contagem; só o `/executar` a conclui. Lote rascunhado: todas as tarefas rascunhadas
+ou concluídas.
 
 Sai com 0, com 1 quando a tarefa ou o lote pedido não existe e com 2 quando a raiz não existe.
 """
@@ -75,6 +80,7 @@ TITULO = re.compile(r"^(#{1,6})\s")
 CAIXA = re.compile(r"^\s*[-*]\s+\[([ xX])\]")
 STATUS = re.compile(r"^\s*\*\*Status\*\*\s*:\s*(.*)$", re.IGNORECASE)
 STATUS_FEITO = re.compile(r"✅|\b(done|complete|completed|conclu[ií]d[oa]s?)\b", re.IGNORECASE)
+STATUS_RASCUNHO = re.compile(r"\brascunhad[oa]s?\b", re.IGNORECASE)
 CAMPO_RETOMADA = re.compile(r"^\s*-\s+\*\*(Fluxo|Item|Fase aprovada|Próxima fase)\*\*\s*:\s*(.+?)\s*$")
 TITULO_FASE = re.compile(r"^(#{2,4})\s+(?:Phase|Fase)\s+(\d+)\b[:.\-—]?\s*(.*?)\s*$", re.IGNORECASE)
 DEPENDE = re.compile(r"^\s*\*\*Depends on\*\*\s*:\s*(.*)$", re.IGNORECASE)
@@ -138,6 +144,15 @@ def _tarefa_feita(linhas: list[str]) -> bool:
         status = STATUS.match(linha)
         if status:
             return bool(STATUS_FEITO.search(status.group(1)))
+    return False
+
+
+def _tarefa_rascunhada(linhas: list[str]) -> bool:
+    """Escrita pelo /rascunho (teste e código, nada executado): `**Status**: rascunhada`, ainda não concluída."""
+    for linha in linhas:
+        status = STATUS.match(linha)
+        if status:
+            return bool(STATUS_RASCUNHO.search(status.group(1)))
     return False
 
 
@@ -216,6 +231,7 @@ def tarefas_de(texto: str) -> tuple[list[dict], list[dict]]:
         comum = declarada is not None and declarada.lower().startswith("comum")
         tarefas.append({"id": id_, "titulo": titulos.get(id_, ""), "fase": fase["numero"] if fase else None,
                         "est": estimadas.get(id_), "feita": _tarefa_feita(linhas), "deps": deps,
+                        "rascunhada": not _tarefa_feita(linhas) and _tarefa_rascunhada(linhas),
                         "criticidade": "comum" if comum else "crítica", "criticidade_declarada": declarada is not None,
                         "dominio": dominio})
     return tarefas, [f for f in fases if f["ids"]]
@@ -288,6 +304,8 @@ def lotes_de(tarefas: list[dict], fases: list[dict]) -> list[dict]:
             lote["rotulo"] = f"R{contador}"
         lote["criticidade"] = "crítico" if lote["critico"] else "comum"
         lote["dominio"] = any(por_id[i]["dominio"] for i in lote["tarefas"])
+        # rascunhado: todas as tarefas já têm teste e código escritos (rascunhadas ou concluídas)
+        lote["rascunhado"] = all(por_id[i]["feita"] or por_id[i]["rascunhada"] for i in lote["tarefas"])
     return lotes
 
 
@@ -612,10 +630,12 @@ def _linhas_detalhe(rel: dict) -> list[str]:
     return linhas
 
 
-def _escolher_lote(det: dict, numero: int | None) -> dict | None:
+def _escolher_lote(det: dict, numero: int | None, rascunho: bool = False) -> dict | None:
     lotes = det["lotes"]
     if numero is not None:
         return next((l for l in lotes if l["numero"] == numero), None)
+    if rascunho:  # passada do /rascunho: o primeiro lote que ainda tem tarefa sem rascunho
+        return next((l for l in lotes if not l["rascunhado"]), None)
     por_id = {t["id"]: t for t in det["tarefas"]}
     ultima = max((t for t in det["tarefas"] if t["quando"]), key=lambda t: t["quando"], default=None)
     alvo = ultima["id"] if ultima else (_proxima(det["tarefas"]) or {}).get("id")
@@ -649,12 +669,15 @@ def linha_tarefa(rel: dict, id_: str | None = None) -> str | None:
     return " · ".join(partes)
 
 
-def linha_lote(rel: dict, numero: int | None = None) -> str | None:
-    """V2 do lote: tarefas, tempo gasto e estimado, e o andamento da feature; None se não existe."""
+def linha_lote(rel: dict, numero: int | None = None, rascunho: bool = False) -> str | None:
+    """V2 do lote: tarefas, tempo gasto e estimado, e o andamento da feature; None se não existe.
+
+    Com `rascunho`, escolhe o primeiro lote ainda não rascunhado (None quando todos já foram).
+    """
     det = rel.get("detalhe")
     if not det:
         return None
-    lote = _escolher_lote(det, numero)
+    lote = _escolher_lote(det, numero, rascunho)
     if lote is None:
         return None
     por_id = {t["id"]: t for t in det["tarefas"]}
@@ -669,6 +692,8 @@ def linha_lote(rel: dict, numero: int | None = None) -> str | None:
         estimado += f" + {sem} sem estimativa"
     if len(feitas) == len(do_lote):
         corpo = f"concluído: {len(do_lote)} tarefas em {gasto} ({estimado})"
+    elif lote["rascunhado"]:
+        corpo = f"rascunhado: {len(do_lote)} tarefas com teste e código escritos, nada executado ({estimado})"
     else:
         corpo = f"em andamento: {len(feitas)} de {len(do_lote)} tarefas, {gasto} até agora ({estimado})"
     if medidas and len(medidas) < len(feitas):
@@ -734,6 +759,8 @@ def main(argv: list[str] | None = None) -> int:
                     help="V2 da tarefa: tempo gasto e estimado (sem ID, a última concluída)")
     ap.add_argument("--lote", nargs="?", const="", metavar="N",
                     help="V2 do lote: tempo gasto e estimado (sem número, o da última concluída)")
+    ap.add_argument("--rascunho", action="store_true",
+                    help="com --lote sem número: o primeiro lote ainda não rascunhado (passada do /rascunho)")
     args = ap.parse_args(argv)
     for fluxo in (sys.stdout, sys.stderr):  # em pipe no Windows o padrão é cp1252; quem lê espera UTF-8
         if hasattr(fluxo, "reconfigure"):
@@ -751,8 +778,9 @@ def main(argv: list[str] | None = None) -> int:
             linha = linha_tarefa(rel, args.tarefa or None)
             falta = f"Tarefa {args.tarefa or '(nenhuma concluída)'} não encontrada na feature atual"
         else:
-            linha = linha_lote(rel, int(args.lote) if args.lote else None)
-            falta = f"Lote {args.lote or '(atual)'} não encontrado na feature atual"
+            linha = linha_lote(rel, int(args.lote) if args.lote else None, args.rascunho)
+            falta = ("Todos os lotes já foram rascunhados" if args.rascunho and not args.lote
+                     else f"Lote {args.lote or '(atual)'} não encontrado na feature atual")
         if linha is None:
             print(falta, file=sys.stderr)
             return 1

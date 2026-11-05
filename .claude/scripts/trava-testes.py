@@ -7,6 +7,11 @@ Dois modos:
       Roda a suíte do projeto no commit atual (HEAD), mostra o resultado e, se passar,
       registra o commit como verde. É a "checagem final" dos fluxos.
 
+  python .claude/scripts/trava-testes.py --rascunho
+      Registra o commit atual (HEAD, árvore limpa) como RASCUNHO: teste e código escritos pelo /rascunho,
+      sem a suíte rodar. Libera só o `git merge` dele na Branch pai; push e PR continuam exigindo
+      a suíte verde (o /executar a leva ao verde, o /validar integra).
+
   (hook PreToolUse do Bash, lendo o JSON da ferramenta pela entrada padrão)
       git push / gh pr create : libera se HEAD já está verde; senão roda a suíte agora
                                 e bloqueia se falhar.
@@ -86,6 +91,25 @@ def gravar_verde(raiz, commit, resumo):
     caminho.write_text(json.dumps(verdes, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
+def cache_rascunhos(raiz):
+    return raiz / ".claude" / ".cache" / "rascunho.json"
+
+
+def ler_rascunhos(raiz):
+    try:
+        return json.loads(cache_rascunhos(raiz).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+
+
+def gravar_rascunho(raiz, commit):
+    registro = ler_rascunhos(raiz)
+    registro[commit] = {"em": datetime.now().isoformat(timespec="seconds")}
+    caminho = cache_rascunhos(raiz)
+    caminho.parent.mkdir(parents=True, exist_ok=True)
+    caminho.write_text(json.dumps(registro, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
 def git(raiz, *args):
     try:
         r = subprocess.run(["git", *args], cwd=raiz, capture_output=True, text=True)
@@ -156,6 +180,20 @@ def modo_rodar():
     return 0
 
 
+def modo_rascunho():
+    raiz = raiz_projeto()
+    commit = git(raiz, "rev-parse", "HEAD")
+    if not commit:
+        print("Sem commit para registrar.")
+        return 2
+    if not arvore_limpa(raiz):
+        print("Há mudanças não commitadas: faça o commit de fechamento do lote e rode de novo.")
+        return 1
+    gravar_rascunho(raiz, commit)
+    print(f"Commit {commit[:7]} registrado como RASCUNHO (suíte não rodou): libera só o merge na Branch pai.")
+    return 0
+
+
 def modo_hook():
     dados = json.load(sys.stdin)
     comando = (dados.get("tool_input") or {}).get("command", "")
@@ -174,11 +212,11 @@ def modo_hook():
     if merge:
         alvo = merge.group("alvo")
         commit = git(raiz, "rev-parse", alvo)
-        if commit is None or commit in verdes:
+        if commit is None or commit in verdes or commit in ler_rascunhos(raiz):
             return 0
         # A suíte da branch pode ter rodado no worktree dela, que tem registro próprio.
         pasta = worktree_da_branch(raiz, alvo)
-        if pasta and pasta.resolve() != raiz.resolve() and commit in ler_verdes(pasta):
+        if pasta and pasta.resolve() != raiz.resolve() and (commit in ler_verdes(pasta) or commit in ler_rascunhos(pasta)):
             return 0
         bloquear(
             f"Trava de testes: o último commit de `{alvo}` ({commit[:7]}) não tem a suíte verde registrada.\n"
@@ -201,4 +239,6 @@ def modo_hook():
 if __name__ == "__main__":
     sys.stdout.reconfigure(encoding="utf-8")
     sys.stderr.reconfigure(encoding="utf-8")
+    if "--rascunho" in sys.argv:
+        sys.exit(modo_rascunho())
     sys.exit(modo_rodar() if "--rodar" in sys.argv else modo_hook())

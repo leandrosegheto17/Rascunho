@@ -24,8 +24,9 @@ Liste os `tasks.md` com tarefa em aberto em `.specs/` (`features/`, `bugs/`, `re
 ## 3. Worktree da feature
 
 - `git worktree list`. Se a feature já tem worktree, entre nela e retome.
-- Senão: **Branch pai** = a do topo do `tasks.md` (`**Branch pai**: <nome>`) ou a branch atual (padrão `main`). Crie fora da pasta do projeto:
-  `git worktree add ../<projeto>-<slug> -b feature/<slug> <pai>`
+- Senão: **Branch pai** = a do topo do `tasks.md` (`**Branch pai**: <nome>`) ou a branch atual (padrão `main`). Crie na pasta `.worktree/` da raiz (confira que `.worktree/` está no `.gitignore`):
+  `git worktree add .worktree/<slug> -b feature/<slug> <pai>`
+- **Depois do `/rascunho`** (`**Passada**: rascunho` no topo): a worktree já existe em `.worktree/<slug>`; entre nela. Veja a seção 4.
 - Trabalhe nela até o fim. Registre a Branch pai no topo do `tasks.md` se faltar. A trava de testes e o hook de commit valem na worktree.
 
 ## 4. Os lotes
@@ -40,6 +41,8 @@ Liste os `tasks.md` com tarefa em aberto em `.specs/` (`features/`, `bugs/`, `re
 6. **Contexto:** rode `python .claude/scripts/contexto.py`. Saída 1 (acima de 300k): **pare**, diga só "Contexto acima do limite: rode /clear e depois /executar" e não comece o lote seguinte. O estado está no `tasks.md` e no git.
 
 Item em **etapas** (refatoração e redesign em modo grande): uma etapa por vez, na ordem do `refatoracao.md` ou do `redesign.md`, cada uma com o gate que a skill do fluxo manda (a seção "Para o /executar e o /validar" dela vale).
+
+**Lote rascunhado** (`**Passada**: rascunho`, tarefas com `**Status**: rascunhada`): o teste e o código já existem, escritos sem rodar. Em vez de escrevê-los, faça o ciclo da seção Execução sobre eles: rode o pacote tocado (no lote crítico, confirme que os testes de comportamento falham ou passam **pelo motivo certo**), corrija o código até o verde e o gate do lote, e siga o commit de fechamento (`Gate:` real e tarefas concluídas, no lugar de `rascunhada`). Teste só muda se o erro for dele, com o motivo no commit, nunca enfraquecido. Lote ainda não rascunhado num item com a passada: **recuse** e mande rodar `/rascunho`. Serviços de apoio (banco, Docker) sobem agora, pela primeira vez.
 
 Lote de **retrabalho** (Phase `Retrabalho R<n>`, gerada pelo `/validar`) é executado como qualquer outro, depois dos normais; cada tarefa cita o achado `A-NN` que corrige.
 

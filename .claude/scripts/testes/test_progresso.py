@@ -511,6 +511,55 @@ class TestLotes(unittest.TestCase):
         self.assertEqual([len(l["tarefas"]) for l in lotes], [3, 3, 3, 3, 4])  # 3×2h = 6h; cauda de 1 foi absorvida
 
 
+class TestRascunho(unittest.TestCase):
+    """Passada do /rascunho: tarefa rascunhada segue em aberto; lote rascunhado tem todas rascunhadas ou concluídas."""
+
+    def rel(self, *blocos):
+        texto = tasks_md(*blocos)
+        tarefas, fs = pr.tarefas_de(texto)
+        for t in tarefas:
+            t.update(quando=None, segundos=None)
+        det = {"tarefas": tarefas, "fases": fs, "lotes": pr.lotes_de(tarefas, fs), "ritmo": None, "usa_criticidade": False}
+        feitas = sum(1 for t in tarefas if t["feita"])
+        return {"detalhe": det, "item": {"feitas": feitas, "total": len(tarefas)}}
+
+    def test_rascunhada_continua_em_aberto_na_contagem(self):
+        texto = tasks_md(tarefa(1, [False], status="rascunhada"), tarefa(2, [False]))
+        self.assertEqual(pr.contar_tarefas(texto), (2, 0))
+        tarefas, _ = pr.tarefas_de(texto)
+        self.assertEqual([t["rascunhada"] for t in tarefas], [True, False])
+
+    def test_tarefa_concluida_nao_e_rascunhada(self):
+        tarefas, _ = pr.tarefas_de(tasks_md(tarefa(1, [True], status="rascunhada")))
+        self.assertFalse(tarefas[0]["rascunhada"])
+
+    def test_lote_so_e_rascunhado_com_todas_as_tarefas_escritas(self):
+        rel = self.rel(tarefa(1, [False], status="rascunhada", estimativa="2h"), tarefa(2, [False], estimativa="2h"))
+        self.assertFalse(rel["detalhe"]["lotes"][0]["rascunhado"])
+        rel = self.rel(tarefa(1, [False], status="rascunhada", estimativa="2h"),
+                       tarefa(2, [False], status="Rascunhada", estimativa="2h"))
+        self.assertTrue(rel["detalhe"]["lotes"][0]["rascunhado"])
+
+    def test_rascunho_escolhe_o_primeiro_lote_sem_rascunho(self):
+        blocos = [tarefa(i, [False], status="rascunhada" if i <= 3 else None, estimativa="2h") for i in range(1, 8)]
+        rel = self.rel(*blocos)
+        self.assertEqual([l["rascunhado"] for l in rel["detalhe"]["lotes"]], [True, False])
+        self.assertTrue(pr.linha_lote(rel, rascunho=True).startswith("Lote 2 de 2 em andamento"))
+        self.assertTrue(pr.linha_lote(rel).startswith("Lote 1 de 2 rascunhado: 3 tarefas com teste e código escritos"))
+
+    def test_rascunho_sem_lote_pendente_devolve_none(self):
+        rel = self.rel(tarefa(1, [False], status="rascunhada"), tarefa(2, [True]))
+        self.assertIsNone(pr.linha_lote(rel, rascunho=True))
+
+    def test_main_com_rascunho_sai_com_1_quando_tudo_foi_rascunhado(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            escrever(tmp, ".specs/features/a/tasks.md", tasks_md(tarefa(1, [False], status="rascunhada")))
+            saida = io.StringIO()
+            with contextlib.redirect_stdout(saida), contextlib.redirect_stderr(saida):
+                self.assertEqual(pr.main(["--raiz", tmp, "--lote", "--rascunho"]), 1)
+            self.assertIn("Todos os lotes já foram rascunhados", saida.getvalue())
+
+
 class TestCriticidade(unittest.TestCase):
     def lotes(self, *fases):
         tarefas, fs = pr.tarefas_de(tasks_fases(*fases))

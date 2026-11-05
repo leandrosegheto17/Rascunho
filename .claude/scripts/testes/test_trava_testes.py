@@ -115,6 +115,36 @@ class TestTrava(unittest.TestCase):
         commitar(pasta, "depois do verde")
         self.assertEqual(self.hook("git merge --ff-only feat")[0], 2)
 
+    def rascunho(self, pasta):
+        env = dict(os.environ, CLAUDE_PROJECT_DIR=str(pasta))
+        r = subprocess.run([sys.executable, str(SCRIPT), "--rascunho"], capture_output=True, text=True,
+                           encoding="utf-8", env=env)
+        return r.returncode, r.stdout
+
+    def test_rascunho_libera_o_merge_mas_nao_o_push(self):
+        self.config({"comando": FALHA})  # a suíte nem roda no rascunho
+        pasta = self.worktree("feat")
+        (pasta / "b.txt").write_text("b", encoding="utf-8")
+        commitar(pasta, "rascunho")
+        self.assertEqual(self.hook("git merge --no-ff feat")[0], 2)
+        self.assertEqual(self.rascunho(pasta)[0], 0)
+        self.assertEqual(self.hook("git merge --no-ff feat")[0], 0)
+        self.assertEqual(self.hook("git push origin main")[0], 2)
+
+    def test_rascunho_de_commit_antigo_nao_libera_commit_novo(self):
+        self.config({"comando": PASSA})
+        pasta = self.worktree("feat")
+        self.assertEqual(self.rascunho(pasta)[0], 0)
+        (pasta / "b.txt").write_text("b", encoding="utf-8")
+        commitar(pasta, "depois do rascunho")
+        self.assertEqual(self.hook("git merge --ff-only feat")[0], 2)
+
+    def test_rascunho_com_arvore_suja_nao_registra(self):
+        self.config({"comando": PASSA})
+        pasta = self.worktree("feat")
+        (pasta / "a.txt").write_text("mudou", encoding="utf-8")
+        self.assertEqual(self.rascunho(pasta)[0], 1)
+
     def test_rodar_com_falha_nao_registra_verde(self):
         self.config({"comando": FALHA})
         codigo, saida = self.rodar()

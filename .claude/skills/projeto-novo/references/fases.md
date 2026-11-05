@@ -39,7 +39,7 @@ Gravado na fase 8, junto com o `tasks.md`; o `/finalizar` o executa no staging (
 |---|---|
 | 8 Preparação: repositório, ambiente, esqueleto, CI | `/preparar` (Nível 1, necessário antes do `/executar`) |
 | 8 Preparação: staging, produção, segredos, backup | `/preparar` (Nível 2, até o fim da execução) |
-| 9 Construção | `/executar` (uma worktree por feature, sem subagentes) |
+| 9 Construção | `/rascunho` (escreve teste e código, sem rodar nada), depois `/executar` (roda, corrige e leva ao verde); uma worktree por feature, sem subagentes |
 | 10 Validação (verificador, revisão, segurança) | `/validar` (por feature, com lote de retrabalho) |
 | 11 Lançamento | `/finalizar` (antes dele, o E2E geral das jornadas) |
 | 12 Operação e aprendizado | `/finalizar` (métricas do MVP, feedback, decisão de persistir, pivotar ou encerrar) |

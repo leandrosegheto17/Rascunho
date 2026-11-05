@@ -42,7 +42,7 @@ Se o usuário descreveu o que quer em texto livre (ex.: "o login quebrou"), esco
 
 ## 3. Acionar o fluxo escolhido
 
-Todo fluxo **termina no planejamento**: ao fim, a única mensagem é "O plano está disponível para execução." O que vem depois é de quatro comandos, que o usuário chama quando quiser: `/preparar` (infraestrutura, em dois níveis; pode rodar em paralelo), `/executar` (executa o `tasks.md` numa worktree, sem skills nem subagentes), `/validar` (valida uma feature e gera o lote de retrabalho; com PASS, integra) e `/finalizar` (E2E geral, lançamento, operação e aprendizado). Se o usuário perguntar o que vem depois de um plano, explique essa ordem em poucas linhas.
+Todo fluxo **termina no planejamento**: ao fim, a única mensagem é "O plano está disponível para execução." O que vem depois é de quatro comandos, que o usuário chama quando quiser: `/preparar` (infraestrutura, em dois níveis; pode rodar em paralelo), `/rascunho` (só projeto do zero, fluxos 1 e 2: escreve teste e código sem rodar nada, uma worktree por feature em `.worktree/`), `/executar` (executa o `tasks.md` numa worktree, sem skills nem subagentes; no projeto do zero, roda e leva ao verde o que o `/rascunho` escreveu), `/validar` (valida uma feature e gera o lote de retrabalho; com PASS, integra) e `/finalizar` (E2E geral, lançamento, operação e aprendizado). Se o usuário perguntar o que vem depois de um plano, explique essa ordem em poucas linhas.
 
 - **Pronto:** acione a skill indicada na tabela e deixe que ela conduza.
 - **Em preparação:** diga em uma linha que ainda não foi construído e pergunte (via `AskUserQuestion`):

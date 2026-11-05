@@ -1149,3 +1149,10 @@ Uma pasta só, a mesma que o `tlc-spec-driven` já usa, para um fluxo ler o que 
 - **Instalado** no projeto de teste com `instalar.py --atualizar` (3 arquivos, sem conflito).
 - **Estimativa, não medida:** o retrabalho de segurança deve sumir da feature repetida e o `/validar` deve cair; a repetição diz se é verdade. Comparar com a linha de base do passo 2: ativo por comando, número de achados por rodada, rodadas até PASS, tempo do verificador.
 - **Em aberto:** sessão nova entre planejamento e `/preparar` e entre rodadas do `/validar`, disparador automático e pré-checagem por script (A-07) seguem sem implementar.
+
+## Passo 36: `/rascunho` no projeto do zero (2026-11-04)
+
+- **Decisão:** nos fluxos 1 e 2 a construção ganha uma primeira passada, `/rascunho`, que escreve teste e código sem rodar nada; depois `/executar` roda e leva ao verde; depois `/validar`. Marca no `tasks.md`: `**Passada**: rascunho` no topo e `**Status**: rascunhada` por tarefa (em aberto na contagem; `progresso.py --lote --rascunho` acha o próximo lote não rascunhado).
+- **Motivo:** escrever sem parar no ciclo rodar-e-corrigir é mais rápido e mantém o contexto pequeno; o `/executar` corrige com a suíte à frente.
+- **Worktrees:** uma por feature, sempre em `.worktree/<slug>` (ignorada pelo git), mantidas até o `/executar`; limpeza única ao fim. O `/rascunho` integra cada feature à Branch pai (merge local, com confirmação) e sugere a feature seguinte.
+- **Trava:** `trava-testes.py --rascunho` registra o commit como rascunho e libera só o merge na Branch pai; push e PR seguem exigindo suíte verde (aprovado pelo usuário). Modelo do `/rascunho`: Opus.

@@ -18,7 +18,7 @@ O fluxo vai até o planejamento. O que vem depois (infraestrutura, construção,
 | Antes (desenho antigo) | Agora |
 |---|---|
 | 5 Preparação: ambiente Docker, esqueleto, scripts de backup e restauração | `/preparar` (Nível 1, necessário antes do `/executar`; backup e restauração testada no Nível 2) |
-| 6 Construção | `/executar` (uma worktree por feature, sem subagentes) |
+| 6 Construção | `/rascunho` (escreve teste e código, sem rodar nada), depois `/executar` (roda, corrige e leva ao verde); uma worktree por feature, sem subagentes |
 | 7 Validação (verificador, restauração a partir de cópia limpa, segurança se na internet) | `/validar` (por feature, com lote de retrabalho) |
 | 8 Implantação | `/finalizar` (antes dele, o E2E geral das jornadas; publicar na nuvem exige confirmação específica) |
 | 9 Uso e manutenção | `/finalizar` abre a operação; a revisão periódica segue o checklist abaixo |
