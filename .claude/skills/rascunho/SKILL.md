@@ -20,7 +20,7 @@ Motivo: escrever tudo de uma vez, sem parar para o ciclo de rodar e corrigir, é
 
 ## 2. Os lotes
 
-`python .claude/scripts/progresso.py --lote --rascunho` diz o **primeiro lote ainda não rascunhado** e a criticidade (sai com 1 e "Todos os lotes já foram rascunhados" quando acabou). Para cada lote, na ordem do Execution Plan e só com as dependências escritas:
+`python .claude/scripts/progresso.py --lote --rascunho` diz o **primeiro lote ainda não rascunhado** e a criticidade (sai com 1 e "Todos os lotes já foram rascunhados" quando acabou). Antes do primeiro lote da sessão, rode a medição do passo 7 (a sessão pode já chegar cheia). Para cada lote, na ordem do Execution Plan e só com as dependências escritas:
 
 1. **Vizinhança antes de editar** e **Reuses** valem como no `/executar`: siga o molde (`Molde: <arquivo:linha>` no commit) e a decisão nomeada na tarefa, literalmente.
 2. **Testes primeiro, a partir dos critérios de aceite** (nunca do código), conforme a Test Coverage Matrix. No lote **crítico**, escreva também o que o erro deixaria passar em silêncio: matriz política × comando, um teste por ramo de cada guarda, teste de erro com gatilho de falha, higiene de teste de banco, cada critério de tarefa de `**Risco**: alto` com teste cujo nome cita o `FUN-NN` (seção Execução do `CLAUDE.md`). Depois o código. Todos os arquivos do lote em chamadas paralelas.
@@ -28,7 +28,7 @@ Motivo: escrever tudo de uma vez, sem parar para o ciclo de rodar e corrigir, é
 4. **Sem rodar nada.** Releia o que escreveu contra o critério e a tarefa (imports, nomes, assinaturas entre arquivos) em vez de executar; o que a execução apontar é do `/executar`.
 5. **Commit por grupo de tarefas**, em português, citando `Tn` e `FUN-NN`, corpo com `Molde:`. Nenhum commit afirma que algo passa. Depois, **um commit de fechamento do lote** que grava `**Status**: rascunhada` em cada tarefa do lote (caixas `- [ ]` ficam abertas) e, sob o lote, a linha `Rascunho: <comando de gate previsto> @ <árvore> = não executado`, com a árvore de `git rev-parse HEAD^{tree}`; sem `amend`.
 6. Mostre a linha de `progresso.py --lote` do lote (ela diz "rascunhado").
-7. **Contexto:** `python .claude/scripts/contexto.py`. Saída 1 (acima de 300k): **pare**, diga só "Contexto acima do limite: rode /clear e depois /rascunho". O estado está no `tasks.md` e no git.
+7. **Contexto:** `python .claude/scripts/contexto.py --comando rascunho`. Saída 1 (acima de 300k, ou do `limite_contexto` de `.specs/projeto/execucao.json`): **pare**, diga só "Contexto acima do limite: rode /clear e depois /rascunho" e não comece o lote seguinte. Saída 2 (sem registros): avise que não deu para medir e siga. O estado está no `tasks.md` e no git.
 
 Lote de **retrabalho** não passa por aqui: vai direto ao `/executar`.
 

@@ -1,3 +1,5 @@
+import contextlib
+import io
 import json
 import os
 import re
@@ -79,6 +81,13 @@ class TestContextoCli(unittest.TestCase):
     def test_acima_do_limite_padrao_de_300k_manda_limpar(self):
         sessao(self.pasta, "s1", [resposta("a", 1, 300_000, 5)])
         self.assertEqual(self.rodar(), 1)
+
+    def test_mensagem_cita_o_comando_a_retomar(self):
+        sessao(self.pasta, "s1", [resposta("a", 1, 300_000, 5)])
+        for comando, esperado in ((None, "/executar"), ("rascunho", "/rascunho")):
+            with self.subTest(comando=comando), contextlib.redirect_stdout(io.StringIO()) as saida:
+                self.assertEqual(self.rodar(*(["--comando", comando] if comando else [])), 1)
+                self.assertTrue(saida.getvalue().strip().endswith(f"depois {esperado}."))
 
     def test_exatamente_no_limite_ainda_segue(self):
         sessao(self.pasta, "s1", [resposta("a", 0, 300_000)])

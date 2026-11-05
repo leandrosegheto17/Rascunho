@@ -216,6 +216,11 @@ class TestSkills(unittest.TestCase):
             for trecho in trechos:
                 with self.subTest(skill=nome, trecho=trecho):
                     self.assertIn(trecho, texto)
+        rascunho = (SKILLS / "rascunho" / "SKILL.md").read_text(encoding="utf-8")
+        for trecho in ("contexto.py --comando rascunho", "300k"):
+            with self.subTest(skill="rascunho", trecho=trecho):
+                self.assertIn(trecho, rascunho)
+        self.assertIn("`/rascunho`", claude_md.split("- **Contexto.**")[1].splitlines()[0])
         self.assertTrue((SKILLS / "preparar" / "references" / "modelo.md").exists())
         self.assertTrue((SKILLS / "validar" / "references" / "relatorio.md").exists())
         # o /executar não pode mandar chamar skill nem agente

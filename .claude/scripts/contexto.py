@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Mede o tamanho do contexto da sessão atual do Claude Code e diz se passou do limite.
 
-Uso (ao fechar cada lote do /executar):
-  python .claude/scripts/contexto.py [--projeto <pasta>] [--limite N] [--raiz <registros>]
+Uso (ao fechar cada lote do /executar ou do /rascunho):
+  python .claude/scripts/contexto.py [--projeto <pasta>] [--limite N] [--comando executar|rascunho|...] [--raiz <registros>]
 
 O tamanho é o da última resposta do modelo na sessão mais recente: entrada + leitura de cache +
 escrita de cache (a mesma conta do medir-lotes.py). O limite vem, nesta ordem, de --limite, de
@@ -77,6 +77,7 @@ def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     p.add_argument("--projeto", default=".", help="pasta do projeto (padrão: a atual)")
     p.add_argument("--limite", type=int, help="limite de tokens (padrão: execucao.json ou 300000)")
+    p.add_argument("--comando", default="executar", help="comando a retomar depois do /clear (padrão: executar)")
     p.add_argument("--raiz", help="pasta dos registros (padrão: ~/.claude/projects)")
     args = p.parse_args(argv)
     for fluxo in (sys.stdout, sys.stderr):
@@ -100,7 +101,7 @@ def main(argv=None):
     limite = args.limite or limite_do_projeto(candidatas[-1] if len(candidatas) > 1 else projeto)
     k = lambda n: f"{n / 1000:.0f}k"  # noqa: E731
     if tokens > limite:
-        print(f"Contexto: {k(tokens)} acima do limite de {k(limite)}. Pare aqui: rode /clear e depois /executar.")
+        print(f"Contexto: {k(tokens)} acima do limite de {k(limite)}. Pare aqui: rode /clear e depois /{args.comando}.")
         return 1
     print(f"Contexto: {k(tokens)} de {k(limite)}. Pode seguir para o próximo lote.")
     return 0
