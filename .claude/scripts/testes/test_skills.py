@@ -205,7 +205,7 @@ class TestSkills(unittest.TestCase):
                 self.assertIn(trecho, claude_md)
         for nome, trechos in {
             "preparar": ("preparacao.py", "Nível 1", "Nível 2", "confirmação específica", "model: sonnet"),
-            "executar": ("preparacao.py --nivel1", "git worktree add", "contexto.py", "não use a ferramenta `Skill`",
+            "executar": ("preparacao.py --nivel1", "git worktree add", "contexto.py", "fechar-lote.py", "não use a ferramenta `Skill`",
                          "Sem push, sem PR", "Retrabalho", "model: sonnet"),
             "validar": ("`verificador`", "`auditor-seguranca`", "`revisao-codigo`", "Retrabalho R<n>", "finishing-a-development-branch",
                         "confirmação específica", "integracao.md"),
@@ -220,6 +220,9 @@ class TestSkills(unittest.TestCase):
         for trecho in ("contexto.py --comando rascunho", "300k", "[LACUNA]", "Lacunas:"):
             with self.subTest(skill="rascunho", trecho=trecho):
                 self.assertIn(trecho, rascunho)
+        for trecho in ("fechar-lote.py", "**Saída enxuta.**", "`Read`, `Glob` e `Grep`", "numa chamada"):
+            with self.subTest(claude_md=trecho):
+                self.assertIn(trecho, claude_md)
         self.assertIn("[LACUNA]", (SKILLS / "executar" / "SKILL.md").read_text(encoding="utf-8"))
         self.assertIn("`/rascunho`", claude_md.split("- **Contexto.**")[1].splitlines()[0])
         self.assertTrue((SKILLS / "preparar" / "references" / "modelo.md").exists())

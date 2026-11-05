@@ -36,9 +36,9 @@ Liste os `tasks.md` com tarefa em aberto em `.specs/` (`features/`, `bugs/`, `re
 1. Siga o **ciclo do lote comum** ou o **do lote crítico** da seção Execução do `CLAUDE.md`: testes a partir dos critérios, vermelho no crítico, código, gate do lote.
 2. **Vizinhança antes de editar** (`Molde: <arquivo:linha>` no commit); a decisão nomeada na tarefa vale literalmente (Reuses).
 3. Tarefa de `**Domínio**: sim`: antes de codar, liste os casos limite e os estados. Lacuna da spec: **pare e pergunte** via `AskUserQuestion`.
-4. **Commit por grupo de tarefas**, em português, citando `Tn` e `FUN-NN`, cada um fechando verde. Depois, **um commit de fechamento do lote** com o status no `tasks.md` e `Gate: <comando> @ <árvore> = <resultado>`, sem `amend`.
-5. Mostre a linha de `progresso.py --lote`.
-6. **Contexto:** rode `python .claude/scripts/contexto.py`. Saída 1 (acima de 300k): **pare**, diga só "Contexto acima do limite: rode /clear e depois /executar" e não comece o lote seguinte. O estado está no `tasks.md` e no git.
+4. **Commit por grupo de tarefas**, em português, citando `Tn` e `FUN-NN`, cada um fechando verde. Encadeie `typecheck && git add && git commit` numa chamada só.
+5. **Fechamento do lote, uma chamada:** `python .claude/scripts/fechar-lote.py` (com `--gate "<comando filtrado pelos pacotes tocados>"` e `--rodape "<atribuição>"`). Roda o gate, grava status e `Gate:` no `tasks.md`, faz o commit de fechamento e imprime três linhas: gate, `progresso.py --lote` e `contexto.py`. Gate vermelho: nada é escrito; corrija e rode de novo.
+6. **Contexto:** a terceira linha do passo 5. Saída 3 (acima de 300k): **pare**, diga só "Contexto acima do limite: rode /clear e depois /executar" e não comece o lote seguinte. O estado está no `tasks.md` e no git.
 
 Item em **etapas** (refatoração e redesign em modo grande): uma etapa por vez, na ordem do `refatoracao.md` ou do `redesign.md`, cada uma com o gate que a skill do fluxo manda (a seção "Para o /executar e o /validar" dela vale).
 
@@ -59,4 +59,5 @@ Com todas as tarefas concluídas: rode o **gate completo** (lint, format, checag
 - Divergiu da spec ou do desenho? `SPEC_DEVIATION: <o quê>` no código e no commit; siga as ADs do `STATE.md`.
 - **Sem push, sem PR, sem merge, sem deploy.** A integração é do `/validar`, com confirmação específica.
 - Tarefa de interface: só `tokens.css` e os componentes do guia; prova de tela conforme a seção Execução.
+- **Poucas chamadas, saída curta:** use `Read`, `Glob` e `Grep` (não `cat`, `ls`, `grep`, `git show`), testes com reporter mínimo e comandos encadeados com `&&`.
 - Tudo em português.
