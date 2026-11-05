@@ -26,7 +26,7 @@ Liste os `tasks.md` com tarefa em aberto em `.specs/` (`features/`, `bugs/`, `re
 - `git worktree list`. Se a feature já tem worktree, entre nela e retome.
 - Senão: **Branch pai** = a do topo do `tasks.md` (`**Branch pai**: <nome>`) ou a branch atual (padrão `main`). Crie na pasta `.worktree/` da raiz (confira que `.worktree/` está no `.gitignore`):
   `git worktree add .worktree/<slug> -b feature/<slug> <pai>`
-- **Depois do `/rascunho`** (`**Passada**: rascunho` no topo): a worktree já existe em `.worktree/<slug>`; entre nela. Veja a seção 4.
+- **Depois do `/rascunho`** (`**Passada**: rascunho` no topo): o `/rascunho` commitou direto na Branch pai (uma tarefa por commit); crie a worktree normalmente, a partir dela, e os commits do rascunho já vêm junto. Veja a seção 4.
 - Trabalhe nela até o fim. Registre a Branch pai no topo do `tasks.md` se faltar. A trava de testes e o hook de commit valem na worktree.
 
 ## 4. Os lotes
