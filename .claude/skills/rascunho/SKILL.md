@@ -38,7 +38,7 @@ Com todos os lotes da feature rascunhados (não rode o gate completo):
 
 1. **Integre à Branch pai** (merge local, `--no-ff`), só depois de `python .claude/scripts/trava-testes.py --rascunho` na worktree, que registra o commit como rascunho (o merge é liberado; push e PR continuam exigindo suíte verde). Pergunte antes via `AskUserQuestion` (**merge local (Recomendado)** / **deixar para depois**): merge exige confirmação específica. **A worktree e a branch `feature/<slug>` ficam**: o `/executar` as retoma.
 2. Mostre a linha final do `progresso.py` e consulte o roteiro (`.specs/projeto/roadmap.md`): se há **feature seguinte** com `tasks.md` de `**Passada**: rascunho` ainda não rascunhado, pergunte via `AskUserQuestion` **rascunhar a feature <nome> agora (Recomendado)** / **parar**; aceitando, repita desde a seção 1 (se o contexto estiver acima do limite, peça `/clear` e `/rascunho`). Feature do roteiro sem `tasks.md` ainda precisa do planejamento (`/fluxo`): diga.
-3. Sem feature seguinte: diga apenas **"Projeto rascunhado: rode /executar."** (o `/executar` vai de feature em feature nas worktrees de `.worktree/`).
+3. Sem feature seguinte: diga apenas **"Projeto rascunhado: rode /executar."** (o `/executar` vai de feature em feature nas worktrees de `.worktree/`). A publicação do rascunho para o teste visual e a ordem em que o `/executar` e o `/validar` andam em paralelo a ele são do usuário, feitas à mão (seção Projeto do zero do `CLAUDE.md`); não publique nem faça deploy por iniciativa própria.
 
 ## Regras
 

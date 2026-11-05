@@ -78,6 +78,8 @@ Vale nos fluxos 1 (projeto novo) e 2 (uso próprio): o `tasks.md` leva `**Passad
 2. **`/executar`**: entra na worktree de cada feature, roda os testes, corrige e leva ao **verde** lote a lote (ciclo da seção Execução, com o vermelho do lote crítico), registra `Gate:` e marca concluída.
 3. **`/validar`**: todas as validações, como em qualquer feature; integra com PASS.
 
+**Rodada completa e teste visual.** Terminado o `/rascunho` de todas as features, o usuário pode publicar o rascunho em produção para ver o projeto visual (ele é o único usuário ativo e testa em ambiente real). A publicação e a orquestração em paralelo com o `/executar` e o `/validar` são **manuais, do usuário**; nenhum comando as faz. Se o publicar passar por `git push`, `gh pr create` ou deploy pela sessão, a trava de testes e a confirmação específica da seção Aprovação continuam valendo (rascunho não tem suíte verde: a trava bloqueia o push).
+
 Item sem `**Passada**: rascunho` segue direto `/executar` → `/validar`. Retrabalho nunca passa pelo `/rascunho`.
 
 ## Plano pronto
