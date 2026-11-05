@@ -23,9 +23,9 @@ Motivo: escrever tudo de uma vez, sem parar para o ciclo de rodar e corrigir, é
 
 1. Siga o molde da vizinhança e a decisão nomeada em **Reuses**, literalmente.
 2. **Testes primeiro, a partir dos critérios de aceite**, conforme a Test Coverage Matrix; no lote **crítico**, também o que o erro deixaria passar em silêncio (seção Execução do `CLAUDE.md`). Depois o código. Arquivos do lote em chamadas paralelas.
-3. Tarefa de `**Domínio**: sim`: liste os casos limite antes de codar; lacuna da spec: **pare e pergunte** via `AskUserQuestion`.
+3. Tarefa de `**Domínio**: sim`: liste os casos limite antes de codar. Onde a spec não define o resultado, **não pare**: deixe `[LACUNA] <o quê>` num comentário no código e uma linha `Lacunas:` na tarefa do `tasks.md`, siga com a interpretação mais conservadora; o `/executar` pergunta antes de levar a tarefa ao verde.
 4. **Sem rodar nada** (nem teste, typecheck, lint, build, servidor ou instalação). Nenhuma releitura de conferência além do necessário para escrever.
-5. **Um commit local por tarefa finalizada**, em português, citando `Tn` e `FUN-NN`, com `Molde:` no corpo. O mesmo commit grava `**Status**: rascunhada` na tarefa (a caixa `- [ ]` fica aberta). Nenhum commit afirma que algo passa. Sem commit de fechamento de lote.
+5. **Um commit local por tarefa finalizada**, em português, citando `Tn` e `FUN-NN`, com `Molde:` no corpo. O mesmo commit grava `**Status**: rascunhada` na tarefa (a caixa `- [ ]` fica aberta). Nenhum commit afirma que algo passa, e ele não precisa fechar verde; só vale que nada importe arquivo que só nasce em tarefa posterior. Sem commit de fechamento de lote.
 6. **Contexto, só a cada 5 lotes rascunhados** (e não a cada lote): `python .claude/scripts/contexto.py --comando rascunho`. Saída 1 (acima de 300k, ou do `limite_contexto` de `.specs/projeto/execucao.json`): **pare**, diga só "Contexto acima do limite: rode /clear e depois /rascunho". Saída 2: siga. O estado está no `tasks.md` e no git.
 
 Lote de **retrabalho** não passa por aqui: vai direto ao `/executar`.

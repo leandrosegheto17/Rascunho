@@ -1156,3 +1156,10 @@ Uma pasta só, a mesma que o `tlc-spec-driven` já usa, para um fluxo ler o que 
 - **Motivo:** escrever sem parar no ciclo rodar-e-corrigir é mais rápido e mantém o contexto pequeno; o `/executar` corrige com a suíte à frente.
 - **Worktrees:** uma por feature, sempre em `.worktree/<slug>` (ignorada pelo git), mantidas até o `/executar`; limpeza única ao fim. O `/rascunho` integra cada feature à Branch pai (merge local, com confirmação) e sugere a feature seguinte.
 - **Trava:** `trava-testes.py --rascunho` registra o commit como rascunho e libera só o merge na Branch pai; push e PR seguem exigindo suíte verde (aprovado pelo usuário). Modelo do `/rascunho`: Opus.
+
+## Passo 37: `/rascunho` mais rápido, direto na Branch pai (2026-11-04)
+
+- **Decisão (usuário):** o `/rascunho` roda **direto na Branch pai** (`main`), sem worktree e sem merge; **um commit local por tarefa finalizada** (com `**Status**: rascunhada` no mesmo commit, sem commit de fechamento de lote); `contexto.py --comando rascunho` **a cada 5 lotes**; mínimo de verificações (só confere `**Passada**: rascunho`). O `/executar` cria a worktree a partir da Branch pai e herda os commits por tarefa.
+- **Substitui parcialmente o passo 36:** a worktree por feature no rascunho e o merge local ao fim saem; `trava-testes.py --rascunho` fica sem uso pelo `/rascunho` (mantido, com testes). Risco aceito: a `main` passa a ter código sem teste rodado até o `/executar`.
+- **Lacuna de Domínio:** o `/rascunho` não para; deixa `[LACUNA] <o quê>` no código e `Lacunas:` na tarefa, segue pela interpretação mais conservadora; o `/executar` procura as marcas e pergunta (`AskUserQuestion`) antes de levar a tarefa ao verde. "Cada commit fecha verde" não vale no rascunho; vale só que nada importe arquivo de tarefa posterior.
+- **Correção da trava:** `settings.json` ganha o mesmo hook `trava-testes.py` com `matcher: PowerShell` (antes só `Bash`: `git push`, `gh pr create` e `git merge` pelo PowerShell passavam). O script já lia `tool_input.command`; `instalar.py` soma grupos de hook genericamente, então o novo matcher segue no `--atualizar` e no `--local`. Teste em `test_trava_testes.py`.
