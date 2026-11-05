@@ -62,6 +62,15 @@ class TestTrava(unittest.TestCase):
     def test_comando_comum_passa_direto(self):
         self.assertEqual(self.hook("git status")[0], 0)
 
+    def test_push_pelo_powershell_tambem_e_travado(self):
+        """O PowerShell manda o mesmo tool_input.command; o settings.json registra a trava nos dois matchers."""
+        self.assertEqual(self.hook("Set-Location .; git push origin main")[0], 2)
+        hooks = json.loads((SCRIPT.parent.parent / "settings.json").read_text(encoding="utf-8"))["hooks"]["PreToolUse"]
+        for ferramenta in ("Bash", "PowerShell"):
+            with self.subTest(ferramenta=ferramenta):
+                self.assertTrue(any(g["matcher"] == ferramenta and "trava-testes.py" in h["command"]
+                                    for g in hooks for h in g["hooks"]))
+
     def test_push_sem_configuracao_bloqueia(self):
         codigo, erro = self.hook("git push origin main")
         self.assertEqual(codigo, 2)
