@@ -13,7 +13,7 @@ Roda em **Sonnet** (trava de modelo do `CLAUDE.md`).
 
 ## 1. Qual feature
 
-Liste os `tasks.md` com tarefa em aberto em `.specs/` (`features/`, `bugs/`, `refatoracoes/`, `performance/`, `redesign/` e `automacoes/`; `python .claude/scripts/progresso.py` ajuda). A pasta que tem o `tasks.md` é o "item"; no texto abaixo, "feature" vale para qualquer item. Respeite o argumento recebido, se houver. Mais de uma: pergunte qual (via `AskUserQuestion`), a mais antiga primeiro como recomendada. Nenhuma: diga que não há plano a executar e que o `/fluxo` faz o planejamento.
+Liste os `tasks.md` com tarefa em aberto em `.specs/` (`features/`, `bugs/`, `refatoracoes/`, `performance/`, `redesign/`, `automacoes/`, `cobertura/` e `e2e/`; `python .claude/scripts/progresso.py` ajuda). A pasta que tem o `tasks.md` é o "item"; no texto abaixo, "feature" vale para qualquer item. Respeite o argumento recebido, se houver. Mais de uma: pergunte qual (via `AskUserQuestion`), a mais antiga primeiro como recomendada. Nenhuma: diga que não há plano a executar e que o `/fluxo` faz o planejamento.
 
 ## 2. Condições para começar
 

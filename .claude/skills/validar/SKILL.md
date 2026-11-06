@@ -13,7 +13,7 @@ Roda em **Sonnet** (trava de modelo do `CLAUDE.md`).
 
 ## 1. Qual feature
 
-Liste os `tasks.md` de `.specs/` (`features/`, `bugs/`, `refatoracoes/`, `performance/`, `redesign/`, `automacoes/`) cujas tarefas estão **todas concluídas** e que ainda não têm `validation.md` com PASS (ou que acabaram de executar um retrabalho). Respeite o argumento recebido. Escolha a **primeira da lista**, na ordem dos lotes do roteiro, e diga qual é. Mais de uma pronta e sem ordem clara: pergunte via `AskUserQuestion`. Tarefa em aberto (inclusive `rascunhada`): **recuse** e diga para rodar `/executar` (em projeto do zero, `/rascunho` antes, se faltar lote).
+Liste os `tasks.md` de `.specs/` (`features/`, `bugs/`, `refatoracoes/`, `performance/`, `redesign/`, `automacoes/`, `cobertura/`, `e2e/`) cujas tarefas estão **todas concluídas** e que ainda não têm `validation.md` com PASS (ou que acabaram de executar um retrabalho). Respeite o argumento recebido. Escolha a **primeira da lista**, na ordem dos lotes do roteiro, e diga qual é. Mais de uma pronta e sem ordem clara: pergunte via `AskUserQuestion`. Tarefa em aberto (inclusive `rascunhada`): **recuse** e diga para rodar `/executar` (em projeto do zero, `/rascunho` antes, se faltar lote).
 
 A pasta do item escolhe o modo do `verificador` (o agente já conhece: feature, bug, refatoração, performance, redesign), e a fonte da verdade é a do fluxo dele (spec, `relato.md`/`causa.md`, comportamento inalterado). O relatório leva o nome que o modo manda (`validation.md`, `validation-etapa-<N>.md`, `validation-rodada-<N>.md`). No texto abaixo, "feature" vale para qualquer item.
 

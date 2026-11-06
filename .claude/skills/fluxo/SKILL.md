@@ -36,7 +36,7 @@ Se o usuário descreveu o que quer em texto livre (ex.: "o login quebrou"), esco
 | Categoria | Opções do clique 2 | Mais opções |
 |---|---|---|
 | Começar algo novo | 1 Projeto para vender · 2 Uso próprio · 17 Prova de conceito | 8 Aprendizado · 30 Automação |
-| Mudar projeto existente | 3 Feature (projeto IA) · 4 Feature (legado) · 13 Refatoração | 6 Integração · 7 Redesign · 5 Performance · 14 Documentar |
+| Mudar projeto existente | 3 Feature (projeto IA) · 4 Feature (legado) · 13 Refatoração | 6 Integração · 7 Redesign · 5 Performance · **Mais opções (2)**: 14 Documentar · 33 Cobertura de testes · 34 Teste E2E de feature |
 | Corrigir ou atender | 12 Bug · 9 Incidente · 11 Pedido de feature | 32 Suporte · 10 Sugestão de terceiros |
 | Avaliar ou decidir | 24 Revisão de código · 16 Auditoria de segurança · 25 Escolha de tecnologia · 27 Avaliar terceiros | — |
 
@@ -75,6 +75,8 @@ Todo fluxo **termina no planejamento**: ao fim, a única mensagem é "O plano es
 | 27 | Avaliação de projeto de terceiros | `avaliar`, `terceiros` | **Pronto** | skill `avaliar-terceiros` |
 | 30 | Automação de processo | `automacao`, `automatizar` | **Pronto** | skill `automacao` |
 | 32 | Suporte ao cliente | `suporte`, `atendimento` | **Pronto** | skill `suporte` |
+| 33 | Cobertura de testes unitários | `cobertura`, `unitarios` | **Pronto** | skill `cobertura` |
+| 34 | Teste E2E de uma feature | `e2e`, `teste-e2e` | **Pronto** | skill `teste-e2e` |
 
 O roteiro (fase 6b do fluxo 1, fase 3b do fluxo 2) é conduzido pela skill `roteiro`, dentro desses fluxos.
 

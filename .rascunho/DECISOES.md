@@ -1176,3 +1176,9 @@ Uma pasta só, a mesma que o `tlc-spec-driven` já usa, para um fluxo ler o que 
 - **Decisão (usuário):** depois do `/rascunho` funcionar bem, o `/executar` sobre lote rascunhado passa a seguir, **tarefa a tarefa**: (1) confere se atende os requisitos, (2) code review próprio sobre o diff, (3) roda os testes da tarefa, (4) corrige tudo até o verde, (5) fecha a tarefa com commit e vai à próxima.
 - **Mantido:** sem skills e sem subagentes (o review é feito pela própria sessão); a marca `concluída` e o `Gate:` continuam no commit de fechamento do lote (`fechar-lote.py`), pois a marca exige o gate real. Lote não rascunhado segue o ciclo comum/crítico da seção Execução.
 - **`/validar` (mesmo passo):** como o `/executar` já confere e revisa cada tarefa, o `/validar` roda a suíte completa e abre como retrabalho (Phase `Retrabalho R<n>`) tudo o que entender ser falha ou lacuna da feature inteira.
+
+## Passo 40: fluxos 33 (cobertura) e 34 (teste E2E de feature) (2026-11-06)
+
+- **Decisões (usuário):** cobertura **por risco, não por %**, com testes de **caracterização** do comportamento atual (método da `rede-de-protecao`); E2E a partir dos **critérios da spec** da feature, ferramenta **detectada no projeto, senão Playwright**.
+- **Forma:** skills `cobertura` e `teste-e2e`, 3 fases de planejamento cada, artefatos em `.specs/cobertura/<slug>/` e `.specs/e2e/<slug>/`, terminam no `tasks.md` (execução e verificação por `/executar` e `/validar`). Menu: categoria "Mudar projeto existente" ganha uma segunda página de "Mais opções".
+- **Pendente:** nenhum fluxo foi rodado de ponta a ponta ainda.
