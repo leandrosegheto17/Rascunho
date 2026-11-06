@@ -28,7 +28,7 @@ Dispare numa única mensagem, em segundo plano, o que se aplica:
 
 e, enquanto eles rodam, aplique a skill **`revisao-codigo` em modo curto** (com o `code-review`) ao diff da feature contra a Branch pai. Ela roda sempre em legado e em toda feature com tarefa de `**Risco**: alto`; nos outros casos, registre que a revisão é a do PR do projeto.
 
-Aguarde os três. Em **rodada de retrabalho**, o escopo é o diff do retrabalho mais a regressão (a suíte inteira).
+Aguarde os três. O `/executar` já conferiu e revisou cada tarefa; aqui a visão é a da **feature inteira**: a **suíte completa** roda (reaproveitando o `Gate:` só se a árvore for a mesma) e **tudo o que o validador entender como falha ou lacuna** (teste vermelho, critério sem prova, achado de revisão ou segurança) vira item de retrabalho, sem pedir licença. Em **rodada de retrabalho**, o escopo é o diff do retrabalho mais a regressão (a suíte inteira).
 
 ## 3. Consolidar
 

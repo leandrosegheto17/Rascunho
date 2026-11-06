@@ -1170,3 +1170,9 @@ Uma pasta só, a mesma que o `tlc-spec-driven` já usa, para um fluxo ler o que 
 - **`fechar-lote.py` (novo):** uma chamada roda o gate (`--gate` filtrado pelos pacotes tocados, ou o `testes.json`), grava as tarefas concluídas e `Gate: <comando> @ <árvore> = verde` no `tasks.md`, faz o commit de fechamento e imprime 3 linhas (gate, `progresso.py --lote`, `contexto.py`). Gate vermelho não escreve nada. Substitui 5 a 6 chamadas. O `/rascunho` não o usa (sem gate nem commit de fechamento).
 - **Regras no `CLAUDE.md` e nas skills:** typecheck, `git add` e `git commit` do grupo numa chamada com `&&`; reporter mínimo nos testes (o `/preparar` grava o comando assim); `Read`, `Glob` e `Grep` no lugar de `cat`, `ls`, `grep` e `git show`.
 - **Descartado:** restringir o hook `trava-testes.py`. A saída dele não entra no contexto quando passa e o script já sai logo depois de ler o comando; o custo é só a partida do Python, e o matcher não filtra por conteúdo do comando.
+
+## Passo 39: `/executar` leva cada tarefa rascunhada por um ciclo próprio (2026-11-06)
+
+- **Decisão (usuário):** depois do `/rascunho` funcionar bem, o `/executar` sobre lote rascunhado passa a seguir, **tarefa a tarefa**: (1) confere se atende os requisitos, (2) code review próprio sobre o diff, (3) roda os testes da tarefa, (4) corrige tudo até o verde, (5) fecha a tarefa com commit e vai à próxima.
+- **Mantido:** sem skills e sem subagentes (o review é feito pela própria sessão); a marca `concluída` e o `Gate:` continuam no commit de fechamento do lote (`fechar-lote.py`), pois a marca exige o gate real. Lote não rascunhado segue o ciclo comum/crítico da seção Execução.
+- **`/validar` (mesmo passo):** como o `/executar` já confere e revisa cada tarefa, o `/validar` roda a suíte completa e abre como retrabalho (Phase `Retrabalho R<n>`) tudo o que entender ser falha ou lacuna da feature inteira.
