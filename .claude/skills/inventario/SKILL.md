@@ -31,6 +31,16 @@ Identifique as áreas do projeto (pastas de primeiro e segundo nível, manifesto
 
 Cada item com caminho (`arquivo:linha` quando fizer sentido) e uma linha do que faz. Inclua **duplicações** encontradas (duas peças que fazem a mesma coisa): elas indicam qual usar e viram candidatas a refatoração.
 
+## Arquivos críticos
+
+Os **3 arquivos mais alterados** do histórico concentram o risco. Liste pelo git e descarte gerados, migrações, travas de dependência, configuração e documentação:
+
+```bash
+git log --since="1 year ago" --name-only --pretty=format: | sort | uniq -c | sort -rn | head -30
+```
+
+Grave só os 3 caminhos na seção `## Arquivos críticos` do inventário. Tarefa que toca um deles é `**Risco**: alto` (revisão reforçada e regressão). Sem histórico suficiente (menos de 20 commits), registre "sem histórico suficiente". Ao atualizar o inventário, refaça a lista.
+
 ## 3. Gravar `.specs/projeto/inventario.md`
 
 ```markdown
@@ -63,6 +73,9 @@ Cada item com caminho (`arquivo:linha` quando fizer sentido) e uma linha do que 
 
 ## Integrações
 ...
+
+## Arquivos críticos
+- `<caminho>`
 
 ## Duplicações encontradas
 | Faz | Peças | Usar |

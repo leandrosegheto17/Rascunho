@@ -15,6 +15,7 @@ Você planeja em **uma passada**, no **modo enxuto** da seção de mesmo nome do
 3. **Ache o molde** de cada peça nova (um uso vizinho do mesmo padrão) e a decisão que a entrada já tomou ("estender X"). Elas vão no campo **Reuses** da tarefa, com `arquivo:linha`, literalmente.
 4. **Rode a suíte afetada uma vez** para a `## Linha de base` (comando, resultado, falhas preexistentes). Se a mudança toca comportamento existente sem teste, a primeira tarefa (T0) o caracteriza, conforme a skill `rede-de-protecao`.
 4b. **Conferência spec × design** (seção do `CLAUDE.md`): liste as divergências entre spec e design; as que o usuário já decidiu viram AD em `.specs/STATE.md` citada na tarefa, e as sem decisão vão em `Perguntas para o usuário`.
+4c. **Exemplos com valores** (seção **Conferência de consistência**): cada regra de tarefa de `**Domínio**: sim` leva exemplo com números e o caso limite em `## Exemplos`; refaça as contas e cruze as regras. Divergência vai em `Perguntas para o usuário`.
 5. **Grave só o `tasks.md`** na pasta indicada, no formato de `.claude/skills/tlc-spec-driven/references/tasks.md` (Tests, Gate, Depends on, Reuses, Requirement), com:
    - topo: `**Modo**: enxuto`, `**Base**: <arquivo(s)>, conferido em <data>` e `**Branch pai**: <nome>` (a branch atual, onde o `/validar` integra a feature; padrão `main`);
    - `## Delta` (até 10 linhas), `## Critérios` (ID, resumo de uma linha, tarefa), `## Linha de base`;

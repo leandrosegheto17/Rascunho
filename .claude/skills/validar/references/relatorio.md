@@ -28,6 +28,10 @@
 ## Lacunas e o que não foi validado
 
 - <lacuna de precisão da spec | E2E não executado: motivo | nenhuma>
+
+## Cenário mais frágil
+
+<obrigatório mesmo com PASS: o que quebraria primeiro, `arquivo:linha` e por que ainda se confia nele>
 ```
 
 Sem achado: remova a tabela de achados e escreva "Nenhum achado".

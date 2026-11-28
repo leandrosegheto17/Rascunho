@@ -42,6 +42,9 @@ Preencha **Retorno entregue** com a forma e a data (e o link, se publicado).
 ## Perguntas
 1. **REV-00N**: <o que precisamos saber e o que muda com a resposta>.
 
+## Cenário mais frágil
+<obrigatório, mesmo recomendando aprovar: o que quebraria primeiro, `<arquivo:linha>` e por que ainda se confia nele>
+
 ## Como foi revisado
 Checagens: <resumo>. Exercitado: <critérios>. Testes: <sensor N/N>. Segurança: <feita | dispensada — motivo>.
 

@@ -1182,3 +1182,10 @@ Uma pasta só, a mesma que o `tlc-spec-driven` já usa, para um fluxo ler o que 
 - **Decisões (usuário):** cobertura **por risco, não por %**, com testes de **caracterização** do comportamento atual (método da `rede-de-protecao`); E2E a partir dos **critérios da spec** da feature, ferramenta **detectada no projeto, senão Playwright**.
 - **Forma:** skills `cobertura` e `teste-e2e`, 3 fases de planejamento cada, artefatos em `.specs/cobertura/<slug>/` e `.specs/e2e/<slug>/`, terminam no `tasks.md` (execução e verificação por `/executar` e `/validar`). Menu: categoria "Mudar projeto existente" ganha uma segunda página de "Mais opções".
 - **Pendente:** nenhum fluxo foi rodado de ponta a ponta ainda.
+
+## Passo 41: regras de qualidade antes do código (2026-11-27)
+
+- **Origem:** comparação com um processo de equipe e com a camada pessoal feita sobre ele (plano em `PLANO-MELHORIAS-AJUSTE-EXECUCAO.md`). Ideias reescritas aqui, sem copiar arquivo, texto ou nome de terceiros.
+- **Decisão:** seção **Conferência de consistência** no `CLAUDE.md` (exemplos com valores nas regras de domínio, contas refeitas, divergência vira pergunta); **Casos por risco** na Execução (cálculo, datas, migração, evento, flag); **Cenário mais frágil** obrigatório no relatório do verificador e no retorno da revisão; **Arquivos críticos** no inventário (3 mais alterados pelo git; tarefa que os toca é risco alto).
+- **Em aberto:** nenhum ganho medido.
+

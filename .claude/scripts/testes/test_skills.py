@@ -423,5 +423,27 @@ class TestSkills(unittest.TestCase):
         self.assertNotIn("fecha verde em cada commit de código", claude_md)
 
 
+    def test_regras_de_qualidade_antes_do_codigo(self):
+        """Passo 41: exemplos com valores, casos por risco, cenário mais frágil e arquivos críticos."""
+        claude_md = (CLAUDE / "CLAUDE.md").read_text(encoding="utf-8")
+        for trecho in ("**Exemplos com valores:**", "refaz as contas", "sem ajustar a fonte para a conta fechar",
+                       "**Casos por risco:**", "arredondamento", "véspera", "evento repetido ou fora de ordem",
+                       "flag ligada e desligada", "**Cenário mais frágil:**", "arquivo crítico do inventário"):
+            with self.subTest(trecho=trecho):
+                self.assertIn(trecho, claude_md)
+        for caminho, trechos in {
+            "agents/planejador.md": ("Exemplos com valores", "refaça as contas"),
+            "agents/verificador.md": ("Casos por risco", "Cenário mais frágil"),
+            "skills/validar/references/relatorio.md": ("## Cenário mais frágil",),
+            "skills/revisao-codigo/references/retorno.md": ("## Cenário mais frágil",),
+            "skills/inventario/SKILL.md": ("## Arquivos críticos", "git log", "`**Risco**: alto`"),
+        }.items():
+            texto = (CLAUDE / caminho).read_text(encoding="utf-8")
+            for trecho in trechos:
+                with self.subTest(arquivo=caminho, trecho=trecho):
+                    self.assertIn(trecho, texto)
+        self.assertLessEqual(len((CLAUDE / "agents" / "planejador.md").read_text(encoding="utf-8").splitlines()), 60)
+
+
 if __name__ == "__main__":
     unittest.main()
