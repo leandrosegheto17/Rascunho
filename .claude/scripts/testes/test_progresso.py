@@ -120,6 +120,57 @@ class TestFrase(unittest.TestCase):
         self.assertEqual(pr.frase(999, 1000), "Falta 1 de 1000 tarefas: 99% concluído")
 
 
+def bloquear(bloco, motivo):
+    return bloco.replace("**What**: algo", f"**What**: algo{chr(10)}**Bloqueio**: {motivo}")
+
+
+class TestBloqueio(unittest.TestCase):
+    """Passo 42: tarefa com **Bloqueio** fica aberta, e o que depende dela espera; o resto anda."""
+
+    def texto(self):
+        return tasks_md(tarefa(1, [True]),
+                        bloquear(tarefa(2, [False], estimativa="6h"), "qual o arredondamento?"),
+                        tarefa(3, [False], estimativa="1h", depende="T2"),
+                        tarefa(4, [False], estimativa="1h", depende="T3"),
+                        tarefa(5, [False], estimativa="1h"))
+
+    def tarefas(self):
+        return {t["id"]: t for t in pr.tarefas_de(self.texto())[0]}
+
+    def test_bloqueada_conta_como_aberta_e_trava_quem_depende(self):
+        t = self.tarefas()
+        self.assertEqual(t["T2"]["bloqueio"], "qual o arredondamento?")
+        self.assertEqual([i for i in t if t[i]["travada"]], ["T2", "T3", "T4"])
+        self.assertEqual(pr.contar_tarefas(self.texto()), (5, 1))
+
+    def test_proxima_pula_as_travadas(self):
+        self.assertEqual(pr._proxima(list(self.tarefas().values()))["id"], "T5")
+
+    def test_bloqueio_vazio_ou_nenhum_nao_trava(self):
+        for motivo in ("", "nenhum", "—"):
+            with self.subTest(motivo=motivo):
+                texto = tasks_md(bloquear(tarefa(1, [False]), motivo))
+                self.assertFalse(pr.tarefas_de(texto)[0][0]["travada"])
+
+    def test_tarefa_concluida_nao_fica_travada(self):
+        texto = tasks_md(bloquear(tarefa(1, [True]), "resolvida"), tarefa(2, [False], depende="T1"))
+        self.assertEqual([t["travada"] for t in pr.tarefas_de(texto)[0]], [False, False])
+
+    def test_resumo_lista_as_bloqueadas_e_a_pergunta(self):
+        with tempfile.TemporaryDirectory() as pasta:
+            escrever(pasta, ".specs/features/a/tasks.md", self.texto())
+            saida = pr.formatar(pr.relatorio(Path(pasta)))
+        self.assertIn("Bloqueadas: T2 (qual o arredondamento?)", saida)
+        self.assertIn("esperando por elas: T3, T4", saida)
+
+    def test_linha_do_lote_diz_que_parou_por_bloqueio(self):
+        with tempfile.TemporaryDirectory() as pasta:
+            escrever(pasta, ".specs/features/a/tasks.md", self.texto())
+            linha = pr.linha_lote(pr.relatorio(Path(pasta)), 2)  # lote 2 = só a T2, bloqueada
+        self.assertIn("parado por bloqueio", linha)
+        self.assertIn("T2", linha)
+
+
 STATE = """# Estado
 
 ## Decisões

@@ -12,7 +12,8 @@ O que faz, na ordem:
   3. Commita só o tasks.md (`chore(tasks): fecha o lote N ...`); `--rodape` entra no fim da mensagem.
   4. Imprime três linhas: o gate, a linha do progresso.py e o veredito do contexto.py.
 
-O lote é o primeiro com tarefa em aberto. Sai com 0, 1 (gate falhou), 2 (não achou o lote ou o tasks.md,
+O lote é o primeiro com tarefa em aberto e executável: a tarefa com `**Bloqueio**`, e a que depende dela,
+não é marcada. Sai com 0, 1 (gate falhou), 2 (não achou o lote ou o tasks.md,
 ou o commit falhou) ou 3 (fechou, mas o contexto passou do limite: pare e peça /clear).
 """
 
@@ -96,10 +97,16 @@ def main(argv=None):
         print("Sem tasks.md com tarefas para fechar.", file=sys.stderr)
         return 2
     por_id = {t["id"]: t for t in det["tarefas"]}
-    lote = next((l for l in det["lotes"] if not all(por_id[i]["feita"] for i in l["tarefas"])), None)
+    def executavel(i):
+        return not por_id[i]["feita"] and not por_id[i]["travada"]
+
+    lote = next((l for l in det["lotes"] if any(map(executavel, l["tarefas"]))), None)
     if lote is None:
-        print("Todos os lotes já estão concluídos.", file=sys.stderr)
+        bloqueadas = "; ".join(f"{t['id']} ({t['bloqueio']})" for t in det["tarefas"] if t["bloqueio"])
+        print(f"Só restam tarefas travadas. Bloqueadas: {bloqueadas}" if bloqueadas
+              else "Todos os lotes já estão concluídos.", file=sys.stderr)
         return 2
+    marcar = [i for i in lote["tarefas"] if executavel(i)]
     comando = comando_do_gate(raiz, args.gate)
     if not comando:
         print("Sem comando de gate: passe --gate ou grave `comando` em .specs/projeto/testes.json.", file=sys.stderr)
@@ -119,8 +126,8 @@ def main(argv=None):
         print(f"tasks.md não encontrado: {arquivo}", file=sys.stderr)
         return 2
     texto = arquivo.read_text(encoding="utf-8")
-    arquivo.write_text(marcar_lote(texto, lote["tarefas"], gate_linha), encoding="utf-8", newline="")
-    ids = ", ".join(lote["tarefas"])
+    arquivo.write_text(marcar_lote(texto, marcar, gate_linha), encoding="utf-8", newline="")
+    ids = ", ".join(marcar)
     nome = lote.get("rotulo") or lote["numero"]
     mensagem = f"chore(tasks): fecha o lote {nome}, tarefas {ids} concluídas com o gate verde"
     if args.rodape:

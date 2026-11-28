@@ -17,7 +17,7 @@ Liste os `tasks.md` de `.specs/` (`features/`, `bugs/`, `refatoracoes/`, `perfor
 
 A pasta do item escolhe o modo do `verificador` (o agente já conhece: feature, bug, refatoração, performance, redesign), e a fonte da verdade é a do fluxo dele (spec, `relato.md`/`causa.md`, comportamento inalterado). O relatório leva o nome que o modo manda (`validation.md`, `validation-etapa-<N>.md`, `validation-rodada-<N>.md`). No texto abaixo, "feature" vale para qualquer item.
 
-Entre na worktree e na branch da feature (`git worktree list`): é a mesma do `/executar`. Sem worktree, use a branch `feature/<slug>`.
+Entre na worktree e na branch da feature (`git worktree list`): é a mesma do `/executar`. Sem worktree, use a branch `feature/<slug>`. Leia `.specs/projeto/regras-execucao.md`, se existir, e passe o caminho aos agentes (comandos e testes que já falham).
 
 ## 2. Verificações, em paralelo
 

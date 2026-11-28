@@ -44,6 +44,9 @@ Uso:
   python .claude/scripts/progresso.py --lote [N]       # V2 do lote (padrão: o da última concluída)
   python .claude/scripts/progresso.py --lote --rascunho  # o primeiro lote ainda não rascunhado (/rascunho)
 
+Bloqueada: tarefa aberta com `**Bloqueio**: <pergunta ou motivo>`. Conta como aberta; ela e quem depende dela
+ficam travadas e não são a "Tarefa atual".
+
 Rascunhada: tarefa com `**Status**: rascunhada` (teste e código escritos pelo /rascunho, nada executado).
 Continua em aberto na contagem; só o `/executar` a conclui. Lote rascunhado: todas as tarefas rascunhadas
 ou concluídas.
@@ -81,6 +84,12 @@ CAIXA = re.compile(r"^\s*[-*]\s+\[([ xX])\]")
 STATUS = re.compile(r"^\s*\*\*Status\*\*\s*:\s*(.*)$", re.IGNORECASE)
 STATUS_FEITO = re.compile(r"✅|\b(done|complete|completed|conclu[ií]d[oa]s?)\b", re.IGNORECASE)
 STATUS_RASCUNHO = re.compile(r"\brascunhad[oa]s?\b", re.IGNORECASE)
+BLOQUEIO = re.compile(r"^\s*\*\*Bloqueio\*\*\s*:\s*(.*?)\s*$", re.IGNORECASE)
+SEM_BLOQUEIO = re.compile(r"^(?:[-—]+|nenhum[a]?|não há)?\.?$", re.IGNORECASE)
+BLOQUEIO = re.compile(r"^\s*\*\*Bloqueio\*\*\s*:\s*(.*?)\s*$", re.IGNORECASE)
+SEM_BLOQUEIO = re.compile(r"^(?:[-—]+|nenhum[a]?|não há)?\.?$", re.IGNORECASE)
+BLOQUEIO = re.compile(r"^\s*\*\*Bloqueio\*\*\s*:\s*(.*?)\s*$", re.IGNORECASE)
+SEM_BLOQUEIO = re.compile(r"^(?:[-—]+|nenhum[a]?|não há)?\.?$", re.IGNORECASE)
 CAMPO_RETOMADA = re.compile(r"^\s*-\s+\*\*(Fluxo|Item|Fase aprovada|Próxima fase)\*\*\s*:\s*(.+?)\s*$")
 TITULO_FASE = re.compile(r"^(#{2,4})\s+(?:Phase|Fase)\s+(\d+)\b[:.\-—]?\s*(.*?)\s*$", re.IGNORECASE)
 DEPENDE = re.compile(r"^\s*\*\*Depends on\*\*\s*:\s*(.*)$", re.IGNORECASE)
@@ -154,6 +163,72 @@ def _tarefa_rascunhada(linhas: list[str]) -> bool:
         if status:
             return bool(STATUS_RASCUNHO.search(status.group(1)))
     return False
+
+
+def _bloqueio(linhas: list[str]) -> str | None:
+    """Pergunta ou motivo da linha `**Bloqueio**:`; None quando não há (vazia ou "nenhum")."""
+    for linha in linhas:
+        achou = BLOQUEIO.match(linha)
+        if achou:
+            return None if SEM_BLOQUEIO.match(achou.group(1)) else achou.group(1)
+    return None
+
+
+def _marcar_travadas(tarefas: list[dict]) -> None:
+    """Travada: aberta e bloqueada, ou aberta e dependendo (direta ou indiretamente) de uma travada."""
+    for t in tarefas:
+        t["travada"] = not t["feita"] and t["bloqueio"] is not None
+    mudou = True
+    while mudou:
+        travadas = {t["id"] for t in tarefas if t["travada"]}
+        mudou = False
+        for t in tarefas:
+            if not t["feita"] and not t["travada"] and travadas & set(t["deps"]):
+                t["travada"] = mudou = True
+
+
+def _bloqueio(linhas: list[str]) -> str | None:
+    """Pergunta ou motivo da linha `**Bloqueio**:`; None quando não há (vazia ou "nenhum")."""
+    for linha in linhas:
+        achou = BLOQUEIO.match(linha)
+        if achou:
+            return None if SEM_BLOQUEIO.match(achou.group(1)) else achou.group(1)
+    return None
+
+
+def _marcar_travadas(tarefas: list[dict]) -> None:
+    """Travada: aberta e bloqueada, ou aberta e dependendo (direta ou indiretamente) de uma travada."""
+    for t in tarefas:
+        t["travada"] = not t["feita"] and t["bloqueio"] is not None
+    mudou = True
+    while mudou:
+        travadas = {t["id"] for t in tarefas if t["travada"]}
+        mudou = False
+        for t in tarefas:
+            if not t["feita"] and not t["travada"] and travadas & set(t["deps"]):
+                t["travada"] = mudou = True
+
+
+def _bloqueio(linhas: list[str]) -> str | None:
+    """Pergunta ou motivo da linha `**Bloqueio**:`; None quando não há (vazia ou "nenhum")."""
+    for linha in linhas:
+        achou = BLOQUEIO.match(linha)
+        if achou:
+            return None if SEM_BLOQUEIO.match(achou.group(1)) else achou.group(1)
+    return None
+
+
+def _marcar_travadas(tarefas: list[dict]) -> None:
+    """Travada: aberta e bloqueada, ou aberta e dependendo (direta ou indiretamente) de uma travada."""
+    for t in tarefas:
+        t["travada"] = not t["feita"] and t["bloqueio"] is not None
+    mudou = True
+    while mudou:
+        travadas = {t["id"] for t in tarefas if t["travada"]}
+        mudou = False
+        for t in tarefas:
+            if not t["feita"] and not t["travada"] and travadas & set(t["deps"]):
+                t["travada"] = mudou = True
 
 
 def _numero(id_: str) -> int:
@@ -232,8 +307,10 @@ def tarefas_de(texto: str) -> tuple[list[dict], list[dict]]:
         tarefas.append({"id": id_, "titulo": titulos.get(id_, ""), "fase": fase["numero"] if fase else None,
                         "est": estimadas.get(id_), "feita": _tarefa_feita(linhas), "deps": deps,
                         "rascunhada": not _tarefa_feita(linhas) and _tarefa_rascunhada(linhas),
+                        "bloqueio": None if _tarefa_feita(linhas) else _bloqueio(linhas),
                         "criticidade": "comum" if comum else "crítica", "criticidade_declarada": declarada is not None,
                         "dominio": dominio})
+    _marcar_travadas(tarefas)
     return tarefas, [f for f in fases if f["ids"]]
 
 
@@ -427,10 +504,10 @@ def _ha(segundos: float) -> str:
 
 
 def _proxima(tarefas: list[dict]) -> dict | None:
-    """Primeira tarefa pendente com as dependências prontas (senão, a primeira pendente)."""
+    """Primeira tarefa pendente e não travada com as dependências prontas (senão, a primeira não travada)."""
     feitas = {t["id"] for t in tarefas if t["feita"]}
     todas = {t["id"] for t in tarefas}
-    pendentes = [t for t in tarefas if not t["feita"]]
+    pendentes = [t for t in tarefas if not t["feita"] and not t.get("travada")]
     for t in pendentes:
         if all(d in feitas or d not in todas for d in t["deps"]):
             return t
@@ -615,6 +692,13 @@ def _linhas_detalhe(rel: dict) -> list[str]:
         medida = _dur(ultima["segundos"] / 3600) if ultima["segundos"] is not None else "tempo não medido"
         est = f"; estimada {_dur(ultima['est'])}" if ultima["est"] else ""
         linhas.append(f"Última tarefa: {ultima['id']} {_ha(rel['agora'] - ultima['quando'])} ({medida}{est})")
+    bloqueadas = [t for t in pendentes if t["bloqueio"] is not None]
+    if bloqueadas:
+        texto = "Bloqueadas: " + "; ".join(f"{t['id']} ({_curto(t['bloqueio'], 70)})" for t in bloqueadas)
+        esperando = [t["id"] for t in pendentes if t["travada"] and t["bloqueio"] is None]
+        if esperando:
+            texto += " · esperando por elas: " + ", ".join(esperando)
+        linhas.append(texto)
     ritmo = det["ritmo"]
     if pendentes and (ritmo or any(t["est"] for t in pendentes)):
         partes = []
@@ -692,6 +776,10 @@ def linha_lote(rel: dict, numero: int | None = None, rascunho: bool = False) -> 
         estimado += f" + {sem} sem estimativa"
     if len(feitas) == len(do_lote):
         corpo = f"concluído: {len(do_lote)} tarefas em {gasto} ({estimado})"
+    elif all(t["travada"] for t in do_lote if not t["feita"]):
+        abertas = ", ".join(t["id"] for t in do_lote if not t["feita"])
+        corpo = (f"parado por bloqueio: {len(feitas)} de {len(do_lote)} tarefas concluídas ({estimado}); "
+                 f"bloqueadas ou esperando: {abertas}")
     elif lote["rascunhado"]:
         corpo = f"rascunhado: {len(do_lote)} tarefas com teste e código escritos, nada executado ({estimado})"
     else:

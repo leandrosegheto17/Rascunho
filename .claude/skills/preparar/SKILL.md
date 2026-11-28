@@ -33,6 +33,8 @@ Faça um item por vez, **mostrando o que vai fazer e o resultado**. Marque `[x]`
 6. **Pré-voo:** `python .claude/scripts/preparar-ambiente.py` sem pendência.
 7. **Hook de commit:** o `commit-msg` instalado (`instalar.py`) ou conferido.
 
+Com o Nível 1 de pé, grave `.specs/projeto/regras-execucao.md` pelo modelo de [references/regras-execucao.md](references/regras-execucao.md), com o que foi descoberto: comandos, serviços, armadilhas e testes que já falham.
+
 Ao fechar o Nível 1, rode `python .claude/scripts/preparacao.py --nivel1` e diga: **"Nível 1 completo: o /executar já pode começar."**
 
 ## 4. Nível 2: assíncrono

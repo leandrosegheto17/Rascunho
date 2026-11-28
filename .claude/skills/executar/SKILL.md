@@ -20,6 +20,7 @@ Liste os `tasks.md` com tarefa em aberto em `.specs/` (`features/`, `bugs/`, `re
 1. `python .claude/scripts/preparacao.py --nivel1`. Saída diferente de 0: **recuse**, mostre os itens que faltam e diga para rodar `/preparar`. Não escreva nada.
 2. A feature depende de outra que ainda não está integrada (campo **Branch pai** no topo do `tasks.md`)? Diga e confirme a branch pai.
 3. `python .claude/scripts/preparar-ambiente.py` uma vez antes do primeiro lote do projeto; corrija o que ele apontar.
+4. Leia `.specs/projeto/regras-execucao.md` (comandos, armadilhas, testes que já falham). Sem o arquivo, crie-o pelo modelo de `.claude/skills/preparar/references/regras-execucao.md` com o que descobrir.
 
 ## 3. Worktree da feature
 
@@ -35,7 +36,7 @@ Liste os `tasks.md` com tarefa em aberto em `.specs/` (`features/`, `bugs/`, `re
 
 1. Siga o **ciclo do lote comum** ou o **do lote crítico** da seção Execução do `CLAUDE.md`: testes a partir dos critérios, vermelho no crítico, código, gate do lote.
 2. **Vizinhança antes de editar** (`Molde: <arquivo:linha>` no commit); a decisão nomeada na tarefa vale literalmente (Reuses).
-3. Tarefa de `**Domínio**: sim`: antes de codar, liste os casos limite e os estados. Lacuna da spec: **pare e pergunte** via `AskUserQuestion`.
+3. Tarefa de `**Domínio**: sim`: antes de codar, liste os casos limite e os estados. Lacuna da spec: grave `**Bloqueio**` na tarefa e siga com a que não depende dela (seção Execução, **Bloquear e seguir**).
 4. **Commit por grupo de tarefas**, em português, citando `Tn` e `FUN-NN`, cada um fechando verde. Encadeie `typecheck && git add && git commit` numa chamada só.
 5. **Fechamento do lote, uma chamada:** `python .claude/scripts/fechar-lote.py` (com `--gate "<comando filtrado pelos pacotes tocados>"` e `--rodape "<atribuição>"`). Roda o gate, grava status e `Gate:` no `tasks.md`, faz o commit de fechamento e imprime três linhas: gate, `progresso.py --lote` e `contexto.py`. Gate vermelho: nada é escrito; corrija e rode de novo.
 6. **Contexto:** a terceira linha do passo 5. Saída 3 (acima de 300k): **pare**, diga só "Contexto acima do limite: rode /clear e depois /executar" e não comece o lote seguinte. O estado está no `tasks.md` e no git.
@@ -49,16 +50,18 @@ Em vez de escrever, **leve cada tarefa do lote, uma por vez e na ordem, por este
 1. **Requisitos:** leia a tarefa (**What**, **Done when**, critérios `FUN-NN`, ADs citadas, Reuses) e confira, lendo o `git show`/diff do commit dela com `Read`/`Grep`, se código e teste atendem **cada** requisito. Requisito sem teste, teste que não prova o critério ou desvio sem `SPEC_DEVIATION`: anote como correção.
 2. **Code review** (você mesmo, sobre o diff da tarefa, sem skill nem agente): correção e casos limite, guarda sem teste por ramo, segurança (entrada externa, SQL, autorização, log, segredo), molde da vizinhança seguido, duplicação e código morto. Em tarefa de `**Risco**: alto` seja minucioso; em risco baixo, uma passada curta. Anote os achados como correção.
 3. **Testes da tarefa:** rode só os arquivos de `**Testes**:` (reporter mínimo). No lote crítico, confirme que os de comportamento falham ou passam **pelo motivo certo**.
-4. **Correções:** aplique tudo o que os passos 1 a 3 acharam (código primeiro; teste só muda se o erro for dele, com o motivo no commit, nunca enfraquecido) e rode de novo até o **verde**. `[LACUNA]` (`git grep -n "\[LACUNA\]"` e a linha `Lacunas:` da tarefa): **antes** de corrigir, pergunte o resultado correto via `AskUserQuestion`, ajuste código e teste à resposta e retire a marca. Falha inesperada: causa raiz antes de mexer.
+4. **Correções:** aplique tudo o que os passos 1 a 3 acharam (código primeiro; teste só muda se o erro for dele, com o motivo no commit, nunca enfraquecido) e rode de novo até o **verde**. `[LACUNA]` (`git grep -n "\[LACUNA\]"` e a linha `Lacunas:` da tarefa): leve ao verde pela interpretação que está no código, grave `**Bloqueio**` com a pergunta e não a conclua; a resposta vem ao fim, e então ajuste código e teste e retire a marca e o bloqueio. Falha inesperada: causa raiz antes de mexer.
 5. **Fechar a tarefa:** `typecheck && git add && git commit` numa chamada, citando `Tn` e `FUN-NN` (resumo curto do que o review corrigiu, se corrigiu algo). Ela **só é marcada concluída** no commit de fechamento do lote (`fechar-lote.py`), porque a marca exige o `Gate:` real; até lá segue `rascunhada` e não conta como pronta. Vá para a próxima tarefa.
 
-Ao fim das tarefas do lote, rode o gate do lote pelo passo 5 da lista acima (`fechar-lote.py`: grava `Gate:` e troca `rascunhada` por `concluída` em todas) e o contexto (passo 6).
+Tarefa com `**Bloqueio**` é pulada neste ciclo, assim como a que depende dela. Ao fim das tarefas do lote, rode o gate do lote pelo passo 5 da lista acima (`fechar-lote.py`: grava `Gate:` e troca `rascunhada` por `concluída` em todas) e o contexto (passo 6).
 
 Lote de **retrabalho** (Phase `Retrabalho R<n>`, gerada pelo `/validar`) é executado como qualquer outro, depois dos normais; cada tarefa cita o achado `A-NN` que corrige.
 
-Falha ou bloqueio: não marque a tarefa; pare e diga o motivo. Teste que falha de forma inesperada: ache a causa raiz antes de mudar qualquer coisa.
+Dúvida ou 2 tentativas sem verde: `**Bloqueio**` na tarefa e siga (seção Execução, **Bloquear e seguir**; os casos de parada na hora estão lá). Teste que falha de forma inesperada: ache a causa raiz antes de mudar qualquer coisa. Lição nova sobre o projeto (comando, armadilha, teste que já falhava): acrescente com a data em `.specs/projeto/regras-execucao.md`.
 
 ## 5. Fim da feature
+
+**Antes, os bloqueios:** havendo tarefa com `**Bloqueio**`, pergunte tudo em lotes de até 4 perguntas (`AskUserQuestion`), cada uma dizendo a tarefa e o que ela trava. Grave a resposta na tarefa, apague a linha do bloqueio e execute o que destravou (patch salvo em `bloqueios/` serve de ponto de partida). Sem resposta: diga o que ficou bloqueado e que a feature **não** está pronta para o `/validar`.
 
 Com todas as tarefas concluídas: rode o **gate completo** (lint, format, checagens do CI e a suíte inteira) e corrija o que falhar. Depois diga apenas: **"Feature <nome> pronta para validar: rode /validar."** com a linha final do `progresso.py`.
 

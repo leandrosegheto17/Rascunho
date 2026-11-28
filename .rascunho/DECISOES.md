@@ -1189,3 +1189,11 @@ Uma pasta só, a mesma que o `tlc-spec-driven` já usa, para um fluxo ler o que 
 - **Decisão:** seção **Conferência de consistência** no `CLAUDE.md` (exemplos com valores nas regras de domínio, contas refeitas, divergência vira pergunta); **Casos por risco** na Execução (cálculo, datas, migração, evento, flag); **Cenário mais frágil** obrigatório no relatório do verificador e no retorno da revisão; **Arquivos críticos** no inventário (3 mais alterados pelo git; tarefa que os toca é risco alto).
 - **Em aberto:** nenhum ganho medido.
 
+## Passo 42: executar sem parar (2026-11-27)
+
+- **Decisão (usuário):** dúvida ou 2 tentativas sem verde não param o `/executar`: a tarefa fica bloqueada, a sessão faz o que não depende dela e pergunta tudo ao fim. Continuam parando na hora: contexto, segurança ou perda de dado, ação externa, ambiente que não sobe e gate vermelho que não dá para isolar.
+- **Forma:** campo `**Bloqueio**: <pergunta>` na tarefa, em vez do status `bloqueada` do plano: não sobrescreve `rascunhada` nem o status concluído. `progresso.py` trava a bloqueada e as dependentes e as lista; `fechar-lote.py` não as marca e pula lote só com travadas.
+- **Teste vermelho:** o diff da tarefa sai para `<item>/bloqueios/<Tn>.patch`; o gate nunca é filtrado para esconder a falha. Em lote rascunhado o código já está commitado, então vermelho sem isolamento continua parando.
+- **Pendências no fim do planejamento** e **regras de execução do projeto** (`.specs/projeto/regras-execucao.md`, criado pelo `/preparar`).
+- **Risco aceito:** dependência não declarada em `Depends on` pode gerar retrabalho.
+

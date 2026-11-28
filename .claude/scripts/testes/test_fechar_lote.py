@@ -113,5 +113,88 @@ class TestFecharLote(unittest.TestCase):
         self.assertEqual(self.fechar("--gate", f'"{sys.executable}" -c "pass"')[0], 0)
 
 
+BLOQUEADAS = """# Tarefas
+
+### Phase 1: Base
+
+### T1: Primeira
+
+**What**: algo
+**Estimativa**: 3h
+
+- [ ] primeiro critério
+
+### T2: Segunda
+
+**What**: algo
+**Estimativa**: 3h
+**Bloqueio**: qual o limite?
+
+- [ ] segundo critério
+
+### Phase 2: Depois
+
+### T3: Terceira
+
+**What**: algo
+**Estimativa**: 6h
+**Depends on**: T2
+
+- [ ] terceiro critério
+
+### Phase 3: Fim
+
+### T4: Quarta
+
+**What**: algo
+**Estimativa**: 6h
+
+- [ ] quarto critério
+"""
+
+
+class TestFecharComBloqueio(TestFecharLote):
+    """Passo 42: o fechamento não conclui o que está bloqueado e segue para o próximo lote executável."""
+
+    def setUp(self):
+        super().setUp()
+        (self.raiz / ".specs" / "features" / "x" / "tasks.md").write_text(BLOQUEADAS, encoding="utf-8")
+        git(self.raiz, "commit", "-q", "-am", "chore: bloqueadas")
+
+    def log(self):
+        return subprocess.run(["git", "log", "-1", "--format=%s"], cwd=self.raiz, capture_output=True,
+                              text=True, encoding="utf-8").stdout
+
+    def test_fecha_so_as_tarefas_executaveis(self):
+        codigo, saida = self.fechar()
+        self.assertEqual(codigo, 0, saida)
+        self.assertEqual(self.texto().count("- [x]"), 1)
+        self.assertIn("- [x] primeiro", self.texto())
+        self.assertIn("T1", self.log())
+        self.assertNotIn("T2", self.log())
+
+    def test_pula_o_lote_so_com_travadas(self):
+        self.fechar()
+        codigo, saida = self.fechar()
+        self.assertEqual(codigo, 0, saida)
+        self.assertIn("- [x] quarto", self.texto())
+        self.assertIn("- [ ] terceiro", self.texto())
+
+    def test_so_restam_travadas_recusa_e_diz_quais(self):
+        self.fechar()
+        self.fechar()
+        with contextlib.redirect_stderr(io.StringIO()) as erro:
+            codigo, _ = self.fechar()
+        self.assertEqual(codigo, 2)
+        self.assertIn("T2", erro.getvalue())
+        self.assertIn("qual o limite?", erro.getvalue())
+
+    # os testes herdados usam o tasks.md original
+    test_gate_verde_fecha_o_lote_com_um_commit_e_tres_linhas = None
+    test_gate_que_falha_nao_escreve_nem_commita = None
+    test_sem_comando_de_gate_recusa = None
+    test_parametro_gate_vale_mais_que_o_arquivo = None
+
+
 if __name__ == "__main__":
     unittest.main()

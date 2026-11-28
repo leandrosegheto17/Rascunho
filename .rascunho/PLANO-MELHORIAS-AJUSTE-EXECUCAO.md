@@ -34,7 +34,7 @@
 | T | O que | Onde | Estimativa |
 |---|---|---|---|
 | 1 | **Fechar pendências no fim do planejamento**: listar o que pararia a execução (`[A ESCLARECER]`, regra de domínio sem resultado, tarefa sem teste, gate ou molde, serviço de apoio sem como subir, teste existente que vai mudar); perguntar em lotes de 4; gravar respostas e autorizações em `STATE.md`. Vem antes da mensagem final | `CLAUDE.md` (Fim do planejamento), `planejador.md` | 1h30 |
-| 2 | **Status `bloqueada`**: conta como aberta; o lote seguinte pula a bloqueada e quem depende dela | `progresso.py` | 2h |
+| 2 | **Campo `**Bloqueio**`** (no lugar de um status novo, para não sobrescrever `rascunhada`): conta como aberta; a bloqueada e quem depende dela são puladas | `progresso.py` | 2h |
 | 3 | `fechar-lote.py` não marca como concluída a tarefa bloqueada | `fechar-lote.py` | 1h |
 | 4 | **Regra nova de parada**: dúvida ou 2 tentativas sem verde marcam `bloqueada — <pergunta>`, a sessão segue com o que não depende e pergunta tudo ao fim. Dúvida achada no meio do código usa o `[LACUNA]` que já existe. Continuam parando na hora: contexto, segurança e ação externa | `CLAUDE.md` (Execução), `executar/SKILL.md` | 1h |
 | 5 | **Regras de execução do projeto** em `.specs/projeto/regras-execucao.md` (comandos, serviços, armadilhas, testes que já falham, lições com data; até ~60 linhas): criado pelo `/preparar`, lido por `/rascunho`, `/executar` e `/validar`, atualizado pelo `/executar` | skills citadas, `artefatos.md` | 1h30 |

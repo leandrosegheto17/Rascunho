@@ -21,7 +21,7 @@ Motivo: escrever tudo de uma vez, sem parar para o ciclo de rodar e corrigir, é
 
 `python .claude/scripts/progresso.py --lote --rascunho` diz o **primeiro lote ainda não rascunhado** (sai com 1 e "Todos os lotes já foram rascunhados" quando acabou). Para cada lote, na ordem do Execution Plan:
 
-1. Siga o molde da vizinhança e a decisão nomeada em **Reuses**, literalmente.
+1. Siga o molde da vizinhança e a decisão nomeada em **Reuses**, literalmente. Antes do primeiro lote, leia `.specs/projeto/regras-execucao.md`, se existir. Tarefa com `**Bloqueio**` é escrita como lacuna (passo 3); a linha do bloqueio fica.
 2. **Testes primeiro, a partir dos critérios de aceite**, conforme a Test Coverage Matrix; no lote **crítico**, também o que o erro deixaria passar em silêncio (seção Execução do `CLAUDE.md`). Depois o código. Arquivos do lote em chamadas paralelas.
 3. Tarefa de `**Domínio**: sim`: liste os casos limite antes de codar. Onde a spec não define o resultado, **não pare**: deixe `[LACUNA] <o quê>` num comentário no código e uma linha `Lacunas:` na tarefa do `tasks.md`, siga com a interpretação mais conservadora; o `/executar` pergunta antes de levar a tarefa ao verde.
 4. **Sem rodar nada** (nem teste, typecheck, lint, build, servidor ou instalação). Nenhuma releitura de conferência além do necessário para escrever.

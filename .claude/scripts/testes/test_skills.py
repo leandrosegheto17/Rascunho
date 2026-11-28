@@ -445,5 +445,32 @@ class TestSkills(unittest.TestCase):
         self.assertLessEqual(len((CLAUDE / "agents" / "planejador.md").read_text(encoding="utf-8").splitlines()), 60)
 
 
+    def test_execucao_segue_sem_parar_e_le_as_regras_do_projeto(self):
+        """Passo 42: pendências antes da execução, **Bloqueio** em vez de parada e regras de execução do projeto."""
+        claude_md = (CLAUDE / "CLAUDE.md").read_text(encoding="utf-8")
+        for trecho in ("**Pendências antes da mensagem final.**", "`**Bloqueio**:", "**Quando se para na hora:**",
+                       "**Bloquear e seguir:**", "pergunta tudo ao fim", "regras-execucao.md"):
+            with self.subTest(trecho=trecho):
+                self.assertIn(trecho, claude_md)
+        for velho in ("lacuna da spec ou decisão de escopo (pergunta via", "pare e pergunte (`AskUserQuestion`) em vez de inventar"):
+            with self.subTest(velho=velho):
+                self.assertNotIn(velho, claude_md)
+        for caminho, trechos in {
+            "skills/executar/SKILL.md": ("**Bloqueio**", "regras-execucao.md", "até 4 perguntas"),
+            "skills/rascunho/SKILL.md": ("**Bloqueio**", "regras-execucao.md"),
+            "skills/preparar/SKILL.md": ("regras-execucao.md",),
+            "skills/validar/SKILL.md": ("regras-execucao.md",),
+            "agents/planejador.md": ("**Bloqueio**", "Pendências"),
+            "rules/artefatos.md": ("regras-execucao.md",),
+            "skills/preparar/references/regras-execucao.md": ("## Comandos", "## Armadilhas", "## Testes que já falham",
+                                                              "## Lições"),
+        }.items():
+            texto = (CLAUDE / caminho).read_text(encoding="utf-8")
+            for trecho in trechos:
+                with self.subTest(arquivo=caminho, trecho=trecho):
+                    self.assertIn(trecho, texto)
+        self.assertLessEqual(len((CLAUDE / "agents" / "planejador.md").read_text(encoding="utf-8").splitlines()), 60)
+
+
 if __name__ == "__main__":
     unittest.main()
