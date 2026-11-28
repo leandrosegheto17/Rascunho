@@ -4,6 +4,7 @@ Não é script: protege a forma das peças enquanto os fluxos crescem (frontmatt
 tamanho, links para references/ e menu do /fluxo apontando para skill existente).
 """
 
+import ast
 import json
 import re
 import unittest
@@ -470,6 +471,19 @@ class TestSkills(unittest.TestCase):
                 with self.subTest(arquivo=caminho, trecho=trecho):
                     self.assertIn(trecho, texto)
         self.assertLessEqual(len((CLAUDE / "agents" / "planejador.md").read_text(encoding="utf-8").splitlines()), 60)
+
+
+    def test_scripts_sem_definicao_repetida_no_modulo(self):
+        """Uma segunda definição com o mesmo nome apaga a primeira sem aviso, e os testes seguem verdes."""
+        for arquivo in sorted((CLAUDE / "scripts").glob("*.py")):
+            with self.subTest(script=arquivo.name):
+                nomes = []
+                for no in ast.parse(arquivo.read_text(encoding="utf-8")).body:
+                    if isinstance(no, (ast.FunctionDef, ast.ClassDef)):
+                        nomes.append(no.name)
+                    elif isinstance(no, ast.Assign):
+                        nomes += [a.id for a in no.targets if isinstance(a, ast.Name) and a.id.isupper()]
+                self.assertEqual(sorted({n for n in nomes if nomes.count(n) > 1}), [])
 
 
 if __name__ == "__main__":

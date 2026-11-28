@@ -86,10 +86,6 @@ STATUS_FEITO = re.compile(r"✅|\b(done|complete|completed|conclu[ií]d[oa]s?)\b
 STATUS_RASCUNHO = re.compile(r"\brascunhad[oa]s?\b", re.IGNORECASE)
 BLOQUEIO = re.compile(r"^\s*\*\*Bloqueio\*\*\s*:\s*(.*?)\s*$", re.IGNORECASE)
 SEM_BLOQUEIO = re.compile(r"^(?:[-—]+|nenhum[a]?|não há)?\.?$", re.IGNORECASE)
-BLOQUEIO = re.compile(r"^\s*\*\*Bloqueio\*\*\s*:\s*(.*?)\s*$", re.IGNORECASE)
-SEM_BLOQUEIO = re.compile(r"^(?:[-—]+|nenhum[a]?|não há)?\.?$", re.IGNORECASE)
-BLOQUEIO = re.compile(r"^\s*\*\*Bloqueio\*\*\s*:\s*(.*?)\s*$", re.IGNORECASE)
-SEM_BLOQUEIO = re.compile(r"^(?:[-—]+|nenhum[a]?|não há)?\.?$", re.IGNORECASE)
 CAMPO_RETOMADA = re.compile(r"^\s*-\s+\*\*(Fluxo|Item|Fase aprovada|Próxima fase)\*\*\s*:\s*(.+?)\s*$")
 TITULO_FASE = re.compile(r"^(#{2,4})\s+(?:Phase|Fase)\s+(\d+)\b[:.\-—]?\s*(.*?)\s*$", re.IGNORECASE)
 DEPENDE = re.compile(r"^\s*\*\*Depends on\*\*\s*:\s*(.*)$", re.IGNORECASE)
@@ -163,50 +159,6 @@ def _tarefa_rascunhada(linhas: list[str]) -> bool:
         if status:
             return bool(STATUS_RASCUNHO.search(status.group(1)))
     return False
-
-
-def _bloqueio(linhas: list[str]) -> str | None:
-    """Pergunta ou motivo da linha `**Bloqueio**:`; None quando não há (vazia ou "nenhum")."""
-    for linha in linhas:
-        achou = BLOQUEIO.match(linha)
-        if achou:
-            return None if SEM_BLOQUEIO.match(achou.group(1)) else achou.group(1)
-    return None
-
-
-def _marcar_travadas(tarefas: list[dict]) -> None:
-    """Travada: aberta e bloqueada, ou aberta e dependendo (direta ou indiretamente) de uma travada."""
-    for t in tarefas:
-        t["travada"] = not t["feita"] and t["bloqueio"] is not None
-    mudou = True
-    while mudou:
-        travadas = {t["id"] for t in tarefas if t["travada"]}
-        mudou = False
-        for t in tarefas:
-            if not t["feita"] and not t["travada"] and travadas & set(t["deps"]):
-                t["travada"] = mudou = True
-
-
-def _bloqueio(linhas: list[str]) -> str | None:
-    """Pergunta ou motivo da linha `**Bloqueio**:`; None quando não há (vazia ou "nenhum")."""
-    for linha in linhas:
-        achou = BLOQUEIO.match(linha)
-        if achou:
-            return None if SEM_BLOQUEIO.match(achou.group(1)) else achou.group(1)
-    return None
-
-
-def _marcar_travadas(tarefas: list[dict]) -> None:
-    """Travada: aberta e bloqueada, ou aberta e dependendo (direta ou indiretamente) de uma travada."""
-    for t in tarefas:
-        t["travada"] = not t["feita"] and t["bloqueio"] is not None
-    mudou = True
-    while mudou:
-        travadas = {t["id"] for t in tarefas if t["travada"]}
-        mudou = False
-        for t in tarefas:
-            if not t["feita"] and not t["travada"] and travadas & set(t["deps"]):
-                t["travada"] = mudou = True
 
 
 def _bloqueio(linhas: list[str]) -> str | None:
