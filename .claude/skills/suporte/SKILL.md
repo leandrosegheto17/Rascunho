@@ -60,6 +60,8 @@ Liste `.specs/demandas/` (skill `demandas`, painel). Em andamento são as do tip
 - **Cobrança, reembolso, contrato ou legal**: fase 8, sem improvisar resposta.
 - **Duplicado** de um caso aberto da mesma pessoa: juntar (`demandas`), sem perguntar de novo.
 
+Consulta ao banco ou aos logs de produção no diagnóstico segue [references/producao.md](../bug/references/producao.md), além do registro em **Acessos**.
+
 ## 5. Fechar a fase
 
 Apresente o que foi produzido (caminho e 3 a 5 linhas) e o critério de passagem, e pergunte via `AskUserQuestion`: **seguir / ajustar / parar**. Nas fases 2 a 5 a decisão do desenho aparece nas opções: **resolver** (seguir), **escalar** (fase 8) ou **encerrar** (com motivo). Em P0, a aprovação é curta e não atrasa a ação. Antes de declarar uma fase concluída, aplique `verification-before-completion`. Marque a fase em `suporte.md` e a situação pela skill `demandas`. Parar é resultado válido: situação `fechada — parada — <motivo>`, e a pessoa ainda recebe resposta, salvo motivo registrado.

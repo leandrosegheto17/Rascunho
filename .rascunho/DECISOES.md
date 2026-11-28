@@ -1205,3 +1205,7 @@ Uma pasta só, a mesma que o `tlc-spec-driven` já usa, para um fluxo ler o que 
 - **Roteiro manual:** critério com `Prova: manual` (aviso acima de 30%); o `/validar` grava `roteiro-manual.md`, o `/finalizar` exige `aprovado` ou `dispensado`.
 - **Em aberto:** nenhum dos dois foi usado em projeto real.
 
+## Passo 44: diagnóstico em produção (2026-11-27)
+
+- **Decisão:** referência `bug/references/producao.md`, ligada a `bug`, `suporte` e `incidente`: consulta ao banco só leitura com hipótese e aprovação a cada execução; ausência de log não prova nada sem conferir serviço, janela e nível coletado; consulta alterada pela correção é medida (antiga contra nova, pior caso); aviso ao relator sem termo técnico e sem prazo não combinado.
+

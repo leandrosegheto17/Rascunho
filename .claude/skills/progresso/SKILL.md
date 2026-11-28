@@ -46,7 +46,7 @@ Projeto: Faltam 45 de 180 tarefas: 75% concluído
 ```
 
 - **Produto** e **Em andamento** só existem em projeto com `.specs/projeto/roadmap.md` ([formato e vocabulário](references/roadmap.md)); contam as etapas ou features do roteiro, inclusive as ainda sem tarefas.
-- **Feature atual** conta as tarefas do `tasks.md`; **Phase atual** é a primeira Phase com tarefa pendente (some se o `tasks.md` não tem Phases); **Tarefa atual** é a primeira pendente com as dependências prontas.
+- **Feature atual** conta as tarefas do `tasks.md`; **Phase atual** é a primeira Phase com tarefa pendente (some se o `tasks.md` não tem Phases); **Tarefa atual** é a primeira pendente, não bloqueada, com as dependências prontas. A linha **Bloqueadas** lista as tarefas com `**Bloqueio**`, a pergunta de cada uma e as que esperam por elas.
 - **Última tarefa** e **Ritmo** vêm do `git log` do `tasks.md` e somem sem git. O tempo é o intervalo desde a conclusão anterior; intervalo acima de 90 min é pausa e aparece como "tempo não medido".
 - **Projeto** só aparece quando há mais de um `tasks.md` (senão repetiria a feature atual).
 

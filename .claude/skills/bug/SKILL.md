@@ -64,6 +64,8 @@ A **primeira linha que se aplica** define a fase (campos de `causa.md` conforme 
 - **Não reproduz**: não planeje correção no escuro. Pergunte via `AskUserQuestion`: **pedir mais dados** ao relator (o que faltou, com sugestão), **instrumentar** (log ou diagnóstico temporário para colher evidência, como tarefa do plano) ou **encerrar como não reproduzido** em `fechamento.md`.
 - **Causa é falha de arquitetura**, ou o teste planejado não consegue pegar a causa: **pare**. Proponha refatoração (skill `refatoracao`, fluxo 13) e pergunte via `AskUserQuestion`: refatorar antes (grave `.specs/refatoracoes/<slug>/refatoracao.md` com **Chamado por** `bug <slug>`, **Usar em** `causa.md` e o motivo, e acione a skill; o plano da correção volta depois dela), correção de contenção mínima com o risco e a refatoração registrados em `causa.md`, ou parar.
 
+Evidência que só existe em produção (banco, log) ou correção que muda consulta: siga [references/producao.md](references/producao.md).
+
 ## 5. Fechar a fase
 
 Nas fases 1 a 5, apresente o que foi produzido (caminho e 3 a 5 linhas) e o critério de passagem, e pergunte via `AskUserQuestion`: **seguir / ajustar / parar**. A **última** fase (6) não pergunta: termina com **"O plano está disponível para execução."** Antes de declarar uma fase concluída, aplique `verification-before-completion`. Parar é resultado válido: registre em `fechamento.md` com o motivo.

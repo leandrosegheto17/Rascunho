@@ -532,5 +532,20 @@ class TestSkills(unittest.TestCase):
         self.assertLessEqual(len((CLAUDE / "agents" / "planejador.md").read_text(encoding="utf-8").splitlines()), 60)
 
 
+    def test_diagnostico_em_producao_e_so_leitura_e_aprovado_a_cada_consulta(self):
+        """Passo 44: consulta ao banco com protocolo, ausência de log não prova e consulta alterada é medida."""
+        referencia = (SKILLS / "bug" / "references" / "producao.md").read_text(encoding="utf-8")
+        for trecho in ("só leitura", "**a cada execução**", "nunca na lista de permissões", "**Hipótese**", "`SELECT *`",
+                       "confirmou ou refutou", "## Logs", "nível", "## Consulta alterada pela correção", "pior caso",
+                       "performance/references/medicao.md", "## Aviso a quem relatou", "sem prazo não combinado"):
+            with self.subTest(trecho=trecho):
+                self.assertIn(trecho, referencia)
+        for nome in ("bug", "suporte", "incidente"):
+            with self.subTest(skill=nome):
+                texto = (SKILLS / nome / "SKILL.md").read_text(encoding="utf-8")
+                self.assertIn("references/producao.md", texto)
+                self.assertLessEqual(len(texto.splitlines()), LIMITE_LINHAS)
+
+
 if __name__ == "__main__":
     unittest.main()

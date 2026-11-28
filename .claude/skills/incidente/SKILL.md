@@ -90,6 +90,8 @@ Muda o fluxo (detalhes em `references/resposta.md`):
 - **Depois da correção no ar**, o incidente ainda não está encerrado: **prevenção** (modelo em [references/postmortem.md](references/postmortem.md): ao menos uma ação de prevenção e uma de detecção, cada uma com responsável e prazo, recorrência em `.specs/incidentes/*/causa-raiz.md`), **post-mortem** sem culpa (`Status: final`, revisado com o usuário) e **comunicação** ([references/comunicacao.md](references/comunicacao.md); cada envio é ação externa com confirmação). Só então marque `Encerrado: sim` no `incidente.md`. Sem ação de prevenção o incidente vai se repetir: esta parte não é opcional.
 - **Prazo legal não espera a correção:** havendo dado pessoal afetado, prepare e avalie a comunicação à ANPD e aos titulares (com o encarregado de dados e o jurídico) assim que a causa estiver confirmada, sem aguardar o `/executar`.
 
+Fases 2 a 5: banco e logs de produção são lidos pelo protocolo de [references/producao.md](../bug/references/producao.md); em urgência a pergunta é curta, mas não some.
+
 ## 5. Fechar a fase
 
 Apresente o que foi produzido (caminho e 3 a 5 linhas) e o critério de passagem, e pergunte via `AskUserQuestion`: **seguir / ajustar / parar** (nas fases 1 a 3, com as variantes de `references/fases.md`). A **última** fase (6) não pergunta: termina com a mensagem final. Antes de declarar uma fase concluída, aplique `verification-before-completion`. Parar é resultado válido: registre no `incidente.md` com o motivo.
