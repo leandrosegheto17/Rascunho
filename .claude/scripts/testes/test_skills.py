@@ -486,5 +486,51 @@ class TestSkills(unittest.TestCase):
                 self.assertEqual(sorted({n for n in nomes if nomes.count(n) > 1}), [])
 
 
+    def test_ajuste_depois_do_teste_revisa_a_spec_sem_renumerar(self):
+        """Passo 43: /ajustar classifica o retorno, cria só as tarefas afetadas e obriga novo /validar."""
+        claude_md = (CLAUDE / "CLAUDE.md").read_text(encoding="utf-8")
+        for trecho in ("## Ajuste depois do teste", "`/ajustar`", "`Ajuste J<n>`", "nunca renumerar",
+                       "`**Status**: cancelada", "Ajuste nunca passa pelo `/rascunho`"):
+            with self.subTest(trecho=trecho):
+                self.assertIn(trecho, claude_md)
+        skill = (SKILLS / "ajustar" / "SKILL.md").read_text(encoding="utf-8")
+        for trecho in ("model: opus", "Não é isso que eu queria", "Faltou um caso", "Está certo, mas quebra",
+                       "A decisão técnica é ruim", "AskUserQuestion", "validation-antes-J<n>.md", "reverter",
+                       "O plano está disponível para execução"):
+            with self.subTest(skill=trecho):
+                self.assertIn(trecho, skill)
+        self.assertTrue((SKILLS / "ajustar" / "references" / "formato.md").exists())
+        self.assertLessEqual(len(skill.splitlines()), LIMITE_LINHAS)
+        for caminho, trechos in {
+            "skills/fluxo/SKILL.md": ("`/ajustar`",),
+            "skills/executar/SKILL.md": ("feature/<slug>-j<n>", "Ajuste J<n>"),
+            "skills/validar/SKILL.md": ("Ajuste J<n>", "feature/<slug>-j<n>"),
+        }.items():
+            texto = (CLAUDE / caminho).read_text(encoding="utf-8")
+            for trecho in trechos:
+                with self.subTest(arquivo=caminho, trecho=trecho):
+                    self.assertIn(trecho, texto)
+
+    def test_roteiro_manual_trava_so_o_finalizar(self):
+        """Passo 43: critério sem prova automática tem roteiro; o /validar integra e o /finalizar cobra o resultado."""
+        claude_md = (CLAUDE / "CLAUDE.md").read_text(encoding="utf-8")
+        for trecho in ("## Verificação manual", "`Prova: manual", "30%", "roteiro-manual.md", "não trava a integração"):
+            with self.subTest(trecho=trecho):
+                self.assertIn(trecho, claude_md)
+        for caminho, trechos in {
+            "skills/validar/SKILL.md": ("roteiro-manual.md",),
+            "skills/validar/references/roteiro-manual.md": ("**Passos**", "**Esperado**", "**Como verificar**",
+                                                            "**Resultado**"),
+            "skills/finalizar/SKILL.md": ("roteiro-manual.md", "dispensado", "`/ajustar`"),
+            "agents/verificador.md": ("Prova: manual",),
+            "agents/planejador.md": ("Prova: manual",),
+        }.items():
+            texto = (CLAUDE / caminho).read_text(encoding="utf-8")
+            for trecho in trechos:
+                with self.subTest(arquivo=caminho, trecho=trecho):
+                    self.assertIn(trecho, texto)
+        self.assertLessEqual(len((CLAUDE / "agents" / "planejador.md").read_text(encoding="utf-8").splitlines()), 60)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -44,6 +44,9 @@ Uso:
   python .claude/scripts/progresso.py --lote [N]       # V2 do lote (padrão: o da última concluída)
   python .claude/scripts/progresso.py --lote --rascunho  # o primeiro lote ainda não rascunhado (/rascunho)
 
+Cancelada: `**Status**: cancelada` (pelo /ajustar) tira a tarefa de todas as contas. Phase `Ajuste J<n>` e
+`Retrabalho R<n>` são lotes próprios.
+
 Bloqueada: tarefa aberta com `**Bloqueio**: <pergunta ou motivo>`. Conta como aberta; ela e quem depende dela
 ficam travadas e não são a "Tarefa atual".
 
@@ -78,12 +81,14 @@ ESTIMATIVA = re.compile(r"^\s*\*\*Estimativa\*\*\s*:\s*(.*?)\s*$", re.IGNORECASE
 CRITICIDADE = re.compile(r"^\s*\*\*Criticidade\*\*\s*:\s*(.*?)\s*$", re.IGNORECASE)
 DOMINIO = re.compile(r"^\s*\*\*Dom[ií]nio\*\*\s*:\s*(.*?)\s*$", re.IGNORECASE)
 RETRABALHO = re.compile(r"retrabalho", re.IGNORECASE)
+AJUSTE = re.compile(r"\bajuste\s+J\d+\b", re.IGNORECASE)
 DURACAO = re.compile(r"(\d+(?:[.,]\d+)?)\s*(h(?:oras?)?|min(?:utos?)?)\b", re.IGNORECASE)
 TITULO = re.compile(r"^(#{1,6})\s")
 CAIXA = re.compile(r"^\s*[-*]\s+\[([ xX])\]")
 STATUS = re.compile(r"^\s*\*\*Status\*\*\s*:\s*(.*)$", re.IGNORECASE)
 STATUS_FEITO = re.compile(r"✅|\b(done|complete|completed|conclu[ií]d[oa]s?)\b", re.IGNORECASE)
 STATUS_RASCUNHO = re.compile(r"\brascunhad[oa]s?\b", re.IGNORECASE)
+STATUS_CANCELADA = re.compile(r"^\W*cancelad[oa]s?\b", re.IGNORECASE)
 BLOQUEIO = re.compile(r"^\s*\*\*Bloqueio\*\*\s*:\s*(.*?)\s*$", re.IGNORECASE)
 SEM_BLOQUEIO = re.compile(r"^(?:[-—]+|nenhum[a]?|não há)?\.?$", re.IGNORECASE)
 CAMPO_RETOMADA = re.compile(r"^\s*-\s+\*\*(Fluxo|Item|Fase aprovada|Próxima fase)\*\*\s*:\s*(.+?)\s*$")
@@ -93,7 +98,7 @@ ID_TAREFA = re.compile(r"\bT\d+\b", re.IGNORECASE)
 
 
 def _blocos(texto: str) -> list[tuple[str, list[str]]]:
-    """Cada tarefa `### T<n>:` de um tasks.md: (id, linhas do bloco)."""
+    """Cada tarefa `### T<n>:` não cancelada de um tasks.md: (id, linhas do bloco)."""
     blocos: list[tuple[str, list[str]]] = []
     atual: list[str] | None = None
     nivel = 0
@@ -109,7 +114,16 @@ def _blocos(texto: str) -> list[tuple[str, list[str]]]:
             atual = None
         if atual is not None:
             atual.append(linha)
-    return blocos
+    return [(id_, linhas) for id_, linhas in blocos if not _cancelada(linhas)]
+
+
+def _cancelada(linhas: list[str]) -> bool:
+    """`**Status**: cancelada` (o /ajustar usa quando o critério sai): a tarefa fica no arquivo e fora das contas."""
+    for linha in linhas:
+        status = STATUS.match(linha)
+        if status:
+            return bool(STATUS_CANCELADA.search(status.group(1)))
+    return False
 
 
 def contar_tarefas(texto: str) -> tuple[int, int]:
@@ -291,18 +305,19 @@ def lotes_de(tarefas: list[dict], fases: list[dict]) -> list[dict]:
     def critica(ids: list[str]) -> bool:
         return any(por_id[i]["criticidade"] == "crítica" for i in ids)
 
-    # Phase de retrabalho (gerada pelo /validar) é lote próprio: não junta com o anterior nem é engolida pela cauda
+    # Phase de retrabalho (/validar) ou de ajuste (/ajustar) é lote próprio: não junta com o anterior nem é engolida
     retrabalho = {f["numero"] for f in fases if RETRABALHO.search(f.get("nome", ""))}
+    ajuste = {f["numero"] for f in fases if AJUSTE.search(f.get("nome", ""))} - retrabalho
     lotes: list[dict] = []
     atual: dict | None = None
     for numero, ids in unidades:
         horas = peso(ids)
-        if numero in retrabalho:
+        if numero in retrabalho or numero in ajuste:
             if atual is not None:
                 lotes.append(atual)
                 atual = None
             lotes.append({"fases": [numero], "tarefas": list(ids), "horas": horas, "critico": critica(ids),
-                          "retrabalho": True})
+                          "retrabalho": numero in retrabalho, "ajuste": numero in ajuste})
             continue
         if atual is not None and atual["horas"] + horas > LOTE_HORAS:
             lotes.append(atual)  # a Phase não cabe: abre o lote seguinte, em vez de passar de LOTE_HORAS
@@ -311,7 +326,7 @@ def lotes_de(tarefas: list[dict], fases: list[dict]) -> list[dict]:
             lotes.append(atual)  # outra criticidade: o lote já tem o bastante, não mistura os dois ciclos
             atual = None
         if atual is None:
-            atual = {"fases": [], "tarefas": [], "horas": 0.0, "critico": False, "retrabalho": False}
+            atual = {"fases": [], "tarefas": [], "horas": 0.0, "critico": False, "retrabalho": False, "ajuste": False}
         atual["critico"] = atual["critico"] or critica(ids)
         if numero is not None:
             atual["fases"].append(numero)
@@ -319,18 +334,22 @@ def lotes_de(tarefas: list[dict], fases: list[dict]) -> list[dict]:
         atual["horas"] += horas
     if atual is not None:
         lotes.append(atual)
-    if len(lotes) > 1 and len(lotes[-1]["tarefas"]) <= 2 and not lotes[-1]["retrabalho"] and not lotes[-2]["retrabalho"]:
+    def proprio(lote: dict) -> bool:
+        return lote["retrabalho"] or lote["ajuste"]
+
+    if len(lotes) > 1 and len(lotes[-1]["tarefas"]) <= 2 and not proprio(lotes[-1]) and not proprio(lotes[-2]):
         ultimo = lotes.pop()
         lotes[-1]["fases"] += ultimo["fases"]
         lotes[-1]["tarefas"] += ultimo["tarefas"]
         lotes[-1]["horas"] += ultimo["horas"]
         lotes[-1]["critico"] = lotes[-1]["critico"] or ultimo["critico"]
-    contador = 0
+    contador = {"R": 0, "J": 0}
     for numero, lote in enumerate(lotes, 1):
         lote["numero"] = numero
-        if lote["retrabalho"]:
-            contador += 1
-            lote["rotulo"] = f"R{contador}"
+        if proprio(lote):
+            letra = "R" if lote["retrabalho"] else "J"
+            contador[letra] += 1
+            lote["rotulo"] = f"{letra}{contador[letra]}"
         lote["criticidade"] = "crítico" if lote["critico"] else "comum"
         lote["dominio"] = any(por_id[i]["dominio"] for i in lote["tarefas"])
         # rascunhado: todas as tarefas já têm teste e código escritos (rascunhadas ou concluídas)
@@ -671,7 +690,8 @@ def _escolher_lote(det: dict, numero: int | None, rascunho: bool = False) -> dic
     if numero is not None:
         return next((l for l in lotes if l["numero"] == numero), None)
     if rascunho:  # passada do /rascunho: o primeiro lote que ainda tem tarefa sem rascunho
-        return next((l for l in lotes if not l["rascunhado"]), None)
+        # retrabalho e ajuste não passam pelo /rascunho
+        return next((l for l in lotes if not (l["rascunhado"] or l["retrabalho"] or l["ajuste"])), None)
     por_id = {t["id"]: t for t in det["tarefas"]}
     ultima = max((t for t in det["tarefas"] if t["quando"]), key=lambda t: t["quando"], default=None)
     alvo = ultima["id"] if ultima else (_proxima(det["tarefas"]) or {}).get("id")
@@ -743,8 +763,11 @@ def linha_lote(rel: dict, numero: int | None = None, rascunho: bool = False) -> 
     marca = ""
     if det.get("usa_criticidade"):
         marca = f" ({lote['criticidade']}{', Domínio' if lote['dominio'] else ''})"
-    normais = sum(1 for l in det["lotes"] if not l["retrabalho"])
-    nome = f"Lote {lote['rotulo']} (retrabalho)" if lote["retrabalho"] else f"Lote {lote['numero']} de {normais}"
+    normais = sum(1 for l in det["lotes"] if not (l["retrabalho"] or l["ajuste"]))
+    if lote["retrabalho"] or lote["ajuste"]:
+        nome = f"Lote {lote['rotulo']} ({'retrabalho' if lote['retrabalho'] else 'ajuste'})"
+    else:
+        nome = f"Lote {lote['numero']} de {normais}"
     return (f"{nome}{marca} {corpo} · "
             f"Feature: {item['feitas']} de {item['total']} tarefas ({pct}%)")
 

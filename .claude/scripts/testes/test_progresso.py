@@ -171,6 +171,58 @@ class TestBloqueio(unittest.TestCase):
         self.assertIn("T2", linha)
 
 
+def fase(numero, nome, ids):
+    return f"### Phase {numero}: {nome}\n\n```\n{' -> '.join(ids)}\n```\n\n"
+
+
+class TestAjuste(unittest.TestCase):
+    """Passo 43: tarefa cancelada sai das contas; a Phase de ajuste é lote próprio."""
+
+    def texto(self, extra=""):
+        plano = (fase(1, "Base", ["T1", "T2"]) + fase(2, "Ajuste J1", ["T3"]) + extra)
+        return ("# Tasks\n\n## Execution Plan\n\n" + plano + "## Task Breakdown\n\n"
+                + "\n".join([tarefa(1, [True], estimativa="1h"),
+                             tarefa(2, [False], status="cancelada — critério removido na revisão 2", estimativa="3h"),
+                             tarefa(3, [False], estimativa="1h", depende="T2")]))
+
+    def test_cancelada_sai_da_contagem_e_dos_avisos(self):
+        self.assertEqual(pr.contar_tarefas(self.texto()), (2, 1))
+        self.assertEqual([t["id"] for t in pr.tarefas_de(self.texto())[0]], ["T1", "T3"])
+        self.assertEqual([i for i, _ in pr.estimativas(self.texto())], ["T1", "T3"])
+
+    def test_dependencia_de_tarefa_cancelada_nao_trava(self):
+        tarefas = pr.tarefas_de(self.texto())[0]
+        self.assertEqual(pr._proxima(tarefas)["id"], "T3")
+
+    def test_palavra_cancelada_no_meio_do_status_nao_cancela(self):
+        texto = tasks_md(tarefa(1, [False], status="pendente: e se for cancelada?"))
+        self.assertEqual(pr.contar_tarefas(texto), (1, 0))
+
+    def test_ajuste_e_lote_proprio_com_rotulo(self):
+        lotes = pr.lotes_de(*pr.tarefas_de(self.texto()))
+        self.assertEqual([l["tarefas"] for l in lotes], [["T1"], ["T3"]])
+        self.assertTrue(lotes[1]["ajuste"])
+        self.assertEqual(lotes[1]["rotulo"], "J1")
+
+    def test_phase_com_a_palavra_ajustes_nao_e_ajuste(self):
+        texto = self.texto().replace("Ajuste J1", "Ajustes de tela")
+        lotes = pr.lotes_de(*pr.tarefas_de(texto))
+        self.assertEqual(len(lotes), 1)
+        self.assertFalse(lotes[0]["ajuste"])
+
+    def test_linha_do_lote_de_ajuste(self):
+        with tempfile.TemporaryDirectory() as pasta:
+            escrever(pasta, ".specs/features/a/tasks.md", self.texto())
+            linha = pr.linha_lote(pr.relatorio(Path(pasta)), 2)
+        self.assertIn("Lote J1 (ajuste)", linha)
+
+    def test_rascunho_pula_ajuste_e_retrabalho(self):
+        with tempfile.TemporaryDirectory() as pasta:
+            escrever(pasta, ".specs/features/a/tasks.md", self.texto())
+            rel = pr.relatorio(Path(pasta))
+            self.assertIsNone(pr.linha_lote(rel, rascunho=True))
+
+
 STATE = """# Estado
 
 ## Decisões

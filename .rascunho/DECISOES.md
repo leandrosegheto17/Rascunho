@@ -1197,3 +1197,11 @@ Uma pasta só, a mesma que o `tlc-spec-driven` já usa, para um fluxo ler o que 
 - **Pendências no fim do planejamento** e **regras de execução do projeto** (`.specs/projeto/regras-execucao.md`, criado pelo `/preparar`).
 - **Risco aceito:** dependência não declarada em `Depends on` pode gerar retrabalho.
 
+## Passo 43: ajuste depois do teste e roteiro manual (2026-11-27)
+
+- **Decisão (usuário):** comando próprio **`/ajustar`** (também citado no `/fluxo`); pendência manual trava **só o `/finalizar`**.
+- **`/ajustar` (skill nova, Opus):** classifica cada ponto (não é o que queria, faltou um caso, bug, decisão técnica ruim), revisa a spec com revisão numerada e histórico, cria a Phase `Ajuste J<n>` sem renumerar, cancela a tarefa aberta de critério removido (e planeja reverter o código feito) e renomeia o `validation.md`, obrigando novo `/validar`.
+- **Scripts:** `**Status**: cancelada` sai de todas as contas; Phase `Ajuste J<n>` é lote próprio; `--lote --rascunho` pula ajuste e retrabalho (antes escolhia um lote de retrabalho aberto, e o `/executar` recusava lote não rascunhado).
+- **Roteiro manual:** critério com `Prova: manual` (aviso acima de 30%); o `/validar` grava `roteiro-manual.md`, o `/finalizar` exige `aprovado` ou `dispensado`.
+- **Em aberto:** nenhum dos dois foi usado em projeto real.
+

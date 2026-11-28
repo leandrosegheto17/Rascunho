@@ -27,6 +27,7 @@ Na construção (seção Execução do `CLAUDE.md`), o trabalhador do lote roda 
 python .claude/scripts/progresso.py --tarefa        # a última concluída; ou --tarefa T12
 python .claude/scripts/progresso.py --lote          # o da última concluída; ou --lote 3
                                                     # lote de retrabalho (Phase "Retrabalho R<n>", do /validar) aparece como "Lote R1 (retrabalho)"
+                                                    # lote de ajuste (Phase "Ajuste J<n>", do /ajustar) aparece como "Lote J1 (ajuste)"
 ```
 
 ## 2. Mostrar

@@ -28,6 +28,7 @@ Liste os `tasks.md` com tarefa em aberto em `.specs/` (`features/`, `bugs/`, `re
 - Senão: **Branch pai** = a do topo do `tasks.md` (`**Branch pai**: <nome>`) ou a branch atual (padrão `main`). Crie na pasta `.worktree/` da raiz (confira que `.worktree/` está no `.gitignore`):
   `git worktree add .worktree/<slug> -b feature/<slug> <pai>`
 - **Depois do `/rascunho`** (`**Passada**: rascunho` no topo): o `/rascunho` commitou direto na Branch pai (uma tarefa por commit); crie a worktree normalmente, a partir dela, e os commits do rascunho já vêm junto. Veja a seção 4.
+- **Ajuste** (Phase `Ajuste J<n>`, do `/ajustar`) em item já integrado, sem worktree viva: crie `.worktree/<slug>-j<n>` com a branch `feature/<slug>-j<n>` a partir da Branch pai. Com a worktree viva, siga nela.
 - Trabalhe nela até o fim. Registre a Branch pai no topo do `tasks.md` se faltar. A trava de testes e o hook de commit valem na worktree.
 
 ## 4. Os lotes
@@ -43,7 +44,7 @@ Liste os `tasks.md` com tarefa em aberto em `.specs/` (`features/`, `bugs/`, `re
 
 Item em **etapas** (refatoração e redesign em modo grande): uma etapa por vez, na ordem do `refatoracao.md` ou do `redesign.md`, cada uma com o gate que a skill do fluxo manda (a seção "Para o /executar e o /validar" dela vale).
 
-**Lote rascunhado** (`**Passada**: rascunho`, tarefas com `**Status**: rascunhada`): o teste e o código já existem, escritos sem rodar. Cada tarefa traz `**Testes**:` (arquivo › nome do teste, com o `FUN-NN`) e `**Código**:`; tarefa rascunhada sem `**Testes**:` volta à lista de pendências e você a localiza em `git log --grep "T<n>"`. Lote ainda não rascunhado num item com a passada: **recuse** e mande rodar `/rascunho`. Serviços de apoio (banco, Docker) sobem agora, pela primeira vez.
+**Lote rascunhado** (`**Passada**: rascunho`, tarefas com `**Status**: rascunhada`): o teste e o código já existem, escritos sem rodar. Cada tarefa traz `**Testes**:` (arquivo › nome do teste, com o `FUN-NN`) e `**Código**:`; tarefa rascunhada sem `**Testes**:` volta à lista de pendências e você a localiza em `git log --grep "T<n>"`. Lote normal ainda não rascunhado num item com a passada: **recuse** e mande rodar `/rascunho` (lotes de retrabalho e de ajuste não passam por ele e seguem o ciclo normal). Serviços de apoio (banco, Docker) sobem agora, pela primeira vez.
 
 Em vez de escrever, **leve cada tarefa do lote, uma por vez e na ordem, por este ciclo** (só passa à próxima quando a atual fecha):
 
@@ -55,7 +56,7 @@ Em vez de escrever, **leve cada tarefa do lote, uma por vez e na ordem, por este
 
 Tarefa com `**Bloqueio**` é pulada neste ciclo, assim como a que depende dela. Ao fim das tarefas do lote, rode o gate do lote pelo passo 5 da lista acima (`fechar-lote.py`: grava `Gate:` e troca `rascunhada` por `concluída` em todas) e o contexto (passo 6).
 
-Lote de **retrabalho** (Phase `Retrabalho R<n>`, gerada pelo `/validar`) é executado como qualquer outro, depois dos normais; cada tarefa cita o achado `A-NN` que corrige.
+Lote de **retrabalho** (Phase `Retrabalho R<n>`, gerada pelo `/validar`) é executado como qualquer outro, depois dos normais; cada tarefa cita o achado `A-NN` que corrige. O de **ajuste** (Phase `Ajuste J<n>`) também; a tarefa de reverter tira o código e o teste do critério removido, com o motivo no commit. Tarefa `cancelada` é ignorada.
 
 Dúvida ou 2 tentativas sem verde: `**Bloqueio**` na tarefa e siga (seção Execução, **Bloquear e seguir**; os casos de parada na hora estão lá). Teste que falha de forma inesperada: ache a causa raiz antes de mudar qualquer coisa. Lição nova sobre o projeto (comando, armadilha, teste que já falhava): acrescente com a data em `.specs/projeto/regras-execucao.md`.
 

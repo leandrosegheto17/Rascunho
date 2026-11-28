@@ -13,11 +13,11 @@ Roda em **Sonnet** (trava de modelo do `CLAUDE.md`).
 
 ## 1. Qual feature
 
-Liste os `tasks.md` de `.specs/` (`features/`, `bugs/`, `refatoracoes/`, `performance/`, `redesign/`, `automacoes/`, `cobertura/`, `e2e/`) cujas tarefas estão **todas concluídas** e que ainda não têm `validation.md` com PASS (ou que acabaram de executar um retrabalho). Respeite o argumento recebido. Escolha a **primeira da lista**, na ordem dos lotes do roteiro, e diga qual é. Mais de uma pronta e sem ordem clara: pergunte via `AskUserQuestion`. Tarefa em aberto (inclusive `rascunhada`): **recuse** e diga para rodar `/executar` (em projeto do zero, `/rascunho` antes, se faltar lote).
+Liste os `tasks.md` de `.specs/` (`features/`, `bugs/`, `refatoracoes/`, `performance/`, `redesign/`, `automacoes/`, `cobertura/`, `e2e/`) cujas tarefas estão **todas concluídas** e que ainda não têm `validation.md` com PASS (ou que acabaram de executar um retrabalho). Respeite o argumento recebido. Escolha a **primeira da lista**, na ordem dos lotes do roteiro, e diga qual é. Mais de uma pronta e sem ordem clara: pergunte via `AskUserQuestion`. Tarefa em aberto (inclusive `rascunhada`; `cancelada` não conta): **recuse** e diga para rodar `/executar` (em projeto do zero, `/rascunho` antes, se faltar lote).
 
 A pasta do item escolhe o modo do `verificador` (o agente já conhece: feature, bug, refatoração, performance, redesign), e a fonte da verdade é a do fluxo dele (spec, `relato.md`/`causa.md`, comportamento inalterado). O relatório leva o nome que o modo manda (`validation.md`, `validation-etapa-<N>.md`, `validation-rodada-<N>.md`). No texto abaixo, "feature" vale para qualquer item.
 
-Entre na worktree e na branch da feature (`git worktree list`): é a mesma do `/executar`. Sem worktree, use a branch `feature/<slug>`. Leia `.specs/projeto/regras-execucao.md`, se existir, e passe o caminho aos agentes (comandos e testes que já falham).
+Entre na worktree e na branch da feature (`git worktree list`): é a mesma do `/executar`. Sem worktree, use a branch `feature/<slug>` (depois de ajuste em item integrado, `feature/<slug>-j<n>`). Depois de uma Phase `Ajuste J<n>`, o escopo é o diff do ajuste, os critérios revisados e a regressão; `validation-antes-J<n>.md` é só histórico. Leia `.specs/projeto/regras-execucao.md`, se existir, e passe o caminho aos agentes (comandos e testes que já falham).
 
 ## 2. Verificações, em paralelo
 
@@ -33,6 +33,8 @@ Aguarde os três. O `/executar` já conferiu e revisou cada tarefa; aqui a visã
 ## 3. Consolidar
 
 Junte tudo em `.specs/features/<feature>/validation.md` (compacto, ~40 linhas; formato em [references/relatorio.md](references/relatorio.md)): tabela critério → `arquivo:linha`, gate, sensor, `## Achados` (`A-NN`, `arquivo:linha`, evidência, correção sugerida, criticidade), pontos da revisão de código e da segurança. Veredito **PASS** só sem achado aberto; qualquer achado é **FAIL** com retrabalho. Rode `python .claude/skills/tlc-spec-driven/scripts/validate_state.py <feature>` quando a feature tiver `spec.md`.
+
+Item com critério `Prova: manual`: grave `<pasta do item>/roteiro-manual.md` pelo modelo de [references/roteiro-manual.md](references/roteiro-manual.md), um bloco por critério, sem apagar resultado já registrado de critério que não mudou. Pendência manual não é achado nem impede o PASS; liste-a no resumo final.
 
 ## 4. Com achados: lote de retrabalho
 

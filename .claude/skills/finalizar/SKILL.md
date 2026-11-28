@@ -16,6 +16,7 @@ Verifique tudo antes de qualquer ação e **recuse listando o que falta**:
 1. Todo item com `tasks.md` em `.specs/` (features, bugs, refatorações...) tem relatório de validação com PASS e `integracao.md` (integrado à branch de origem). Feature por validar ou por integrar: diga qual e para rodar `/executar` ou `/validar`.
 2. `python .claude/scripts/preparacao.py --nivel2` completo. Aberto: liste os itens e diga para rodar `/preparar`.
 3. Branch de origem atualizada, árvore limpa, e `python .claude/scripts/trava-testes.py --rodar` verde.
+4. Todo `roteiro-manual.md` com **Resultado** `aprovado` ou `dispensado — <motivo>` em cada critério. Pendente: mostre o roteiro e pergunte o resultado de cada um via `AskUserQuestion` (**aprovado / reprovado / dispensar / ainda não testei**), registrando a resposta; dispensa exige o motivo. `reprovado`: não lance e mande rodar o `/ajustar`.
 
 ## 2. E2E geral do projeto
 

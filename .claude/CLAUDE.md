@@ -43,6 +43,7 @@ Os mesmos termos em todo projeto, para que o progresso e o planejamento sejam co
 | **Fase do fluxo** | Passo do planejamento (1 a 8 no fluxo 1, onde a 8 é só a quebra em tarefas e lotes; 1 a 5 no fluxo 2); a fase de roteiro é a 6b (fluxo 1) ou 3b (fluxo 2) |
 | **Comando de execução** | `/preparar`, `/executar`, `/validar` e `/finalizar`: tudo o que vem depois do planejamento (seção Fim do planejamento) |
 | **Retrabalho** | Phase `Retrabalho R<n>` no `tasks.md` da feature, gerada pelo `/validar`; lote próprio, separado dos lotes normais |
+| **Ajuste** | Phase `Ajuste J<n>` no `tasks.md`, gerada pelo `/ajustar` quando o usuário testa e pede mudança; lote próprio |
 | **Phase** | Agrupamento de tarefas dentro de um `tasks.md` (termo do `tlc-spec-driven`) |
 | **Tarefa** | `T<n>` do `tasks.md`: atômica, com teste |
 
@@ -81,7 +82,19 @@ Vale nos fluxos 1 (projeto novo) e 2 (uso próprio): o `tasks.md` leva `**Passad
 
 **Rodada completa e teste visual.** Terminado o `/rascunho` de todas as features, o usuário pode publicar o rascunho em produção para ver o projeto visual (ele é o único usuário ativo e testa em ambiente real). A publicação e a orquestração em paralelo com o `/executar` e o `/validar` são **manuais, do usuário**; nenhum comando as faz. Se o publicar passar por `git push`, `gh pr create` ou deploy pela sessão, a trava de testes e a confirmação específica da seção Aprovação continuam valendo (rascunho não tem suíte verde: a trava bloqueia o push).
 
-Item sem `**Passada**: rascunho` segue direto `/executar` → `/validar`. Retrabalho nunca passa pelo `/rascunho`.
+Item sem `**Passada**: rascunho` segue direto `/executar` → `/validar`. Retrabalho nunca passa pelo `/rascunho`, e Ajuste nunca passa pelo `/rascunho`.
+
+## Ajuste depois do teste
+
+Quando o usuário testa uma entrega e quer mudar algo, o caminho é o **`/ajustar`** (skill `ajustar`, planejamento, em Opus): classifica cada ponto (não é o que queria, faltou um caso, é bug, decisão técnica ruim), revisa a spec com número de revisão e gera só as tarefas afetadas numa Phase `Ajuste J<n>`, lote próprio. Regras: **nunca renumerar** nem apagar tarefa; a concluída fica e a mudança vira tarefa nova; a aberta cujo critério saiu leva `**Status**: cancelada — <motivo>`, e o código já feito ganha tarefa de reverter. O relatório de validação anterior é renomeado, o que obriga novo `/validar`. Depois: `/executar` e `/validar`.
+
+## Verificação manual
+
+Vale para o critério que a suíte e o teste de tela não conseguem provar (serviço externo real, aparelho físico, juízo visual, e-mail que chega). Não relaxa a seção **Testes**: o que dá para automatizar continua com teste.
+
+- No planejamento o critério leva `Prova: manual — <por quê>` (na spec ou em `## Critérios` do `tasks.md`). Mais de **30%** dos critérios assim: avise e reveja (falta automação ou o critério está mal escrito).
+- O `/validar` grava `<item>/roteiro-manual.md` (modelo em `validar/references/roteiro-manual.md`) e lista o pendente. Pendência manual **não trava a integração**.
+- O `/finalizar` exige, de cada roteiro, resultado `aprovado` ou `dispensado — <motivo>` (dispensa é decisão do usuário). `reprovado` vai para o `/ajustar`.
 
 ## Plano pronto
 
@@ -226,6 +239,7 @@ A conversa usa o modelo da sessão (padrão: Sonnet). O planejamento enxuto, a v
 |---|---|
 | Planejamento, inclusive a quebra em tarefas e lotes (projeto novo: 1 a 8; uso próprio: 1 a 5) | **Opus**: avise o usuário para usar `/model opus` ao entrar nelas |
 | `/rascunho` (projeto do zero) | **Opus**: avise para usar `/model opus` ao chamá-lo |
+| `/ajustar` | **Opus**: avise para usar `/model opus` ao chamá-lo |
 | `/preparar`, `/executar`, `/validar` e `/finalizar` | **Sonnet**: avise para usar `/model sonnet` ao chamá-los |
 
 - **Trava de modelo**: ao entrar numa fase (ou retomá-la pelo `/fluxo`), compare o modelo em que você está rodando (nome do modelo nas suas instruções de sistema) com o que a fase pede, conforme a tabela acima e a skill do fluxo. Se forem diferentes, **antes de qualquer trabalho da fase** (nenhuma leitura ampla, agente ou artefato), pergunte via `AskUserQuestion`: "Esta fase pede <Opus | Sonnet>, e a sessão está em <modelo atual>. Seguir assim?", com **Vou trocar para <modelo indicado> (Recomendado)** (pare e diga: digite `/model <modelo>` e depois "continuar") e **Seguir com <modelo atual>**. Fase que pede Opus rodando em Sonnet perde qualidade; fase que pede Sonnet rodando em Opus só custa mais: diga o motivo na descrição da opção. Escolha de seguir assim vale até o fim do planejamento do item (todas as fases que pedem esse modelo), sem nova pergunta por fase, e fica registrada em `.specs/STATE.md`, seção `## Modelo` (data, fluxo, item, fase, indicado, usado). Fases sem modelo indicado não checam. Subagentes têm modelo fixo e não checam.
