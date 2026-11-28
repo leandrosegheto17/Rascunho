@@ -1,6 +1,6 @@
 # Plano: ajuste pós-teste, execução sem parar, qualidade e produção
 
-- **Data**: 2026-11-27 · **Situação**: passos 41 a 44 construídos na branch `feature/melhorias-ajuste-execucao`, ainda não usados em projeto real nem integrados à `main`
+- **Data**: 2026-11-27 · **Situação**: passos 41 a 44 construídos na branch `feature/melhorias-ajuste-execucao`, integrados à `main` por merge local em 2026-11-27, sem push, e ainda não usados em projeto real
 - **Origem**: comparação com um processo de equipe e com a camada pessoal feita sobre ele. As ideias são reescritas aqui, sem copiar arquivo, texto ou nome de terceiros.
 - **Escolha do usuário**: os quatro pacotes.
 
